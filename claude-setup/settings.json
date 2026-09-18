@@ -1,0 +1,11 @@
+{
+  "extraKnownMarketplaces": {
+    "anthropic-skills": {
+      "source": { "source": "github", "repo": "anthropics/skills" }
+    },
+    "wshobson-agents": {
+      "source": { "source": "github", "repo": "wshobson/agents" }
+    }
+  },
+  "enabledPlugins": {}
+}

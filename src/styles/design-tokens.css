@@ -1,0 +1,29 @@
+/* BELLA CELLA — design token. Không hardcode màu ở nơi khác. */
+:root{
+  --paper:#FFFFFF; --paper-2:#F6F7F8; --paper-3:#EEF0F2;
+  --ink:#101112; --ink-2:#3A3D40; --ink-3:#8C9094;
+  --rule:#E3E6E8; --rule-strong:#C9CED2;
+  --focus:#2B6CB0;
+
+  --font-display:'Archivo','Segoe UI',system-ui,sans-serif;
+  --font-body:'Be Vietnam Pro','Segoe UI',system-ui,sans-serif;
+
+  --tracking-brand:.2em;
+  --tracking-label:.16em;
+
+  --radius:0px;
+  --gutter:clamp(16px,5vw,80px);
+  --maxw:1240px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C0D0E; --paper-2:#151719; --paper-3:#1D2023;
+    --ink:#F3F4F5; --ink-2:#C4C8CB; --ink-3:#83888C;
+    --rule:#262A2D; --rule-strong:#3A4045; --focus:#7FB2E5;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C0D0E; --paper-2:#151719; --paper-3:#1D2023;
+  --ink:#F3F4F5; --ink-2:#C4C8CB; --ink-3:#83888C;
+  --rule:#262A2D; --rule-strong:#3A4045; --focus:#7FB2E5;
+}
