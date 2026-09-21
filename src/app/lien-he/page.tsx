@@ -31,7 +31,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
             </div>
             <div className="note" style={{ marginTop: '24px' }}>Zalo là kênh phản hồi nhanh nhất. Nhấn nút Zalo ở góc phải màn hình để chat trực tiếp.</div>
             <figure style={{ margin: '28px 0 0', background: 'var(--paper-2)' }}>
-              <Image src={IMG['cred-treatment']} alt="Chuyên gia thực hiện liệu trình chăm sóc da với BELLA CELLA" sizes="(max-width:820px) 100vw, 50vw" style={{ width: '100%', height: 'auto' }} />
+              <Image src={IMG['cred-treatment']} alt="Chuyên gia thực hiện liệu trình chăm sóc da với BELLA CELLA" placeholder="blur" sizes="(max-width:820px) 100vw, 50vw" style={{ width: '100%', height: 'auto' }} />
             </figure>
           </div>
         </div>

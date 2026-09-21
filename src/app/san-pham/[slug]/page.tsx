@@ -33,7 +33,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <div className="crumb"><Link href="/san-pham">Sản phẩm</Link> &nbsp;/&nbsp; {p.name}</div>
       <section className="pdp">
         <figure>
-          <Image src={IMG[p.slug]} alt={`${p.name} — ${p.vi}`} sizes="(max-width:900px) 100vw, 45vw" style={{ width: '100%', height: 'auto' }} priority />
+          <Image src={IMG[p.slug]} alt={`${p.name} — ${p.vi}`} sizes="(max-width:900px) 100vw, 50vw" style={{ width: '100%', height: 'auto' }} priority fetchPriority="high" placeholder="blur" />
           {p.badge && <span className="pbadge">{p.badge}</span>}
         </figure>
         <div>

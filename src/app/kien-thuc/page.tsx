@@ -46,7 +46,7 @@ export default function KnowledgePage() {
         <div className="cgrid">
           {CREDENTIALS.photos.map((c, i) => (
             <figure className={i === 0 ? 'lead' : ''} key={c.img}>
-              <Image src={IMG[c.img]} alt={c.cap} sizes="(max-width:560px) 100vw, (max-width:900px) 50vw, 33vw" style={{ width: '100%', height: 'auto' }} />
+              <Image src={IMG[c.img]} alt={c.cap} placeholder="blur" sizes="(max-width:560px) 100vw, (max-width:900px) 50vw, 33vw" style={{ width: '100%', height: 'auto' }} />
               <figcaption>Ảnh: {c.cap}</figcaption>
             </figure>
           ))}

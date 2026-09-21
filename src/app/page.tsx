@@ -26,7 +26,7 @@ export default function HomePage() {
             </div>
           </div>
           <figure>
-            <Image src="/img/hero-1400.webp" alt="Người mẫu BELLA CELLA cùng hộp phấn nước Recovery BB Cushion" fill priority sizes="(max-width:820px) 100vw, 45vw" style={{ objectFit: 'cover', objectPosition: '50% 22%' }} />
+            <Image src={IMG['hero-1400']} alt="Người mẫu BELLA CELLA cùng hộp phấn nước Recovery BB Cushion" fill priority fetchPriority="high" placeholder="blur" sizes="(max-width:820px) 100vw, 45vw" style={{ objectFit: 'cover', objectPosition: '50% 22%' }} />
           </figure>
         </section>
       </div>
@@ -48,7 +48,7 @@ export default function HomePage() {
               </div>
             </div>
             <figure style={{ margin: 0, background: 'var(--paper-2)' }}>
-              <Image src={IMG['serum-texture']} alt="Kết cấu tinh chất Exo-Bio nhỏ vào đĩa petri" sizes="(max-width:820px) 100vw, 50vw" style={{ width: '100%', height: 'auto' }} />
+              <Image src={IMG['serum-texture']} alt="Kết cấu tinh chất Exo-Bio nhỏ vào đĩa petri" placeholder="blur" sizes="(max-width:820px) 100vw, 50vw" style={{ width: '100%', height: 'auto' }} />
             </figure>
           </div>
         </section>
@@ -91,7 +91,7 @@ export default function HomePage() {
           <div className="cgrid">
             {CREDENTIALS.photos.map((c, i) => (
               <figure className={i === 0 ? 'lead' : ''} key={c.img}>
-                <Image src={IMG[c.img]} alt={c.cap} sizes="(max-width:560px) 100vw, (max-width:900px) 50vw, 33vw" style={{ width: '100%', height: 'auto' }} />
+                <Image src={IMG[c.img]} alt={c.cap} placeholder="blur" sizes="(max-width:560px) 100vw, (max-width:900px) 50vw, 33vw" style={{ width: '100%', height: 'auto' }} />
                 <figcaption>Ảnh: {c.cap}</figcaption>
               </figure>
             ))}

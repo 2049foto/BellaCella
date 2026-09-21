@@ -2,8 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    // Ảnh phục vụ từ public/img/, chỉ dùng nội bộ.
-    formats: ['image/webp'],
+    // Ưu tiên AVIF, fallback WebP. Ảnh phục vụ từ public/img/.
+    formats: ['image/avif', 'image/webp'],
   },
 };
 

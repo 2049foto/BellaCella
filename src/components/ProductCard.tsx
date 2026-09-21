@@ -1,11 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { type Product } from '@/data/products';
+import { IMG } from '@/lib/images';
 import { vnd } from '@/lib/format';
 import ProductAction from '@/components/ProductAction';
 
-// Kích cỡ ảnh theo lưới sản phẩm (tối đa 4 cột).
-const CARD_SIZES = '(max-width:460px) 100vw, (max-width:820px) 50vw, (max-width:1100px) 33vw, 25vw';
+// Kích cỡ ảnh theo CHIỀU RỘNG CARD (container query), không phải viewport.
+// Card render ở nhiều bối cảnh: lưới 4 cột, 2 cột, khối "liên quan" hẹp.
+const CARD_SIZES = '(max-width:460px) 90vw, (max-width:820px) 45vw, (max-width:1100px) 30vw, 280px';
 
 export default function ProductCard({ product: p }: { product: Product }) {
   const alt = `${p.name} — ${p.vi}`;
@@ -14,7 +16,7 @@ export default function ProductCard({ product: p }: { product: Product }) {
       <div className="pgroup">{p.group}</div>
       <Link href={`/san-pham/${p.slug}`} aria-label={p.name}>
         <figure>
-          <Image src={`/img/${p.slug}.webp`} alt={alt} fill sizes={CARD_SIZES} style={{ objectFit: 'cover' }} />
+          <Image src={IMG[p.slug]} alt={alt} fill sizes={CARD_SIZES} placeholder="blur" style={{ objectFit: 'cover' }} />
           {p.badge && <span className="pbadge">{p.badge}</span>}
         </figure>
       </Link>
