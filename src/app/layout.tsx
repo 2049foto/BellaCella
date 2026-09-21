@@ -1,25 +1,10 @@
 import type { Metadata } from 'next';
-import { Archivo, Be_Vietnam_Pro } from 'next/font/google';
 import './globals.css';
+import { archivo, beVietnamPro } from './fonts';
 import { CartProvider } from '@/components/CartProvider';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ZaloFab from '@/components/ZaloFab';
-
-const archivo = Archivo({
-  subsets: ['latin', 'vietnamese'],
-  weight: ['400', '500', '600', '700', '800'],
-  variable: '--font-archivo',
-  display: 'swap',
-});
-
-const beVietnamPro = Be_Vietnam_Pro({
-  subsets: ['latin', 'vietnamese'],
-  weight: ['300', '400', '500', '600'],
-  style: ['normal', 'italic'],
-  variable: '--font-bvp',
-  display: 'swap',
-});
 
 // noindex,nofollow tới khi Chi cho mở công khai (bản review nội bộ).
 export const metadata: Metadata = {
