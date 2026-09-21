@@ -7,6 +7,10 @@ import localFont from 'next/font/local';
 export const archivo = localFont({
   variable: '--font-archivo',
   display: 'swap',
+  // Không preload cả bộ: preload 9 file ~230KB làm nghẽn băng thông và trì hoãn LCP
+  // trên mạng mobile. Font tự host cùng origin + display:swap + fallback đã chỉnh
+  // size-adjust nên tải theo nhu cầu là đủ, LCP không phải chờ font.
+  preload: false,
   fallback: ['Segoe UI', 'system-ui', 'sans-serif'],
   src: [
     { path: '../fonts/archivo-400.woff2', weight: '400', style: 'normal' },
@@ -20,6 +24,7 @@ export const archivo = localFont({
 export const beVietnamPro = localFont({
   variable: '--font-bvp',
   display: 'swap',
+  preload: false,
   fallback: ['Segoe UI', 'system-ui', 'sans-serif'],
   src: [
     { path: '../fonts/bvp-400.woff2', weight: '400', style: 'normal' },
