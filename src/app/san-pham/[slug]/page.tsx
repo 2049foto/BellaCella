@@ -72,7 +72,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       </section>
       <section className="block">
         <div className="shead"><div className="eyebrow">Tiếp theo</div><h2>{next.name}</h2></div>
-        <div className="pgrid"><ProductCard product={next} /></div>
+        <div className="pgrid related"><ProductCard product={next} /></div>
       </section>
     </div>
   );
