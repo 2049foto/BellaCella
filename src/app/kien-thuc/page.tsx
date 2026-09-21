@@ -3,7 +3,11 @@ import Image from 'next/image';
 import { KNOWLEDGE, CREDENTIALS } from '@/data/products';
 import { IMG } from '@/lib/images';
 
-export const metadata: Metadata = { title: 'Kiến thức thành phần' };
+export const metadata: Metadata = {
+  title: 'Kiến thức thành phần',
+  description: 'Exosome thực vật, NMN, Hyaluronic Acid, Collagen, Peptide — nghiên cứu hiện tại cho thấy gì và chưa cho thấy gì, có dẫn nguồn để tự kiểm tra.',
+  alternates: { canonical: '/kien-thuc' },
+};
 
 export default function KnowledgePage() {
   return (

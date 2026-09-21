@@ -3,7 +3,11 @@ import Link from 'next/link';
 import { PRODUCTS, STEPS, bySlug } from '@/data/products';
 import ProductCard from '@/components/ProductCard';
 
-export const metadata: Metadata = { title: 'Liệu trình chăm sóc' };
+export const metadata: Metadata = {
+  title: 'Liệu trình chăm sóc',
+  description: 'Quy trình tám bước với sản phẩm BELLA CELLA như bước chăm sóc tại nhà sau liệu trình — thứ tự thông thường, không phải chỉ định y khoa.',
+  alternates: { canonical: '/lieu-trinh' },
+};
 
 export default function RoutinePage() {
   return (

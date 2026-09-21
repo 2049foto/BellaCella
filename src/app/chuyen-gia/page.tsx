@@ -1,7 +1,11 @@
 import type { Metadata } from 'next';
 import ProviderForm from '@/components/ProviderForm';
 
-export const metadata: Metadata = { title: 'Dành cho spa & chuyên gia' };
+export const metadata: Metadata = {
+  title: 'Dành cho spa & chuyên gia',
+  description: 'Hợp tác phân phối BELLA CELLA cho spa, phòng khám da liễu và thẩm mỹ viện: sản phẩm dùng trong liệu trình và bán kèm chăm sóc tại nhà.',
+  alternates: { canonical: '/chuyen-gia' },
+};
 
 export default function ProviderPage() {
   return (

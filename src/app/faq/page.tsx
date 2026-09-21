@@ -1,12 +1,19 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { FAQ, BRAND } from '@/data/products';
+import JsonLd from '@/components/JsonLd';
+import { faqSchema } from '@/lib/schema';
 
-export const metadata: Metadata = { title: 'Hỏi đáp' };
+export const metadata: Metadata = {
+  title: 'Hỏi đáp',
+  description: 'Câu hỏi thường gặp về BELLA CELLA: Exosome có hiệu quả không, dùng sau laser được không, thứ tự tám sản phẩm, bao lâu thấy kết quả — trả lời thẳng, dẫn nguồn.',
+  alternates: { canonical: '/faq' },
+};
 
 export default function FaqPage() {
   return (
     <div className="wrap">
+      <JsonLd data={faqSchema(FAQ)} />
       <section className="block" style={{ borderTop: 0 }}>
         <div className="shead">
           <div className="eyebrow">Hỏi đáp</div>

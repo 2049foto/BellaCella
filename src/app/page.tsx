@@ -1,9 +1,12 @@
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { PRODUCTS, STEPS, CREDENTIALS, BRAND, bySlug } from '@/data/products';
 import { IMG } from '@/lib/images';
 import { zaloUrl } from '@/lib/brand';
 import ProductCard from '@/components/ProductCard';
+
+export const metadata: Metadata = { alternates: { canonical: '/' } };
 
 export default function HomePage() {
   return (

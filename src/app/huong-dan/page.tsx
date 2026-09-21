@@ -4,7 +4,11 @@ import Link from 'next/link';
 import { STEPS, USAGE, bySlug } from '@/data/products';
 import { IMG } from '@/lib/images';
 
-export const metadata: Metadata = { title: 'Hướng dẫn sử dụng' };
+export const metadata: Metadata = {
+  title: 'Hướng dẫn sử dụng',
+  description: 'Cách dùng từng sản phẩm BELLA CELLA: thời điểm trong ngày, số bước và vị trí trong quy trình tám bước. Ưu tiên hướng dẫn trên bao bì và chỉ dẫn chuyên gia.',
+  alternates: { canonical: '/huong-dan' },
+};
 
 export default function UsagePage() {
   return (

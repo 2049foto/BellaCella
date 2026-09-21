@@ -7,6 +7,8 @@ import { IMG } from '@/lib/images';
 import { vnd } from '@/lib/format';
 import ProductAction from '@/components/ProductAction';
 import ProductCard from '@/components/ProductCard';
+import JsonLd from '@/components/JsonLd';
+import { productSchema, breadcrumbSchema } from '@/lib/schema';
 
 export function generateStaticParams() {
   return PRODUCTS.map((p) => ({ slug: p.slug }));
@@ -15,7 +17,19 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const p = bySlug(slug);
-  return { title: p ? p.name : 'Không tìm thấy sản phẩm' };
+  if (!p) return { title: 'Không tìm thấy sản phẩm' };
+  const desc = `${p.vi} · ${p.size} · ${vnd(p.price)} VND${p.priceUnit ? ' ' + p.priceUnit : ''}. ${p.body[0]}`.slice(0, 200);
+  return {
+    title: p.name,
+    description: desc,
+    alternates: { canonical: `/san-pham/${p.slug}` },
+    openGraph: {
+      type: 'website',
+      title: `${p.name} · BELLA CELLA`,
+      description: desc,
+      url: `/san-pham/${p.slug}`,
+    },
+  };
 }
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -30,6 +44,14 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
   return (
     <div className="wrap">
+      <JsonLd data={[
+        productSchema(p),
+        breadcrumbSchema([
+          { name: 'Trang chủ', path: '/' },
+          { name: 'Sản phẩm', path: '/san-pham' },
+          { name: p.name, path: `/san-pham/${p.slug}` },
+        ]),
+      ]} />
       <div className="crumb"><Link href="/san-pham">Sản phẩm</Link> &nbsp;/&nbsp; {p.name}</div>
       <section className="pdp">
         <figure>

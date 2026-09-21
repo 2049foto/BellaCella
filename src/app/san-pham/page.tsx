@@ -2,7 +2,11 @@ import type { Metadata } from 'next';
 import { PRODUCTS } from '@/data/products';
 import ProductFilter from '@/components/ProductFilter';
 
-export const metadata: Metadata = { title: 'Sản phẩm' };
+export const metadata: Metadata = {
+  title: 'Sản phẩm',
+  description: 'Tám sản phẩm BELLA CELLA — làm sạch, cân bằng, tinh chất Exosome, mặt nạ NMN, chống nắng — giá niêm yết theo catalogue chính thức.',
+  alternates: { canonical: '/san-pham' },
+};
 
 export default function ProductListPage() {
   return (

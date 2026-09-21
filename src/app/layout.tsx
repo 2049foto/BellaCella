@@ -5,12 +5,26 @@ import { CartProvider } from '@/components/CartProvider';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ZaloFab from '@/components/ZaloFab';
+import JsonLd from '@/components/JsonLd';
+import { organizationSchema } from '@/lib/schema';
+import { SITE_URL } from '@/lib/site';
+
+const DEFAULT_DESC = 'Giải pháp chăm sóc da chuyên nghiệp dựa trên Exosome từ tế bào gốc thực vật — được nhiều spa và chuyên gia làm đẹp tại Hàn Quốc và Nhật Bản tin tưởng lựa chọn.';
 
 // noindex,nofollow tới khi Chi cho mở công khai (bản review nội bộ).
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: { default: 'BELLA CELLA Vietnam', template: '%s · BELLA CELLA' },
-  description: 'Giải pháp chăm sóc da chuyên nghiệp dựa trên Exosome từ tế bào gốc thực vật — được nhiều spa và chuyên gia làm đẹp tại Hàn Quốc và Nhật Bản tin tưởng lựa chọn.',
+  description: DEFAULT_DESC,
   robots: { index: false, follow: false },
+  openGraph: {
+    type: 'website',
+    siteName: 'BELLA CELLA',
+    locale: 'vi_VN',
+    title: 'BELLA CELLA Vietnam',
+    description: DEFAULT_DESC,
+    url: SITE_URL,
+  },
 };
 
 const themeInit = `try{var t=localStorage.getItem('bc-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}`;
@@ -20,6 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="vi" className={`${archivo.variable} ${beVietnamPro.variable}`}>
       <body>
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
+        <JsonLd data={organizationSchema()} />
         <CartProvider>
           <Header />
           <main id="view">{children}</main>

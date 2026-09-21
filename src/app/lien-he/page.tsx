@@ -5,7 +5,11 @@ import { IMG } from '@/lib/images';
 import { zaloUrl } from '@/lib/brand';
 import EnquiryForm from '@/components/EnquiryForm';
 
-export const metadata: Metadata = { title: 'Yêu cầu tư vấn' };
+export const metadata: Metadata = {
+  title: 'Yêu cầu tư vấn',
+  description: 'Gọi trực tiếp hoặc nhắn Zalo để được tư vấn sản phẩm BELLA CELLA phù hợp với tình trạng da và liệu trình bạn đang thực hiện.',
+  alternates: { canonical: '/lien-he' },
+};
 
 export default async function ContactPage({ searchParams }: { searchParams: Promise<{ sp?: string }> }) {
   const { sp } = await searchParams;
