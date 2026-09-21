@@ -262,6 +262,19 @@ footer.site { border-top: 1px solid var(--rule); background: var(--paper-2); pad
   }
 }
 
+/* ---- PDP image zoom (native <dialog>) ---- */
+.zoom-trigger { display: block; width: 100%; position: relative; padding: 0; border: 0; background: var(--paper-2); cursor: zoom-in; }
+.zoom-hint { position: absolute; right: 12px; bottom: 12px; background: var(--ink); color: var(--paper); font-family: var(--font-display); font-size: 9.5px; font-weight: 600; letter-spacing: var(--tracking-label); text-transform: uppercase; padding: 6px 10px; opacity: 0; transition: opacity .15s ease; }
+.zoom-trigger:hover .zoom-hint, .zoom-trigger:focus-visible .zoom-hint { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .zoom-hint { transition: none; } }
+
+dialog.zoom { border: 0; padding: 0; margin: auto; background: transparent; max-width: 96vw; max-height: 94vh; overflow: visible; }
+dialog.zoom::backdrop { background: rgba(12, 13, 14, .82); }
+.zoom-inner { position: relative; background: var(--paper); display: flex; }
+.zoom-inner img { display: block; }
+.zoom-close { position: absolute; top: 0; right: 0; width: 44px; height: 44px; display: grid; place-items: center; background: var(--ink); color: var(--paper); }
+.zoom-close:hover { opacity: .85; }
+
 /* ---- loading skeleton ---- */
 /* Khối placeholder giữ đúng kích thước khối thật để không nhảy layout.
    Bo góc 0, không màu nhấn — chỉ dùng paper-2 / paper-3. */

@@ -1,0 +1,50 @@
+'use client';
+
+import Image, { type StaticImageData } from 'next/image';
+import { useRef } from 'react';
+
+/* Xem ảnh cận cảnh bằng <dialog> gốc — không thư viện lightbox.
+   Đóng bằng Esc (native) và bấm nền. Ảnh đã upscale nên phóng to vẫn nét. */
+
+type Props = { src: StaticImageData; alt: string; slug: string; badge?: string | null };
+
+export default function ProductImageZoom({ src, alt, slug, badge }: Props) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  function open() {
+    dialogRef.current?.showModal();
+  }
+  function onDialogClick(e: React.MouseEvent<HTMLDialogElement>) {
+    // Bấm vào vùng nền (chính thẻ dialog, ngoài nội dung) thì đóng.
+    if (e.target === dialogRef.current) dialogRef.current?.close();
+  }
+
+  return (
+    <>
+      <figure style={{ margin: 0 }}>
+        <button type="button" className="zoom-trigger" onClick={open} aria-label={`Phóng to ảnh ${alt}`}>
+          <Image
+            src={src}
+            alt={alt}
+            sizes="(max-width:900px) 100vw, 50vw"
+            style={{ width: '100%', height: 'auto', viewTransitionName: `product-${slug}` }}
+            priority
+            fetchPriority="high"
+            placeholder="blur"
+          />
+          {badge && <span className="pbadge">{badge}</span>}
+          <span className="zoom-hint" aria-hidden="true">Bấm để xem lớn</span>
+        </button>
+      </figure>
+
+      <dialog ref={dialogRef} className="zoom" onClick={onDialogClick} aria-label={`Ảnh lớn: ${alt}`}>
+        <div className="zoom-inner">
+          <button type="button" className="zoom-close" onClick={() => dialogRef.current?.close()} aria-label="Đóng ảnh lớn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+          </button>
+          <Image src={src} alt={alt} sizes="(max-width:900px) 94vw, 860px" placeholder="blur" style={{ width: 'auto', height: 'auto', maxWidth: '94vw', maxHeight: '86vh' }} />
+        </div>
+      </dialog>
+    </>
+  );
+}

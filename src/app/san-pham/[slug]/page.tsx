@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { PRODUCTS, STEPS, USAGE, bySlug, BRAND } from '@/data/products';
@@ -7,6 +6,7 @@ import { IMG } from '@/lib/images';
 import { vnd } from '@/lib/format';
 import ProductAction from '@/components/ProductAction';
 import ProductCard from '@/components/ProductCard';
+import ProductImageZoom from '@/components/ProductImageZoom';
 import JsonLd from '@/components/JsonLd';
 import { productSchema, breadcrumbSchema } from '@/lib/schema';
 
@@ -54,10 +54,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       ]} />
       <div className="crumb"><Link href="/san-pham">Sản phẩm</Link> &nbsp;/&nbsp; {p.name}</div>
       <section className="pdp">
-        <figure>
-          <Image src={IMG[p.slug]} alt={`${p.name} — ${p.vi}`} sizes="(max-width:900px) 100vw, 50vw" style={{ width: '100%', height: 'auto', viewTransitionName: `product-${p.slug}` }} priority fetchPriority="high" placeholder="blur" />
-          {p.badge && <span className="pbadge">{p.badge}</span>}
-        </figure>
+        <ProductImageZoom src={IMG[p.slug]} alt={`${p.name} — ${p.vi}`} slug={p.slug} badge={p.badge} />
         <div>
           <div className="eyebrow">{p.group}{step ? ` · Bước ${String(step.n).padStart(2, '0')} trong quy trình` : ''}</div>
           <h1 style={{ marginTop: '12px', fontSize: 'clamp(24px,3.4vw,38px)' }}>{p.name}</h1>
