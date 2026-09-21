@@ -11,7 +11,7 @@ export default function HomePage() {
       <div className="wrap">
         <section className="hero">
           <div>
-            <div className="hero-mark">BELLA CELLA</div>
+            <h1 className="hero-mark">BELLA CELLA</h1>
             <div className="hero-desc">CELL SOLUTION TECHNOLOGY</div>
             <div className="hero-tag">
               <div className="en">{BRAND.tagline_en}</div>

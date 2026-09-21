@@ -1,7 +1,9 @@
 /* BELLA CELLA — design token. Không hardcode màu ở nơi khác. */
 :root{
   --paper:#FFFFFF; --paper-2:#F6F7F8; --paper-3:#EEF0F2;
-  --ink:#101112; --ink-2:#3A3D40; --ink-3:#8C9094;
+  /* --ink-3 làm đậm từ #8C9094 -> #6B6F73 để chữ nhỏ đạt WCAG AA (≥4.5:1)
+     trên nền sáng; vẫn giữ sắc xám lệch lạnh của bao bì DR.BECELL. */
+  --ink:#101112; --ink-2:#3A3D40; --ink-3:#6B6F73;
   --rule:#E3E6E8; --rule-strong:#C9CED2;
   --focus:#2B6CB0;
 

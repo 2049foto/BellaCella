@@ -16,7 +16,7 @@ export default function Footer() {
             </p>
           </div>
           <div>
-            <h4>Khám phá</h4>
+            <h2>Khám phá</h2>
             <Link href="/san-pham">Sản phẩm</Link>
             <Link href="/lieu-trinh">Liệu trình chăm sóc</Link>
             <Link href="/huong-dan">Hướng dẫn sử dụng</Link>
@@ -25,7 +25,7 @@ export default function Footer() {
             <Link href="/chuyen-gia">Dành cho spa &amp; chuyên gia</Link>
           </div>
           <div>
-            <h4>Liên hệ</h4>
+            <h2>Liên hệ</h2>
             <a href={`tel:${BRAND.phoneHref}`}>{BRAND.phone}</a>
             <a href={zaloUrl} target="_blank" rel="noopener">Zalo tư vấn</a>
             <Link href="/lien-he">Gửi yêu cầu tư vấn</Link>

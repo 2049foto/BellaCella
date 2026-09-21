@@ -18,6 +18,7 @@ export default function UsagePage() {
         <div className="note" style={{ maxWidth: '74ch', marginBottom: 'clamp(22px,3vw,34px)' }}>
           <strong>Đọc trước khi làm theo.</strong> Phần hướng dẫn dưới đây là cách dùng thông thường theo <em>loại</em> sản phẩm, không phải văn bản hướng dẫn chính thức của nhà sản xuất. Luôn ưu tiên hướng dẫn in trên bao bì và chỉ dẫn của chuyên gia đang điều trị cho bạn.
         </div>
+        <h2 className="sr-only">Hướng dẫn theo từng sản phẩm</h2>
         <div className="usage">
           {STEPS.map((st) => {
             const p = bySlug(st.slug)!;

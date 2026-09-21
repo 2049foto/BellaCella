@@ -13,6 +13,7 @@ export default function ProductListPage() {
           <h1 style={{ fontSize: 'clamp(26px,3.6vw,42px)' }}>Sản phẩm</h1>
           <p className="lede">Tám sản phẩm, giá niêm yết theo catalogue chính thức. Nhấn vào từng sản phẩm để xem thành phần chính và công dụng đầy đủ.</p>
         </div>
+        <h2 className="sr-only">Danh sách sản phẩm</h2>
         <ProductFilter products={PRODUCTS} />
       </section>
     </div>

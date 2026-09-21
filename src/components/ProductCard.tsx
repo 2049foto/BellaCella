@@ -20,7 +20,7 @@ export default function ProductCard({ product: p }: { product: Product }) {
           {p.badge && <span className="pbadge">{p.badge}</span>}
         </figure>
       </Link>
-      <Link href={`/san-pham/${p.slug}`}><h3 className="pname">{p.name}</h3></Link>
+      <Link href={`/san-pham/${p.slug}`} className="pname-link"><h3 className="pname">{p.name}</h3></Link>
       <div className="pvi">{p.vi}</div>
       <div className="psize">{p.size}</div>
       <div className="pfoot">

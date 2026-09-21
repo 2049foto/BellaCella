@@ -28,3 +28,6 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# local, un-committed acceptance/QA scripts
+*.local.mjs
