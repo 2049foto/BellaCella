@@ -233,6 +233,17 @@ footer.site { border-top: 1px solid var(--rule); background: var(--paper-2); pad
 .fgrid a:hover { color: var(--ink); }
 .fbot { margin-top: clamp(32px, 4vw, 52px); padding-top: 22px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 11.5px; color: var(--ink-3); }
 
+/* ---- view transitions ----
+   Chỉ bật khi người dùng không yêu cầu giảm chuyển động. Trigger JS cũng đã
+   kiểm tra reduced-motion nên đây là lớp phòng vệ thứ hai. */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) { animation-duration: .3s; animation-timing-function: ease; }
+  ::view-transition-group(*) { animation-duration: .4s; animation-timing-function: cubic-bezier(.2, 0, 0, 1); }
+  /* Tiêu đề trang fade-through giữa các trang (không gồm wordmark hero). */
+  .shead h1, .pdp h1 { view-transition-name: page-title; }
+}
+
 /* ---- loading skeleton ---- */
 /* Khối placeholder giữ đúng kích thước khối thật để không nhảy layout.
    Bo góc 0, không màu nhấn — chỉ dùng paper-2 / paper-3. */

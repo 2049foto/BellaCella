@@ -6,6 +6,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ZaloFab from '@/components/ZaloFab';
 import JsonLd from '@/components/JsonLd';
+import ViewTransitions from '@/components/ViewTransitions';
 import { organizationSchema } from '@/lib/schema';
 import { SITE_URL } from '@/lib/site';
 
@@ -36,10 +37,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
         <JsonLd data={organizationSchema()} />
         <CartProvider>
-          <Header />
-          <main id="view">{children}</main>
-          <Footer />
-          <ZaloFab />
+          <ViewTransitions>
+            <Header />
+            <main id="view">{children}</main>
+            <Footer />
+            <ZaloFab />
+          </ViewTransitions>
         </CartProvider>
       </body>
     </html>

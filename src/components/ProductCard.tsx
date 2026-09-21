@@ -16,7 +16,7 @@ export default function ProductCard({ product: p }: { product: Product }) {
       <div className="pgroup">{p.group}</div>
       <Link href={`/san-pham/${p.slug}`} aria-label={p.name}>
         <figure>
-          <Image src={IMG[p.slug]} alt={alt} fill sizes={CARD_SIZES} placeholder="blur" style={{ objectFit: 'cover' }} />
+          <Image src={IMG[p.slug]} alt={alt} fill sizes={CARD_SIZES} placeholder="blur" style={{ objectFit: 'cover', viewTransitionName: `product-${p.slug}` }} />
           {p.badge && <span className="pbadge">{p.badge}</span>}
         </figure>
       </Link>
