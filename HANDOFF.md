@@ -29,12 +29,38 @@ rồi chờ giấy tờ nhà sản xuất mới mở công khai.
   dải min–max, biểu đồ cột, LCP/SI/CLS/TBT; ghi `.accept/perf.json` để so giữa các lần triển khai.
 - **Xoá:** `src/lib/format.ts` (thay bằng `money(lang, n)` trong `src/i18n/ui.ts`).
 
+## Kết quả trên PRODUCTION (bellacella.vercel.app, Lighthouse mobile, trung vị 3 lượt)
+
+| Trang | Perf | A11y | BP | LCP | SI | CLS |
+|---|:-:|:-:|:-:|:-:|:-:|:-:|
+| Trang chủ | 98 (92–98) | 100 | 100 | 2.2s | 1.7s | 0.000 |
+| /san-pham | 98 (92–99) | 100 | 100 | 2.2s | 1.7s | 0.000 |
+| /lieu-trinh | 95 (95–99) | 100 | 100 | 2.1s | 1.6s | 0.000 |
+| PDP /san-pham/exo-bio-ampoule | 99 (97–99) | 100 | 100 | — | — | 0.000 |
+| /en | 99 (99–100) | 100 | 100 | — | — | 0.000 |
+| /en/products | 99 | 100 | 100 | — | — | 0.000 |
+
+SEO 69 ở mọi trang là **cố ý** (noindex tới khi mở công khai).
+
+### Lỗi thật đã tìm ra và sửa trong lượt rà soát này
+1. **CLS 0.174 ở /san-pham** — font dự phòng của next/font rộng hơn font thật 2,5%;
+   đoạn mô tả thừa một dòng rồi co lại khi font tải xong, đẩy lưới sản phẩm lên 26px.
+   Sửa: tự khai `@font-face` dự phòng theo từng độ đậm với `size-adjust` lấy từ số đo
+   thật → bề rộng khớp 1.000, CLS về 0 trên toàn bộ 10 route.
+2. **Hàng nút lọc xuống dòng** → đổi thành một dòng cuộn ngang.
+3. **CSS chặn render 2 lượt tải** → `experimental.inlineCss` (FCP 2,3s → 2,0s).
+4. **Ảnh LCP trang danh sách không được ưu tiên** → 2 thẻ đầu `priority`.
+5. **Header rớt dòng ở 320–375px** sau khi thêm nút ngôn ngữ → chỉnh khoảng cách + cỡ wordmark.
+6. **Tiêu đề hero tràn 1px ở 320px** (dòng không ngắt) → thu cỡ chữ ở ≤360px.
+7. **Nhãn "Bấm để xem lớn" 9,5px** và ẩn trên cảm ứng → 11px, hiện sẵn khi không có hover.
+
 ## Kết quả nghiệm thu local (build production, `npm start`)
 - `npm run accept --no-lh`: **ĐẠT** — 18 route × 3 bề rộng × 2 theme không tràn ngang; axe 72 lượt quét,
   0 lỗi serious/critical; 18 trang đúng `lang`/hreflang/nút đổi ngôn ngữ; 404 trả đúng mã 404 có khung trang;
   0 lỗi console.
 - Ma trận 10 thiết bị (`.dev.local.mjs`, 320px → 4K, 8 route mỗi máy): **OK** toàn bộ.
-- Lighthouse: xem `npm run perf` (số local dao động mạnh theo máy; số chuẩn lấy trên production).
+- `npm run perf -- --runs 5` (10 route): CLS 0.000 toàn bộ, A11y/BP 100. Perf local 86–95 (máy này
+  luôn thấp hơn production 8–12 điểm; số chuẩn lấy trên production ở bảng trên).
 
 ## Chưa đạt / chưa làm — và vì sao
 - **SEO 69 là cố ý** (noindex tới khi Chi cho mở công khai). Không "sửa".
