@@ -6,10 +6,15 @@ import { BRAND } from '@/data/products';
 export const OG_SIZE = { width: 1200, height: 630 };
 export const OG_CONTENT_TYPE = 'image/png';
 
-// Đọc font một lần cho mỗi lần render OG (chạy phía server lúc build/SSG).
+// Đọc font LƯỜI, chỉ khi thật sự vẽ ảnh. Trang động (vd. /lien-he) nạp module này
+// lúc runtime chỉ để lấy size/alt; đọc font ở top-level từng làm metadata lỗi trên
+// Vercel (mất <title>). next.config outputFileTracingIncludes đóng gói src/fonts/og.
 const fontDir = join(process.cwd(), 'src/fonts/og');
-const archivo800 = readFileSync(join(fontDir, 'archivo-800.ttf'));
-const bvp400 = readFileSync(join(fontDir, 'bvp-400.ttf'));
+let fonts: { archivo800: Buffer; bvp400: Buffer } | null = null;
+const loadFonts = () => (fonts ??= {
+  archivo800: readFileSync(join(fontDir, 'archivo-800.ttf')),
+  bvp400: readFileSync(join(fontDir, 'bvp-400.ttf')),
+});
 
 // Bảng màu OG bám token thương hiệu: giấy trắng, mực đen, xám lệch lạnh, không màu nhấn.
 const PAPER = '#FFFFFF';
@@ -20,6 +25,7 @@ const RULE = '#E3E6E8';
 type CardProps = { eyebrow: string; title: string; subtitle?: string; foot?: string };
 
 export function ogCard({ eyebrow, title, subtitle, foot }: CardProps) {
+  const { archivo800, bvp400 } = loadFonts();
   return new ImageResponse(
     (
       <div
