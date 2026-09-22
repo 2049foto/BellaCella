@@ -13,7 +13,7 @@ export default function ProviderPage() {
       <section className="block" style={{ borderTop: 0 }}>
         <div className="shead">
           <div className="eyebrow">Dành cho chuyên gia</div>
-          <h1 style={{ fontSize: 'clamp(26px,3.6vw,42px)' }}>Hợp tác cùng spa và phòng điều trị</h1>
+          <h1 className="ptitle">Hợp tác cùng spa và phòng điều trị</h1>
           <p className="lede">BELLA CELLA được xây dựng cho kênh chuyên nghiệp: dùng trong liệu trình tại phòng điều trị, và bán kèm như bước chăm sóc tại nhà sau liệu trình.</p>
         </div>
         <div className="split">

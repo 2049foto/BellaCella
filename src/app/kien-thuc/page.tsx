@@ -15,7 +15,7 @@ export default function KnowledgePage() {
       <section className="block" style={{ borderTop: 0 }}>
         <div className="shead">
           <div className="eyebrow">Kiến thức thành phần</div>
-          <h1 style={{ fontSize: 'clamp(26px,3.6vw,42px)' }}>Thành phần và bằng chứng hiện có</h1>
+          <h1 className="ptitle">Thành phần và bằng chứng hiện có</h1>
           <p className="lede">Trang này trình bày những gì nghiên cứu hiện tại thật sự cho thấy — cả điểm tích cực và giới hạn. Mọi nguồn đều dẫn link để bạn tự kiểm tra.</p>
         </div>
         {KNOWLEDGE.map((k) => (

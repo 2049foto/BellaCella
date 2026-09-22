@@ -136,7 +136,8 @@ export const PRODUCTS: Product[] = [
 ];
 
 export const CREDENTIALS = {
-  heading: 'ĐỒNG HÀNH CÙNG CÁC CHUYÊN GIA CHĂM SÓC DA TẠI HÀN QUỐC VÀ NHẬT BẢN',
+  // Catalogue in chữ HOA; viết thường cùng từng chữ để đọc được ở cỡ tiêu đề lớn.
+  heading: 'Đồng hành cùng các chuyên gia chăm sóc da tại Hàn Quốc và Nhật Bản',
   body: 'BELLA CELLA tự hào mang đến những giải pháp chăm sóc da chuyên nghiệp, được nhiều spa và chuyên gia làm đẹp tại Hàn Quốc và Nhật Bản tin tưởng lựa chọn. Thương hiệu đồng thời được giới thiệu trên các tạp chí làm đẹp tại Nhật Bản, góp phần lan tỏa triết lý chăm sóc da từ tế bào đến đông đảo khách hàng.',
   photos: [
     { img: 'cred-treatment',  cap: 'Chuyên gia Nhật Bản trực tiếp thực hiện liệu trình chăm sóc da với BELLA CELLA.' },

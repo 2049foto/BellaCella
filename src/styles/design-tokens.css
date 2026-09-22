@@ -15,7 +15,7 @@
 
   --radius:0px;
   --gutter:clamp(16px,5vw,80px);
-  --maxw:1240px;
+  --maxw:1320px;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){

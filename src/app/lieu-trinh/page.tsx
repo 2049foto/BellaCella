@@ -15,7 +15,7 @@ export default function RoutinePage() {
       <section className="block" style={{ borderTop: 0 }}>
         <div className="shead">
           <div className="eyebrow">Quy trình</div>
-          <h1 style={{ fontSize: 'clamp(26px,3.6vw,42px)' }}>Liệu trình chăm sóc</h1>
+          <h1 className="ptitle">Liệu trình chăm sóc</h1>
           <p className="lede">Tám sản phẩm BELLA CELLA được thiết kế như bước chăm sóc tại nhà sau liệu trình điều trị. Bảng dưới đây là thứ tự sử dụng thông thường theo nhóm công dụng.</p>
         </div>
         <div className="steps">
@@ -23,7 +23,7 @@ export default function RoutinePage() {
             const p = bySlug(s.slug)!;
             return (
               <Link className="step" href={`/san-pham/${s.slug}`} key={s.n}>
-                <span className="num">BƯỚC {String(s.n).padStart(2, '0')}</span>
+                <span className="num"><span className="sr-only">Bước </span>{String(s.n).padStart(2, '0')}</span>
                 <span className="lab">{s.label}</span>
                 <span className="pn">{p.name}<br /><span style={{ color: 'var(--ink-3)', fontSize: '11px' }}>{p.size}</span></span>
               </Link>

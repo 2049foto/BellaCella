@@ -17,7 +17,7 @@ export default function FaqPage() {
       <section className="block" style={{ borderTop: 0 }}>
         <div className="shead">
           <div className="eyebrow">Hỏi đáp</div>
-          <h1 style={{ fontSize: 'clamp(26px,3.6vw,42px)' }}>Câu hỏi thường gặp</h1>
+          <h1 className="ptitle">Câu hỏi thường gặp</h1>
           <p className="lede">Chín câu khách hàng hỏi nhiều nhất, trả lời thẳng — kể cả khi câu trả lời là &quot;chưa có dữ liệu&quot;.</p>
         </div>
         <div className="faq">

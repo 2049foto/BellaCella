@@ -5,7 +5,7 @@ import { PRODUCTS, STEPS, USAGE, bySlug, BRAND } from '@/data/products';
 import { IMG } from '@/lib/images';
 import { vnd } from '@/lib/format';
 import ProductAction from '@/components/ProductAction';
-import ProductCard from '@/components/ProductCard';
+import Image from 'next/image';
 import ProductImageZoom from '@/components/ProductImageZoom';
 import JsonLd from '@/components/JsonLd';
 import { productSchema, breadcrumbSchema } from '@/lib/schema';
@@ -37,9 +37,11 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   const p = bySlug(slug);
   if (!p) notFound();
 
-  const idx = PRODUCTS.indexOf(p);
-  const next = PRODUCTS[(idx + 1) % PRODUCTS.length];
-  const step = STEPS.find((s) => s.slug === p.slug);
+  const stepIdx = STEPS.findIndex((s) => s.slug === p.slug);
+  const step = STEPS[stepIdx];
+  const nextStep = STEPS[(stepIdx + 1) % STEPS.length];
+  const next = bySlug(nextStep.slug)!;
+  const nn = (n: number) => String(n).padStart(2, '0');
   const usage = USAGE[p.slug];
 
   return (
@@ -56,9 +58,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
       <section className="pdp">
         <ProductImageZoom src={IMG[p.slug]} alt={`${p.name} — ${p.vi}`} slug={p.slug} badge={p.badge} />
         <div>
-          <div className="eyebrow">{p.group}{step ? ` · Bước ${String(step.n).padStart(2, '0')} trong quy trình` : ''}</div>
-          <h1 style={{ marginTop: '12px', fontSize: 'clamp(24px,3.4vw,38px)' }}>{p.name}</h1>
-          <p style={{ fontSize: '16px', color: 'var(--ink-3)', marginTop: '8px' }}>{p.vi}</p>
+          <p className="pdp-step">Bước {nn(step.n)} trong quy trình — {step.label}</p>
+          <h1 className="pdp-title">{p.name}</h1>
+          <p className="pdp-vi">{p.vi}</p>
           <div className="bigprice">{vnd(p.price)} <span>VND {p.priceUnit}</span></div>
           <div className="btnrow" style={{ marginTop: '20px' }}>
             <ProductAction product={p} />
@@ -73,7 +75,7 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           </div>
           {usage && (
             <div style={{ marginTop: '30px', borderTop: '1px solid var(--rule)', paddingTop: '22px' }}>
-              <div className="eyebrow">Cách dùng · {usage.when}</div>
+              <h2 className="pdp-h">Cách dùng <span>{usage.when}</span></h2>
               <ol style={{ margin: '13px 0 0', paddingLeft: '20px', fontSize: '13.5px' }}>
                 {usage.steps.map((x, i) => <li key={i} style={{ marginBottom: '7px' }}>{x}</li>)}
               </ol>
@@ -89,9 +91,19 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
           )}
         </div>
       </section>
-      <section className="block">
-        <div className="shead"><div className="eyebrow">Tiếp theo</div><h2>{next.name}</h2></div>
-        <div className="pgrid related"><ProductCard product={next} /></div>
+      <section className="block flush">
+        <Link className="nextband" href={`/san-pham/${next.slug}`}>
+          <div className="nb-copy">
+            <p className="nb-kicker">{nextStep.n === 1 ? 'Quay lại bước đầu của quy trình' : 'Bước tiếp theo trong quy trình'}</p>
+            <p className="nb-step"><span>{nn(nextStep.n)}</span>{nextStep.label}</p>
+            <h2>{next.name}</h2>
+            <p className="nb-vi">{next.vi}</p>
+            <span className="btn ghost">Xem sản phẩm</span>
+          </div>
+          <figure>
+            <Image src={IMG[next.slug]} alt={`${next.name} — ${next.vi}`} fill placeholder="blur" sizes="(max-width:760px) 100vw, 40vw" style={{ objectFit: 'cover' }} />
+          </figure>
+        </Link>
       </section>
     </div>
   );

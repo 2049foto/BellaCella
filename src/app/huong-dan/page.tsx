@@ -16,7 +16,7 @@ export default function UsagePage() {
       <section className="block" style={{ borderTop: 0 }}>
         <div className="shead">
           <div className="eyebrow">Hướng dẫn sử dụng</div>
-          <h1 style={{ fontSize: 'clamp(26px,3.6vw,42px)' }}>Cách dùng từng sản phẩm</h1>
+          <h1 className="ptitle">Cách dùng từng sản phẩm</h1>
           <p className="lede">Hướng dẫn theo từng sản phẩm, kèm thời điểm dùng trong ngày và vị trí trong quy trình tám bước.</p>
         </div>
         <div className="note" style={{ maxWidth: '74ch', marginBottom: 'clamp(22px,3vw,34px)' }}>

@@ -19,7 +19,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
       <section className="block" style={{ borderTop: 0 }}>
         <div className="shead">
           <div className="eyebrow">Liên hệ</div>
-          <h1 style={{ fontSize: 'clamp(26px,3.6vw,42px)' }}>Yêu cầu tư vấn</h1>
+          <h1 className="ptitle">Yêu cầu tư vấn</h1>
           <p className="lede">Gọi trực tiếp để được tư vấn ngay, hoặc để lại thông tin bên dưới.</p>
         </div>
         <div className="contactgrid">

@@ -5,53 +5,55 @@ import { PRODUCTS, STEPS, CREDENTIALS, BRAND, bySlug } from '@/data/products';
 import { IMG } from '@/lib/images';
 import { zaloUrl } from '@/lib/brand';
 import ProductCard from '@/components/ProductCard';
+import { vnd } from '@/lib/format';
+
+const prices = PRODUCTS.map((p) => p.price);
+const priceMin = Math.min(...prices);
+const priceMax = Math.max(...prices);
 
 export const metadata: Metadata = { alternates: { canonical: '/' } };
 
 export default function HomePage() {
   return (
     <>
-      <div className="wrap">
-        <section className="hero">
-          <div>
-            <h1 className="hero-mark">BELLA CELLA</h1>
-            <div className="hero-desc">CELL SOLUTION TECHNOLOGY</div>
-            <div className="hero-tag">
-              <div className="en">{BRAND.tagline_en}</div>
-              <div className="vi">{BRAND.tagline_vi}</div>
-            </div>
-            <p className="lede" style={{ marginTop: '26px' }}>
-              Giải pháp chăm sóc da chuyên nghiệp dựa trên Exosome từ tế bào gốc thực vật — được nhiều spa và chuyên gia làm đẹp tại Hàn Quốc và Nhật Bản tin tưởng lựa chọn.
-            </p>
-            <div className="btnrow">
-              <Link className="btn solid" href="/san-pham">Xem 8 sản phẩm</Link>
-              <Link className="btn ghost" href="/lieu-trinh">Liệu trình chăm sóc</Link>
-            </div>
+      <section className="hero" aria-labelledby="hero-title">
+        <div className="hero-copy">
+          <p className="hero-kicker">{BRAND.tagline_en}</p>
+          <h1 className="hero-title" id="hero-title"><span>Đẹp từ</span><span>từng tế bào.</span></h1>
+          <p className="hero-lede">
+            Giải pháp chăm sóc da chuyên nghiệp dựa trên Exosome từ tế bào gốc thực vật — được nhiều spa và chuyên gia làm đẹp tại Hàn Quốc và Nhật Bản tin tưởng lựa chọn.
+          </p>
+          <div className="btnrow">
+            <Link className="btn solid" href="/san-pham">Xem 8 sản phẩm</Link>
+            <Link className="btn ghost" href="/lieu-trinh">Liệu trình chăm sóc</Link>
           </div>
-          <figure>
-            <Image src={IMG['hero-1400']} alt="Người mẫu BELLA CELLA cùng hộp phấn nước Recovery BB Cushion" fill priority fetchPriority="high" placeholder="blur" sizes="(max-width:820px) 100vw, 45vw" style={{ objectFit: 'cover', objectPosition: '50% 22%' }} />
-          </figure>
-        </section>
-      </div>
+          <dl className="hero-facts">
+            <div><dt>Dòng sản phẩm</dt><dd>{PRODUCTS.length} sản phẩm</dd></div>
+            <div><dt>Hoạt chất trung tâm</dt><dd>Exosome thực vật</dd></div>
+            <div><dt>Giá niêm yết</dt><dd>{vnd(priceMin)} – {vnd(priceMax)} VND</dd></div>
+          </dl>
+        </div>
+        <figure className="hero-media">
+          <Image src={IMG['hero-1400']} alt="Người mẫu BELLA CELLA cùng hộp phấn nước Recovery BB Cushion" fill priority fetchPriority="high" placeholder="blur" sizes="(max-width:860px) 100vw, 50vw" style={{ objectFit: 'cover', objectPosition: '50% 30%' }} />
+        </figure>
+      </section>
 
       <div className="wrap">
         <section className="block">
           <div className="split">
             <div>
-              <div className="eyebrow">Triết lý</div>
-              <h2 style={{ marginTop: '12px' }}>Chăm sóc da bắt đầu từ cấp độ tế bào</h2>
-              <p className="lede" style={{ marginTop: '18px' }}>
+              <h2 className="statement">Chăm sóc da bắt đầu từ cấp độ tế bào.</h2>
+              <p className="lede" style={{ marginTop: '22px' }}>
                 BELLA CELLA xây dựng công thức quanh Exosome có nguồn gốc từ tế bào gốc thực vật, kết hợp Collagen, Peptide và Hyaluronic Acid theo nhiều phân tử lượng. Sản phẩm được thiết kế cho cả liệu trình chuyên nghiệp tại phòng điều trị và bước chăm sóc tại nhà sau liệu trình.
               </p>
               <div className="statline">
-                <div><span className="k">Dòng sản phẩm</span><span className="v">8 sản phẩm</span></div>
                 <div><span className="k">Hoạt chất trung tâm</span><span className="v">Exosome thực vật</span></div>
-                <div><span className="k">Kênh chuyên nghiệp</span><span className="v">Spa · Phòng điều trị</span></div>
-                <div><span className="k">Thị trường tin dùng</span><span className="v">Hàn Quốc · Nhật Bản</span></div>
+                <div><span className="k">Kênh chuyên nghiệp</span><span className="v">Spa và phòng điều trị</span></div>
+                <div><span className="k">Thị trường tin dùng</span><span className="v">Hàn Quốc, Nhật Bản</span></div>
               </div>
             </div>
-            <figure style={{ margin: 0, background: 'var(--paper-2)' }}>
-              <Image src={IMG['serum-texture']} alt="Kết cấu tinh chất Exo-Bio nhỏ vào đĩa petri" placeholder="blur" sizes="(max-width:820px) 100vw, 50vw" style={{ width: '100%', height: 'auto' }} />
+            <figure className="texture">
+              <Image src={IMG['serum-texture']} alt="Kết cấu tinh chất Exo-Bio nhỏ vào đĩa petri" fill placeholder="blur" sizes="(max-width:820px) 100vw, 50vw" style={{ objectFit: 'cover', objectPosition: '50% 100%' }} />
             </figure>
           </div>
         </section>
@@ -76,7 +78,7 @@ export default function HomePage() {
               const p = bySlug(s.slug)!;
               return (
                 <Link className="step" href={`/san-pham/${s.slug}`} key={s.n}>
-                  <span className="num">BƯỚC {String(s.n).padStart(2, '0')}</span>
+                  <span className="num"><span className="sr-only">Bước </span>{String(s.n).padStart(2, '0')}</span>
                   <span className="lab">{s.label}</span>
                   <span className="pn">{p.name}</span>
                 </Link>
@@ -108,18 +110,15 @@ export default function HomePage() {
           </div>
           <div className="sci">
             <div>
-              <div className="eyebrow">Hướng dẫn</div>
-              <h3 style={{ marginTop: '9px' }}><Link href="/huong-dan">Cách dùng từng sản phẩm</Link></h3>
+              <h3><Link href="/huong-dan">Cách dùng từng sản phẩm</Link></h3>
               <p>Thời điểm dùng, số bước, vị trí trong quy trình tám bước — cho cả tám sản phẩm.</p>
             </div>
             <div>
-              <div className="eyebrow">Kiến thức</div>
-              <h3 style={{ marginTop: '9px' }}><Link href="/kien-thuc">Thành phần và bằng chứng</Link></h3>
+              <h3><Link href="/kien-thuc">Thành phần và bằng chứng</Link></h3>
               <p>Exosome, NMN, Hyaluronic Acid — nghiên cứu hiện tại cho thấy gì, và chưa cho thấy gì. Có dẫn nguồn.</p>
             </div>
             <div>
-              <div className="eyebrow">Hỏi đáp</div>
-              <h3 style={{ marginTop: '9px' }}><Link href="/faq">Câu hỏi thường gặp</Link></h3>
+              <h3><Link href="/faq">Câu hỏi thường gặp</Link></h3>
               <p>Dùng sau laser được không, bao lâu thấy kết quả, giá có thay đổi — trả lời thẳng.</p>
             </div>
           </div>
