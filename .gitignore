@@ -31,3 +31,6 @@ yarn-error.log*
 
 # local, un-committed acceptance/QA scripts
 *.local.mjs
+
+# acceptance output
+/.accept/

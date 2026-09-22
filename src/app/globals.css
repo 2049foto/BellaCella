@@ -245,7 +245,7 @@ footer.site { border-top: 1px solid var(--rule); background: var(--paper-2); pad
 }
 
 /* ---- scroll-driven reveal ----
-   CSS thuần, không JS, không thư viện. Chỉ opacity 0->1 và translateY 12px->0.
+   CSS thuần, không JS, không thư viện. Chỉ translateY 14px->0 (không opacity, xem dưới).
    @supports bảo đảm trình duyệt không hỗ trợ animation-timeline vẫn thấy đủ nội dung;
    @media no-preference tôn trọng reduced-motion. Hero (không phải .block) không đụng tới. */
 @media (prefers-reduced-motion: no-preference) {
