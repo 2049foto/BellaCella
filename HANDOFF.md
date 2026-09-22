@@ -73,9 +73,31 @@ Hai bản bằng nhau. Ngưỡng ≥ 90 trong `accept` được chỉnh theo pro
 Cùng lúc đó bản cũ đo trên bellacella.vercel.app được perf 92 / FCP 1,4s.
 → **Đo hiệu năng phải đo trên production**, không đo localhost.
 
+## Đã deploy — số đo trên production (bellacella.vercel.app, bản 1cd7040)
+```
+BASE=https://bellacella.vercel.app npm run accept   -> KẾT QUẢ: ĐẠT
+  404 vi/en/slug sai: đúng mã 404, đúng ngôn ngữ, có khung site
+  song ngữ 18 trang · axe 72 lượt quét 0 lỗi serious/critical
+  /  91 · /san-pham/exo-bio-ampoule 97 · /en 99   (a11y 100, bp 100, CLS 0)
+
+BASE=... npm run perf -- --runs 3                   -> ĐẠT mọi ngưỡng
+route                        perf  LCP    CLS
+/                             92   3.0s   0.000
+/san-pham                     99   2.0s   0.000
+/san-pham/exo-bio-ampoule     99   1.8s   0.000
+/lieu-trinh                  100   1.8s   0.000
+/huong-dan                    96   2.7s   0.000
+/kien-thuc                    98   2.2s   0.000
+/faq                          99   2.0s   0.000
+/en                           99   2.0s   0.000
+/en/products                  99   2.1s   0.004
+/en/products/exo-bio-ampoule  99   1.8s   0.000
+```
+Trang chủ 92 là điểm thấp nhất, đúng bằng bản cũ đo cùng máy cùng ngày (92) → không phải do bản này,
+mà do mạng hôm nay chậm hơn lúc đo lần trước. Mọi trang còn lại 96–100.
+
 ## Next 3 actions
-1. Đo lại production sau khi deploy: `BASE=https://bellacella.vercel.app npm run perf -- --runs 5`,
-   so với mốc bản cũ (perf 92, FCP 1,4s, LCP 3,1s đo cùng máy hôm nay).
+1. Chi mở web kiểm mắt thường: số 034 966 7962, nút Gọi/Nhắn Zalo/Chép số, chuyển VI–EN.
 2. Chi kiểm tra tài khoản Zalo của số 034 966 7962 đã mở chưa — nút "Nhắn Zalo" trỏ
    `zalo.me/84349667962`, số chưa đăng ký Zalo thì link sẽ hỏng.
 3. Chờ giấy tờ nhà sản xuất (số công bố 8 SKU, chứng nhận SPF, ảnh gốc, logo vector) rồi mới mở công khai.
