@@ -20,6 +20,9 @@ Branch `claude/bellacella-design-quality-5q5c5a` = `main` = production (`c479232
   - `98bba20` + `c479232`: `/lien-he` (trang động) mất `<title>`/description/OG trên Vercel — `og-card.tsx` đọc font OG bằng `readFileSync` lúc nạp module, lambda không có file → metadata throw. Sửa: đọc font lười + `outputFileTracingIncludes` + `htmlLimitedBots`.
   - **Production sau sửa (`npm run accept` với BASE=https://bellacella.vercel.app, trung vị 3 lần):** trang chủ Perf 93 · A11y 100 · BP 100 · SEO 69 · LCP 2.9s; PDP Perf 97 · 100 · 100 · 69 · LCP 2.4s. axe 36 lượt 0 serious/critical. KẾT QUẢ: ĐẠT.
 
+- **Thiết kế lại** (`30512ea`, 22/09 chiều): hero "Đẹp từ từng tế bào." cỡ lớn + ảnh tràn mép, thang chữ lớn hơn, 8 bước dạng số lớn + kẻ 1px, PDP ảnh dính + dải "Bước tiếp theo trong quy trình". Production: Perf / 98 · PDP 98 · A11y 100 · BP 100 · axe 0 · KẾT QUẢ ĐẠT.
+- **Zalo:** zalo.me/84934454426 báo "Tài khoản này không tồn tại hoặc không cho phép tìm kiếm" → cài đặt tài khoản Zalo, không phải code. Chủ số bật: Zalo → Cá nhân → Cài đặt → Quyền riêng tư → "Cho phép người lạ tìm thấy và kết bạn" → bật "Qua số điện thoại". Hoặc gửi link Zalo OA → sửa `zaloUrl` trong `src/lib/brand.ts`.
+
 ## Số đo local (cùng máy PC, Lighthouse mobile, trung vị 3 lần)
 
 | Trang | Perf | A11y | BP | SEO | LCP |
@@ -39,6 +42,7 @@ SEO 69 = cố ý (noindex). axe: 36 lượt quét, 0 serious/critical. Không tr
 - **app-factory-rules** 1.2.0 → 2.0.x: chỉ làm khi còn 1 cửa sổ Claude.
 
 ## Next 3 actions
+0. Chủ số +84 93-445-4426 bật tìm kiếm qua SĐT trong Zalo (xem mục Zalo) rồi thử lại nút "Zalo tư vấn".
 1. Xin nhà sản xuất: số tiếp nhận phiếu công bố 8 SKU + chứng nhận SPF Sun Cushion → đối chiếu QĐ 610 + tra cứu dav.gov.vn.
 2. LOCAL-ONLY: cần thực hiện trước 16:00 — khi chỉ còn 1 cửa sổ Claude: `powershell -ExecutionPolicy Bypass -File "D:\APP FACTORY\Claude 2\PUBLISH-PLUGIN.ps1"` rồi `/plugin update app-factory-rules@app-factory-toolkit`. (12:45 còn app Claude profile `Roaming\Claude` đang chạy phiên Claude Code → chưa làm.)
 3. Context7 MCP cần authorize: chạy `/mcp` trong terminal `claude` tương tác.
