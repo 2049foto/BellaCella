@@ -216,6 +216,16 @@ form.enq { display: grid; gap: 16px; max-width: 520px; margin-top: 8px; }
 .ksrc { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--rule); font-size: 12px; }
 .ksrc a { color: var(--ink-3); text-decoration: underline; text-underline-offset: 2px; display: block; padding-block: 3px; }
 .ksrc a:hover { color: var(--ink); }
+a.inline { color: var(--ink); text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 3px; }
+a.inline:hover { text-decoration-color: var(--ink); }
+/* Tìm theo nhu cầu (/san-pham#theo-nhu-cau): nhu cầu trái, sản phẩm + câu trích phải. */
+#theo-nhu-cau { scroll-margin-top: 80px; }
+.need { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: clamp(14px, 3vw, 48px); border-top: 1px solid var(--rule); padding-block: clamp(20px, 2.6vw, 32px); }
+@media (max-width: 760px) { .need { grid-template-columns: 1fr; gap: 12px; } }
+.need ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+.need a { display: inline-block; padding-block: 3px; font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--ink); text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 4px; }
+.need a:hover { text-decoration-color: var(--ink); }
+.need q { display: block; margin-top: 4px; font-size: 14px; line-height: 1.65; color: var(--ink-2); max-width: 60ch; }
 .faq { display: grid; gap: 0; }
 .faq details { border-top: 1px solid var(--rule); }
 .faq summary { list-style: none; cursor: pointer; padding-block: 19px; display: flex; justify-content: space-between; gap: 18px; align-items: baseline; font-family: var(--font-display); font-size: 14.5px; font-weight: 600; color: var(--ink); }

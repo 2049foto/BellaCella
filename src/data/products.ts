@@ -150,6 +150,48 @@ export const CREDENTIALS = {
 export const bySlug = (s: string) => PRODUCTS.find((p) => p.slug === s);
 
 /* ---------------------------------------------------------------
+   TÌM THEO NHU CẦU
+   Mỗi gợi ý kèm `quote` — câu NGUYÊN VĂN trong `body` của sản phẩm đó
+   (catalogue). Không thêm nhu cầu nào catalogue không nói tới.
+   `assertNeedQuotes()` làm build fail nếu quote lệch với `body`.
+   Đây là tra cứu theo mô tả công dụng, không phải chẩn đoán hay chỉ định.
+   --------------------------------------------------------------- */
+export type Need = { key: string; label: string; picks: { slug: string; quote: string }[] };
+
+export const NEEDS: Need[] = [
+  { key: 'lam-sach', label: 'Làm sạch mà không khô căng', picks: [
+    { slug: 'bubble-clear-cleanser', quote: 'giúp làm sạch hiệu quả bụi bẩn và tạp chất, đồng thời duy trì độ ẩm tự nhiên cho da mà không gây cảm giác khô căng sau khi rửa' }] },
+  { key: 'cap-am', label: 'Cấp ẩm', picks: [
+    { slug: 'toner-pad', quote: 'giúp cấp ẩm, cân bằng độ pH' },
+    { slug: 'exo-bio-ampoule-mist', quote: 'cung cấp độ ẩm và dưỡng chất tức thì' },
+    { slug: 'nmn-serum-mask', quote: 'giúp cấp ẩm chuyên sâu' }] },
+  { key: 'san-chac', label: 'Độ săn chắc, đàn hồi', picks: [
+    { slug: 'exo-bio-ampoule', quote: 'cải thiện độ săn chắc và hỗ trợ làm chậm các dấu hiệu lão hóa' },
+    { slug: 'nmn-serum-mask', quote: 'cải thiện độ đàn hồi' }] },
+  { key: 'hang-rao', label: 'Hàng rào bảo vệ da', picks: [
+    { slug: 'nmn-serum-mask', quote: 'hỗ trợ phục hồi hàng rào bảo vệ da' },
+    { slug: 'recovery-bb-cushion', quote: 'hỗ trợ tăng cường hàng rào bảo vệ da' },
+    { slug: 'recella-cream', quote: 'củng cố hàng rào bảo vệ độ ẩm tự nhiên' }] },
+  { key: 'da-kho', label: 'Da khô, xỉn màu', picks: [
+    { slug: 'nmn-serum-mask', quote: 'đặc biệt phù hợp với làn da khô, xỉn màu' }] },
+  { key: 'sau-lieu-trinh', label: 'Chăm sóc tại nhà sau liệu trình', picks: [
+    { slug: 'exo-bio-ampoule', quote: 'dành cho cả liệu trình chuyên nghiệp và chăm sóc tại nhà' },
+    { slug: 'nmn-serum-mask', quote: 'sau các liệu trình chăm sóc chuyên sâu' },
+    { slug: 'recovery-bb-cushion', quote: 'có thể sử dụng như một lớp kem dưỡng phục hồi sau các liệu trình thẩm mỹ' }] },
+  { key: 'chong-nang', label: 'Chống nắng và lớp nền', picks: [
+    { slug: 'sun-cushion', quote: 'bảo vệ da trước tia UV, mang lại lớp nền mỏng nhẹ, tự nhiên' },
+    { slug: 'recovery-bb-cushion', quote: 'giúp che phủ tự nhiên' }] },
+];
+
+export function assertNeedQuotes() {
+  for (const n of NEEDS) for (const { slug, quote } of n.picks) {
+    const p = bySlug(slug);
+    if (!p) throw new Error(`NEEDS/${n.key}: không có sản phẩm "${slug}"`);
+    if (!p.body.join(' ').includes(quote)) throw new Error(`NEEDS/${n.key}: câu trích không khớp catalogue của ${slug}: "${quote}"`);
+  }
+}
+
+/* ---------------------------------------------------------------
    HƯỚNG DẪN SỬ DỤNG
    usageSource: 'general' = hướng dẫn chung theo LOẠI sản phẩm, không
    phải văn bản chính thức của BELLA CELLA. Cần thay bằng hướng dẫn
