@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // CSS của trang chỉ ~9KB nhưng nằm trên đường chặn render: 2 lượt tải nối tiếp
+  // (~300ms + 150ms trên mạng chậm). Nhúng thẳng vào HTML, bỏ hẳn 2 lượt đó.
+  experimental: { inlineCss: true },
   images: {
     // Ưu tiên AVIF, fallback WebP. Ảnh phục vụ từ public/img/.
     formats: ['image/avif', 'image/webp'],

@@ -16,7 +16,7 @@ const BASE = process.env.BASE || 'http://localhost:3000';
 const OUT = '.accept';
 const arg = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const RUNS = Number(arg('--runs', 5));
-const ROUTES = arg('--routes', '/,/san-pham,/san-pham/exo-bio-ampoule,/en,/en/products/exo-bio-ampoule').split(',');
+const ROUTES = arg('--routes', '/,/san-pham,/san-pham/exo-bio-ampoule,/lieu-trinh,/huong-dan,/kien-thuc,/faq,/en,/en/products,/en/products/exo-bio-ampoule').split(',');
 mkdirSync(OUT, { recursive: true });
 
 const med = (a) => [...a].sort((x, y) => x - y)[Math.floor(a.length / 2)];

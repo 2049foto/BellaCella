@@ -21,7 +21,7 @@ export default function ProductFilter({ products, lang }: { products: Product[];
           </button>
         ))}
       </div>
-      <div className="pgrid">{shown.map((p) => <ProductCard key={p.id} product={p} lang={lang} />)}</div>
+      <div className="pgrid">{shown.map((p, i) => <ProductCard key={p.id} product={p} lang={lang} priority={i < 2} />)}</div>
     </>
   );
 }

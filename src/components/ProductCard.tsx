@@ -10,7 +10,8 @@ import ProductAction from '@/components/ProductAction';
 // Card render ở nhiều bối cảnh: lưới 4 cột, 2 cột, khối "liên quan" hẹp.
 const CARD_SIZES = '(max-width:460px) 90vw, (max-width:820px) 45vw, (max-width:1100px) 30vw, 280px';
 
-export default function ProductCard({ product: p, lang }: { product: Product; lang: Lang }) {
+// priority: chỉ bật cho vài thẻ đầu ở trang danh sách — ảnh đó là LCP, phải tải sớm.
+export default function ProductCard({ product: p, lang, priority = false }: { product: Product; lang: Lang; priority?: boolean }) {
   const link = href(lang, 'products', p.slug);
   const alt = `${p.name} — ${p.vi}`;
   return (
@@ -18,7 +19,7 @@ export default function ProductCard({ product: p, lang }: { product: Product; la
       <div className="pgroup">{p.group}</div>
       <Link href={link} aria-label={p.name}>
         <figure>
-          <Image src={IMG[p.slug]} alt={alt} fill sizes={CARD_SIZES} placeholder="blur" style={{ objectFit: 'cover', viewTransitionName: `product-${p.slug}` }} />
+          <Image src={IMG[p.slug]} alt={alt} fill sizes={CARD_SIZES} placeholder="blur" priority={priority} fetchPriority={priority ? 'high' : 'auto'} style={{ objectFit: 'cover', viewTransitionName: `product-${p.slug}` }} />
           {p.badge && <span className="pbadge">{p.badge}</span>}
         </figure>
       </Link>

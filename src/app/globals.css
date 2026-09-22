@@ -1,11 +1,26 @@
 @import "tailwindcss";
 @import "../styles/design-tokens.css";
 
+/* Font dự phòng khớp BỀ RỘNG với font thương hiệu (xem chú thích trong src/app/fonts.ts).
+   size-adjust của từng độ đậm lấy từ số đo thật (script .ratio2.local.mjs): bề rộng chuỗi
+   mẫu khi vẽ bằng font dự phòng = bề rộng khi vẽ bằng font thật, sai số < 0.5%.
+   Nhờ vậy số dòng không đổi lúc font thật tải xong → không xô lệch bố cục (CLS 0).
+   Máy không có Arial/Helvetica/Roboto (hiếm) rơi về system-ui, khớp kém hơn. */
+@font-face { font-family: archivo-fallback; src: local('Arial'), local('Helvetica'), local('Roboto'); font-weight: 400; size-adjust: 97.26%; ascent-override: 88.86%; descent-override: 21.25%; line-gap-override: 0%; }
+@font-face { font-family: archivo-fallback; src: local('Arial'), local('Helvetica'), local('Roboto'); font-weight: 500; size-adjust: 90.49%; ascent-override: 88.86%; descent-override: 21.25%; line-gap-override: 0%; }
+@font-face { font-family: archivo-fallback; src: local('Arial'), local('Helvetica'), local('Roboto'); font-weight: 600; size-adjust: 100.43%; ascent-override: 88.86%; descent-override: 21.25%; line-gap-override: 0%; }
+@font-face { font-family: archivo-fallback; src: local('Arial'), local('Helvetica'), local('Roboto'); font-weight: 700; size-adjust: 103.82%; ascent-override: 88.86%; descent-override: 21.25%; line-gap-override: 0%; }
+@font-face { font-family: archivo-fallback; src: local('Arial'), local('Helvetica'), local('Roboto'); font-weight: 800; size-adjust: 108.94%; ascent-override: 88.86%; descent-override: 21.25%; line-gap-override: 0%; }
+@font-face { font-family: bvp-fallback; src: local('Arial'), local('Helvetica'), local('Roboto'); font-weight: 400; size-adjust: 108.11%; ascent-override: 90.08%; descent-override: 23.87%; line-gap-override: 0%; }
+@font-face { font-family: bvp-fallback; src: local('Arial'), local('Helvetica'), local('Roboto'); font-weight: 500; size-adjust: 109.21%; ascent-override: 90.08%; descent-override: 23.87%; line-gap-override: 0%; }
+@font-face { font-family: bvp-fallback; src: local('Arial'), local('Helvetica'), local('Roboto'); font-weight: 600; size-adjust: 110.34%; ascent-override: 90.08%; descent-override: 23.87%; line-gap-override: 0%; }
+@font-face { font-family: bvp-fallback; src: local('Arial'), local('Helvetica'), local('Roboto'); font-weight: 400; font-style: italic; size-adjust: 108.11%; ascent-override: 90.08%; descent-override: 23.87%; line-gap-override: 0%; }
+
 /* Cầu nối next/font -> token font đã khai báo trong design-tokens.css.
    Cùng hai font Archivo + Be Vietnam Pro, chỉ thêm biến do next/font sinh ra. */
 :root {
-  --font-display: var(--font-archivo), 'Archivo', 'Segoe UI', system-ui, sans-serif;
-  --font-body: var(--font-bvp), 'Be Vietnam Pro', 'Segoe UI', system-ui, sans-serif;
+  --font-display: var(--font-archivo), 'Archivo', archivo-fallback, 'Segoe UI', system-ui, sans-serif;
+  --font-body: var(--font-bvp), 'Be Vietnam Pro', bvp-fallback, 'Segoe UI', system-ui, sans-serif;
 }
 
 /* ---- ngữ pháp bố cục port nguyên từ reference/prototype.html ---- */
@@ -253,7 +268,11 @@ figure.texture { position: relative; margin: 0; background: var(--paper-2); aspe
 .note { margin-top: 16px; padding: 12px 15px; background: var(--paper-2); border-left: 2px solid var(--rule-strong); font-size: 12px; color: var(--ink-3); line-height: 1.6; }
 
 /* ---- filter ---- */
-.filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: clamp(26px, 3vw, 40px); }
+/* Hàng lọc: một dòng cuộn ngang, không xuống dòng. Khi font thật tải xong, bề rộng
+   nhãn đổi nhẹ; nếu cho xuống dòng thì số dòng đổi theo và đẩy cả lưới sản phẩm (CLS 0.17). */
+.filters { display: flex; gap: 8px; flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; margin-bottom: clamp(26px, 3vw, 40px); padding-bottom: 2px; }
+.filters::-webkit-scrollbar { display: none; }
+.chip { flex: 0 0 auto; scroll-snap-align: start; }
 .chip { padding: 8px 15px; border: 1px solid var(--rule); font-family: var(--font-display); font-size: 11px; font-weight: 600; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--ink-3); }
 .chip:hover { border-color: var(--rule-strong); color: var(--ink); }
 .chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
