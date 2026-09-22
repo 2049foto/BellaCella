@@ -11,7 +11,7 @@ trung tâm là Exosome từ tế bào gốc thực vật), phân phối tại Vi
 8 SKU, giá 600.000 – 7.000.000 VND. Kênh chính là spa và phòng điều trị;
 sản phẩm được dùng làm bước chăm sóc tại nhà sau liệu trình.
 
-Liên hệ chính thức: +84 93-445-4426 · ljlbeauty.vn
+Liên hệ chính thức: 034 966 7962 · ljlbeauty.vn
 
 ## Stack
 

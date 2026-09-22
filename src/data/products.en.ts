@@ -29,7 +29,7 @@ export const PRODUCTS_EN: Record<string, ProductEn> = {
   'nmn-serum-mask': {
     desc: 'Dr.Becell NMN essence sheet mask', group: 'Mask', size: '25ml × 10 sheets / box', priceUnit: '',
     actives: 'NMN (Nicotinamide Mononucleotide) with moisturising and restoring actives.', activeList: null, needsReview: null,
-    body: ['A premium serum mask that provides intensive hydration, helps restore the skin barrier and improves elasticity. Its nutrient-rich formula leaves skin soft, plump and radiant — especially suited to dry or dull skin, or after intensive treatments.'],
+    body: ['A premium serum mask that provides intensive hydration, helps restore the skin barrier and improves elasticity. Its nutrient-rich formula leaves skin soft, plump and radiant, especially suited to dry or dull skin, or after intensive treatments.'],
   },
   'sun-cushion': {
     desc: 'Sunscreen cushion SPF50+ PA++++', group: 'Sun care', size: '200ml', priceUnit: '',
@@ -39,20 +39,20 @@ export const PRODUCTS_EN: Record<string, ProductEn> = {
            'The product holds a Korean safety certification, is gentle, and is suitable even for children’s skin.'],
   },
   'recovery-bb-cushion': {
-    desc: 'Recovery BB Cushion', group: 'Recovery', size: '15g', priceUnit: '',
+    desc: 'Restorative BB cushion', group: 'Recovery', size: '15g', priceUnit: '',
     actives: null, activeList: null, needsReview: null,
     body: ['Contains BELLA CELLA’s exclusive complex of Exosome from plant stem cells, 8 precious plant-derived nutrients and 7 types of Peptide.',
            'A make-up product that gives natural coverage, helps strengthen the skin barrier, nourishes healthy skin and brings a youthful, radiant finish.',
            'Its special formula can be used as a restorative moisturising layer after aesthetic treatments. It can stay on the skin overnight without cleansing, helping nourish and support the skin’s renewal.'],
   },
   'exo-bio-ampoule-mist': {
-    desc: 'Exo-Bio Ampoule Mist', group: 'Hydrate', size: '50ml', priceUnit: '',
+    desc: 'Exo-Bio Ampoule facial mist', group: 'Hydrate', size: '50ml', priceUnit: '',
     actives: null, needsReview: null,
     activeList: ['2 types of plant-derived Exosome', '8 types of Hyaluronic Acid'],
     body: ['A facial mist that delivers instant moisture and nutrients, keeping skin fresh and plump. Its formula combines plant Exosome with 8 types of Hyaluronic Acid and BELLA CELLA’s exclusive ingredients to nourish healthy skin every day.'],
   },
   'recella-cream': {
-    desc: 'ReCella Cream', group: 'Moisturise', size: '24ml × 30 sachets', priceUnit: '/ box',
+    desc: 'ReCella day and night cream', group: 'Moisturise', size: '24ml × 30 sachets', priceUnit: '/ box',
     actives: null, needsReview: null,
     activeList: ['Babassu oil: 50,000 ppm'],
     body: ['A day and night cream with 14 plant extracts that deeply nourishes, reinforces the skin’s natural moisture barrier and keeps skin soft and healthy.',
@@ -119,9 +119,9 @@ export const KNOWLEDGE_EN: Record<string, { title: string; eyebrow: string; body
     evidence: [
       'A 2026 systematic review of 19 human studies found an association between topical exosomes and short-term improvements in hydration, elasticity, wrinkles, pores, pigmentation and overall appearance.',
       'Most of those studies were non-randomised and observational, with varied methods, short follow-up and no long-term safety data.',
-      'Topical use after procedures specifically showed a favourable short-term safety profile — the context this range is designed for.',
-      'The FDA states that no exosome product is currently FDA-approved. Marketing claims across the industry are generally ahead of the data.'] },
-  nmn: { title: 'NMN — Nicotinamide Mononucleotide', eyebrow: 'Dr.Becell line',
+      'Topical use after procedures specifically showed a favourable short-term safety profile, which is the context this range is designed for.',
+      'The FDA has stated that no exosome product has been approved by the agency. Marketing claims across the industry generally run ahead of the data.'] },
+  nmn: { title: 'NMN (Nicotinamide Mononucleotide)', eyebrow: 'Dr.Becell line',
     body: [
       'NMN is a precursor of NAD+, a coenzyme involved in cellular energy metabolism. NAD+ levels in skin decline with age, which is why NMN is of interest as an anti-ageing approach.',
       'In the BELLA CELLA range, NMN appears in Toner Pad and Dr.Becell NMN Serum Mask.'],
@@ -131,13 +131,13 @@ export const KNOWLEDGE_EN: Record<string, { title: string; eyebrow: string; body
       'Human data on topical NMN are still limited. Treat this as a promising research direction, not a proven effect in people.'] },
   botanical: { title: 'Botanical ingredients', eyebrow: 'Supporting ingredients',
     body: [
-      'Centella (Centella asiatica / Asiatic Pennywort) — in Toner Pad and Sun Cushion. A long-established ingredient in restorative skincare, often used for post-procedure and sensitive skin.',
-      'Grapefruit seed extract (Citrus Grandis Seed) — in Bubble Clear Cleanser and Toner Pad. Tea leaf (Camellia Sinensis) and Artemisia Princeps also appear in the cleanser.',
-      'Babassu oil at 50,000 ppm in Recella Cream. It is pressed from Babassu palm seeds and belongs to the group of occlusive, moisture-sealing oils.'],
+      'Centella (Centella asiatica) appears in Toner Pad and Sun Cushion. It is a long-established ingredient in restorative skincare, often chosen for post-procedure and sensitive skin.',
+      'Grapefruit seed extract (Citrus Grandis Seed) appears in Bubble Clear Cleanser and Toner Pad. Tea leaf (Camellia Sinensis) and Artemisia Princeps are also in the cleanser.',
+      'Recella Cream contains Babassu oil at 50,000 ppm. Pressed from Babassu palm seeds, it belongs to the group of occlusive oils that seal moisture in.'],
     evidence: [
       'These are common, widely used cosmetic ingredients. Concentration and formulation determine real-world results, and the catalogue does not publish the full ingredient list (INCI).',
       'If you have a history of allergies, check the full ingredient list printed on the packaging before use.'] },
-  ha: { title: 'Hyaluronic Acid, Collagen and Peptide', eyebrow: 'Hydrating and supporting group',
+  ha: { title: 'Hyaluronic Acid, Collagen and Peptide', eyebrow: 'Hydration and support',
     body: [
       'Exo-Bio Ampoule combines 7 types of Collagen, 15 types of Peptide and 8 types of Hyaluronic Acid. Exo-Bio Ampoule Mist contains 8 types of Hyaluronic Acid. Recovery BB Cushion adds 7 types of Peptide.',
       'Using several molecular weights of Hyaluronic Acid is a common way to hydrate at different depths of the stratum corneum.'],
@@ -151,11 +151,11 @@ export const FAQ_EN = [
   { q: 'What are exosomes, and do they really work?',
     a: 'Exosomes are tiny vesicles released by cells that carry signalling molecules. A 2026 systematic review of 19 human studies found short-term improvements in hydration, elasticity and wrinkles, but most studies were non-randomised and there are no long-term data. No exosome product is currently FDA-approved. In short: early signals are positive, not a firm conclusion.' },
   { q: 'Can I use it right after laser or microneedling?',
-    a: 'Follow the instructions of the doctor or specialist treating you. The catalogue positions this range as home care after treatments, and research shows topical exosomes after procedures have a favourable short-term safety profile. But when to start after each procedure differs — we do not give instructions in place of your practitioner.' },
+    a: 'Follow the instructions of the doctor or specialist treating you. The catalogue positions this range as home care after treatments, and research shows topical exosomes after procedures have a favourable short-term safety profile. The right moment to start differs from one procedure to the next, so we do not give instructions in place of your practitioner.' },
   { q: 'In what order should I use the eight products?',
     a: 'Cleanse, balance, essence, hydrate, weekly mask, seal in moisture, recovery, sun protection. See the Routine page for details. This is a usual care order, not a medical prescription.' },
   { q: 'Is it suitable for sensitive or acne-prone skin?',
-    a: 'The catalogue states that Sun Cushion holds a Korean safety certification, is gentle and is suitable even for children’s skin. For the other products, the catalogue does not address sensitive skin specifically — patch-test a small area first and read the ingredient list on the packaging if you have a history of allergies.' },
+    a: 'The catalogue states that Sun Cushion holds a Korean safety certification, is gentle and is suitable even for children’s skin. For the other products, the catalogue does not address sensitive skin specifically. If you have a history of allergies, patch-test a small area first and read the ingredient list on the packaging.' },
   { q: 'What does NMN do in Toner Pad and Serum Mask?',
     a: 'NMN is a precursor of NAD+. Preclinical research in mice shows it helps strengthen the skin barrier and reduce UV-B-induced ageing. Human data on topical use are still limited.' },
   { q: 'How soon will I see results?',

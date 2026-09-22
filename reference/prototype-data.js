@@ -9,8 +9,8 @@ const BRAND = {
   tagline_en: 'Beautiful From Every Cell',
   tagline_vi: 'Đẹp từ từng tế bào.',
   descriptor: 'CELL SOLUTION TECHNOLOGY',
-  phone: '+84 93-445-4426',
-  phoneHref: '+84934454426',
+  phone: '034 966 7962',
+  phoneHref: '+84349667962',
   site: 'ljlbeauty.vn'
 };
 

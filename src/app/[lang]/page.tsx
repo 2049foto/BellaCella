@@ -5,6 +5,7 @@ import { BRAND } from '@/data/products';
 import { IMG } from '@/lib/images';
 import { zaloUrl } from '@/lib/brand';
 import ProductCard from '@/components/ProductCard';
+import ContactActions from '@/components/ContactActions';
 import { content } from '@/i18n/content';
 import { href, alternates } from '@/i18n/routes';
 import { ui, money } from '@/i18n/ui';
@@ -39,7 +40,7 @@ export default async function HomePage({ params }: LangParams) {
           </dl>
         </div>
         <figure className="hero-media">
-          <Image src={IMG['hero-1400']} alt={t.heroAlt} fill priority fetchPriority="high" placeholder="blur" sizes="(max-width:860px) 100vw, 50vw" style={{ objectFit: 'cover', objectPosition: '50% 30%' }} />
+          <Image src={IMG.hero} alt={t.heroAlt} fill priority fetchPriority="high" placeholder="blur" sizes="(max-width:860px) 100vw, 50vw" style={{ objectFit: 'cover', objectPosition: '50% 30%' }} />
         </figure>
       </section>
 
@@ -134,7 +135,8 @@ export default async function HomePage({ params }: LangParams) {
                 <div><span className="k">Zalo</span><a className="v" href={zaloUrl} target="_blank" rel="noopener">{BRAND.phone}</a></div>
                 <div><span className="k">{t.website}</span><span className="v">{BRAND.site}</span></div>
               </div>
-              <div className="btnrow"><Link className="btn solid" href={href(lang, 'contact')}>{t.sendEnquiry}</Link></div>
+              <ContactActions lang={lang} />
+              <div className="btnrow"><Link className="btn ghost" href={href(lang, 'contact')}>{t.sendEnquiry}</Link></div>
             </div>
           </div>
         </section>

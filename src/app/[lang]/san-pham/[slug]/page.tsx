@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { PRODUCTS, BRAND } from '@/data/products';
 import { IMG } from '@/lib/images';
+import { zaloUrl } from '@/lib/brand';
 import ProductAction from '@/components/ProductAction';
 import ProductImageZoom from '@/components/ProductImageZoom';
 import JsonLd from '@/components/JsonLd';
@@ -77,6 +78,7 @@ export default async function ProductPage({ params }: Params) {
           <div className="btnrow" style={{ marginTop: '20px' }}>
             <ProductAction product={p} lang={lang} />
             <a className="btn ghost" href={`tel:${BRAND.phoneHref}`}>{ui(lang).call} {BRAND.phone}</a>
+            <a className="btn ghost" href={zaloUrl} target="_blank" rel="noopener">{ui(lang).contactActions.zalo}</a>
           </div>
           <div className="spec">
             <div className="row"><span className="k">{t.size}</span><span>{p.size}</span></div>

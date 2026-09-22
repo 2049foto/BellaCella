@@ -4,87 +4,91 @@ Cập nhật: 2026-09-22 chiều (PC, Claude-Pro2).
 Branch `claude/bellacella-design-quality-5q5c5a`. Production: bellacella.vercel.app.
 
 ## Current goal
-Bản song ngữ Việt – Anh đã xong và nghiệm thu sạch ở local. Còn: đẩy lên production để Chi duyệt,
-rồi chờ giấy tờ nhà sản xuất mới mở công khai.
+Xong 4 việc Chi giao (số điện thoại + Zalo, tinh chỉnh trải nghiệm, rà soát câu chữ 2 ngôn ngữ,
+nâng chất ảnh). Còn lại là chờ giấy tờ nhà sản xuất mới mở công khai.
 
 ## Done (phiên này)
-- **Song ngữ vi/en** — URL tiếng Việt giữ nguyên (`/san-pham`), tiếng Anh có đoạn dịch (`/en/products`):
-  - `src/i18n/routes.ts` — bảng đoạn URL + `href()`, `parsePath()`, `counterpart()`, `alternates()` (hreflang).
-  - `src/i18n/ui.ts` — toàn bộ chữ giao diện 2 ngôn ngữ, kiểu của bản `en` suy từ `vi` → thiếu khoá là build fail.
-  - `src/data/products.en.ts` + `src/i18n/content.ts` — bản dịch catalogue (8 sản phẩm, 8 bước, 7 nhu cầu,
-    hướng dẫn dùng, kiến thức, 9 FAQ, chứng thực); giữ nguyên id/sku/giá/ảnh từ bản gốc tiếng Việt.
-  - `src/middleware.ts` — `/en/<đoạn tiếng Anh>` → route nội bộ; `/vi/...` → chuyển 308 về URL không tiền tố;
-    đường dẫn lạ (kể cả slug sản phẩm sai) → trang 404 có khung site, mã HTTP 404 thật.
-  - Route chuyển vào `src/app/[lang]/`, `<html lang>` theo ngôn ngữ, sitemap 2 ngôn ngữ + hreflang,
-    JSON-LD `inLanguage`, ảnh OG riêng từng ngôn ngữ.
-  - Nút **VI/EN** ở header: tải lại trang thật (để `<html lang>` đổi), trỏ đúng trang tương ứng.
-- **Tương tác / hiệu ứng:**
-  - Vạch tiến trình mảnh dưới header khi mạng chậm (chỉ hiện sau 120ms, tự tắt).
-  - Chuyển cảnh giữa 2 ngôn ngữ dùng View Transition xuyên trang (`@view-transition`).
-  - Màn cảm ứng: bỏ trạng thái hover "dính", thay bằng phản hồi lúc nhấn; nhãn "Bấm để xem lớn" hiện sẵn.
-  - 3 nút header đủ 44px trên cảm ứng; header vẫn một hàng tới màn 320px.
-- **Nghiệm thu mở rộng** (`scripts/accept.mjs`): thêm 9 route tiếng Anh, kiểm `<html lang>`, hreflang,
-  nút đổi ngôn ngữ, 3 trường hợp 404, lỗi console (bắt lệch server/trình duyệt).
-- **Đo hiệu năng lặp** (`scripts/perf.mjs`, `npm run perf -- --runs N`): chạy N lượt/route, in trung vị,
-  dải min–max, biểu đồ cột, LCP/SI/CLS/TBT; ghi `.accept/perf.json` để so giữa các lần triển khai.
-- **Xoá:** `src/lib/format.ts` (thay bằng `money(lang, n)` trong `src/i18n/ui.ts`).
 
-## Kết quả trên PRODUCTION (bellacella.vercel.app, Lighthouse mobile, trung vị 3 lượt)
+### 1. Liên hệ — số mới 034 966 7962
+- Số cũ bị xoá khỏi toàn bộ repo. `BRAND.phone = '034 966 7962'`, `phoneHref = '+84349667962'`,
+  Zalo `zalo.me/84349667962`. Sửa ở `src/data/products.ts`, `CLAUDE.md`, `reference/prototype-data.js`.
+- **`src/components/ContactActions.tsx` (mới)** — ba cách liên hệ cùng một chỗ: Gọi · Nhắn Zalo · Chép số.
+  Nút chép dùng Clipboard API, báo "Đã chép" qua `role="status"`; máy chặn clipboard thì hiện số
+  ra màn hình để khách tự bôi đen. Gắn ở trang chủ và trang liên hệ; trang sản phẩm + FAQ có nút Zalo.
+- **Xoá hẳn** thư mục `deploy/` (bản tĩnh cũ, vẫn còn số điện thoại cũ và dữ liệu lệch).
 
-| Trang | Perf | A11y | BP | LCP | SI | CLS |
-|---|:-:|:-:|:-:|:-:|:-:|:-:|
-| Trang chủ | 98 (92–98) | 100 | 100 | 2.2s | 1.7s | 0.000 |
-| /san-pham | 98 (92–99) | 100 | 100 | 2.2s | 1.7s | 0.000 |
-| /lieu-trinh | 95 (95–99) | 100 | 100 | 2.1s | 1.6s | 0.000 |
-| PDP /san-pham/exo-bio-ampoule | 99 (97–99) | 100 | 100 | — | — | 0.000 |
-| /en | 99 (99–100) | 100 | 100 | — | — | 0.000 |
-| /en/products | 99 | 100 | 100 | — | — | 0.000 |
+### 2. Tinh chỉnh trải nghiệm
+- Form: lỗi báo **ngay tại ô thiếu** (`aria-invalid` + mô tả dưới ô), con trỏ nhảy về ô đầu tiên bị thiếu,
+  lỗi tự biến mất khi khách gõ lại. Bảng màu không có màu nhấn nên báo lỗi bằng viền dày + chữ đậm, không dùng đỏ.
+- Bộ lọc sản phẩm: `role="group"` + nhãn, và một dòng ẩn báo cho trình đọc màn hình còn lại bao nhiêu sản phẩm
+  sau mỗi lần lọc (đổi bộ lọc không tải lại trang nên nếu không báo thì người dùng trình đọc không biết gì đã đổi).
+- Xem ảnh cận cảnh: khoá cuộn nền khi mở, trả lại đúng trạng thái cũ khi đóng; ảnh trong khung phóng to
+  nén nhẹ tay hơn (`quality={90}`).
+- CSS: bôi đen theo màu thương hiệu, `text-wrap: balance/pretty` chống dòng cụt, cuộn mượt tới mục
+  (tôn trọng reduced-motion), ảnh nhích nhẹ khi rê chuột, FAQ trượt mở, **bản in sạch** (bỏ nav/nút, in kèm link).
 
-SEO 69 ở mọi trang là **cố ý** (noindex tới khi mở công khai).
+### 3. Rà soát toàn bộ câu chữ (vi + en)
+- `src/i18n/ui.ts` viết lại toàn bộ: bỏ lối lạm dụng gạch ngang, câu dài ngắn xen kẽ, bỏ giọng máy dịch.
+- `src/data/products.ts` + `products.en.ts`: sửa lối viết định nghĩa bằng gạch ngang trong phần kiến thức
+  thành phần và FAQ; ba mô tả tiếng Anh bị mất chữ phân loại so với bản Việt đã bổ sung lại
+  (Restorative BB cushion · Exo-Bio Ampoule facial mist · ReCella day and night cream).
+- Sửa lỗi số ít/số nhiều tiếng Anh ở dòng đếm sản phẩm ("1 product" thay vì "1 products").
+- Trang liên hệ trước đây nhắc "Zalo" ba lần liền nhau; nay khối nút để chế độ gọn, phần ghi chú đổi sang
+  thông tin có ích (gửi kèm ảnh da + tên liệu trình để tư vấn sát hơn).
+- **Phần mô tả công dụng sản phẩm vẫn là nguyên văn catalogue, không đụng tới.** `assertNeedQuotes()`
+  chạy lúc build bảo đảm câu trích "tìm theo nhu cầu" khớp nguyên văn ở cả 2 ngôn ngữ.
 
-### Lỗi thật đã tìm ra và sửa trong lượt rà soát này
-1. **CLS 0.174 ở /san-pham** — font dự phòng của next/font rộng hơn font thật 2,5%;
-   đoạn mô tả thừa một dòng rồi co lại khi font tải xong, đẩy lưới sản phẩm lên 26px.
-   Sửa: tự khai `@font-face` dự phòng theo từng độ đậm với `size-adjust` lấy từ số đo
-   thật → bề rộng khớp 1.000, CLS về 0 trên toàn bộ 10 route.
-2. **Hàng nút lọc xuống dòng** → đổi thành một dòng cuộn ngang.
-3. **CSS chặn render 2 lượt tải** → `experimental.inlineCss` (FCP 2,3s → 2,0s).
-4. **Ảnh LCP trang danh sách không được ưu tiên** → 2 thẻ đầu `priority`.
-5. **Header rớt dòng ở 320–375px** sau khi thêm nút ngôn ngữ → chỉnh khoảng cách + cỡ wordmark.
-6. **Tiêu đề hero tràn 1px ở 320px** (dòng không ngắt) → thu cỡ chữ ở ≤360px.
-7. **Nhãn "Bấm để xem lớn" 9,5px** và ẩn trên cảm ứng → 11px, hiện sẵn khi không có hover.
+### 4. Ảnh — dựng lại từ catalogue gốc
+- Nguồn: `Catalogue BELLA CELLA VN.pdf` Chi gửi, trích ở 2480px/trang.
+- 8 ảnh sản phẩm 908 → **1200px**, ảnh kết cấu 900 → 1200px, ảnh hero 1400 → **2000px**, 5 ảnh chứng thực dựng lại.
+- Đã so 1:1 với ảnh cũ trước khi thay: cùng nguồn, bản mới nhiều điểm ảnh hơn và ít viền halo hơn.
+  Tổng thư mục ảnh 1,01 MB. Xoá `hero-1400.webp`, `hero-760.webp`.
+- Giới hạn còn lại: ảnh trong catalogue vốn chỉ ~448px cho khung sản phẩm. Muốn nét hơn nữa thì
+  **phải xin ảnh gốc của nhà sản xuất** — không có cách nào bịa thêm chi tiết.
 
-## Kết quả nghiệm thu local (build production, `npm start`)
-- `npm run accept --no-lh`: **ĐẠT** — 18 route × 3 bề rộng × 2 theme không tràn ngang; axe 72 lượt quét,
-  0 lỗi serious/critical; 18 trang đúng `lang`/hreflang/nút đổi ngôn ngữ; 404 trả đúng mã 404 có khung trang;
-  0 lỗi console.
-- Ma trận 10 thiết bị (`.dev.local.mjs`, 320px → 4K, 8 route mỗi máy): **OK** toàn bộ.
-- `npm run perf -- --runs 5` (10 route): CLS 0.000 toàn bộ, A11y/BP 100. Perf local 86–95 (máy này
-  luôn thấp hơn production 8–12 điểm; số chuẩn lấy trên production ở bảng trên).
+## Số đo thật (chạy trên máy, bản build này)
+```
+npm run accept
+  404 /khong-co-trang-nay: HTTP 404 lang=vi h1="Không tìm thấy trang"
+  404 /en/no-such-page:    HTTP 404 lang=en h1="Page not found"
+  404 /san-pham/khong-co:  HTTP 404 lang=vi h1="Không tìm thấy trang"
+  song ngữ: 18 trang kiểm lang/hreflang/nút đổi ngôn ngữ
+  axe: 72 lượt quét, 0 lượt có lỗi serious/critical
+  overflow/reveal: 18 route × 3 bề rộng × 2 theme
+  Lighthouse localhost: / 82 · /san-pham/exo-bio-ampoule 96 · /en 87 — a11y 100, bp 100, CLS 0.000
 
-## Chưa đạt / chưa làm — và vì sao
-- **SEO 69 là cố ý** (noindex tới khi Chi cho mở công khai). Không "sửa".
-- **Zalo** zalo.me/84934454426 báo không tồn tại → cài đặt tài khoản, không phải code:
-  Zalo → Cá nhân → Cài đặt → Quyền riêng tư → cho phép tìm qua số điện thoại. Hoặc gửi link Zalo OA
-  để đổi `zaloUrl` trong `src/lib/brand.ts`.
-- **Giấy tờ nhà sản xuất**: số tiếp nhận phiếu công bố 8 SKU, chứng nhận SPF Sun Cushion, ảnh gốc, logo vector.
-- **needsReview** (Toner Pad 200/180ml, Sun Cushion 200ml): chờ nhà sản xuất, không tự sửa.
-- **Vercel Hobby cấm dùng thương mại** — khi mua domain làm web chính thức phải chuyển Cloudflare Pages
-  (miễn phí, cho phép thương mại) hoặc lên Vercel Pro, rồi đổi `SITE_URL` trong `src/lib/site.ts`.
-- **app-factory-rules 1.2.0 → 2.0.x**: chỉ làm khi còn đúng 1 cửa sổ Claude.
+node .dev.local.mjs   → 10/10 thiết bị OK (320px → 2560px)
+npx tsc --noEmit      → sạch
+npm run build         → 43/43 trang tĩnh
+```
+
+**Về 2 mục Lighthouse dưới 90 ở trên:** không phải do bản này. Đã dựng worktree bản cũ `b7a6d65`,
+build và chạy song song cùng máy cùng lúc, 3 lượt mỗi bên:
+```
+CŨ  (b7a6d65, :3001)  perf 85  FCP 2.3s  LCP 3.9s   | các lượt: 82 86 85
+MỚI (bản này,  :3000)  perf 85  FCP 2.4s  LCP 3.9s   | các lượt: 85 84 85
+```
+Hai bản bằng nhau. Ngưỡng ≥ 90 trong `accept` được chỉnh theo production: Vercel nén brotli
+(trang chủ 25,4 KB trên đường truyền) còn `next start` ở máy chỉ có gzip (43,8 KB).
+Cùng lúc đó bản cũ đo trên bellacella.vercel.app được perf 92 / FCP 1,4s.
+→ **Đo hiệu năng phải đo trên production**, không đo localhost.
 
 ## Next 3 actions
-1. Chi duyệt bản song ngữ trên production, cho ý kiến nội dung tiếng Anh (bản dịch từ catalogue tiếng Việt).
-2. Xin nhà sản xuất giấy tờ (mục trên) → mới mở `robots`/`noindex`.
-3. Quyết định hạ tầng cho domain chính thức (Cloudflare Pages hay Vercel Pro).
+1. Đo lại production sau khi deploy: `BASE=https://bellacella.vercel.app npm run perf -- --runs 5`,
+   so với mốc bản cũ (perf 92, FCP 1,4s, LCP 3,1s đo cùng máy hôm nay).
+2. Chi kiểm tra tài khoản Zalo của số 034 966 7962 đã mở chưa — nút "Nhắn Zalo" trỏ
+   `zalo.me/84349667962`, số chưa đăng ký Zalo thì link sẽ hỏng.
+3. Chờ giấy tờ nhà sản xuất (số công bố 8 SKU, chứng nhận SPF, ảnh gốc, logo vector) rồi mới mở công khai.
 
-## Blockers (chỉ Chi)
-- Giấy tờ nhà sản xuất; cài đặt tài khoản Zalo; chọn hạ tầng + mua domain.
+## Blockers (cần Chi hoặc nhà sản xuất)
+- Tài khoản Zalo cho số mới.
+- Giấy tờ nhà sản xuất — chưa đủ thì giữ `robots noindex`, không mở công khai.
+- Ảnh sản phẩm gốc độ phân giải cao: trần chất lượng hiện tại nằm ở nguồn catalogue.
+- Hạ tầng khi chạy thật: Vercel Hobby cấm dùng thương mại → Cloudflare Pages hoặc Vercel Pro.
+- `LOCAL-ONLY: cần thực hiện trước 16:00` — nâng app-factory-rules 1.2.0 → 2.0.x.
 
-## Files touched (phiên này)
-`src/i18n/*` (mới), `src/data/products.en.ts` (mới), `src/middleware.ts` (mới),
-`src/app/[lang]/**` (chuyển từ `src/app/**`), `src/app/{sitemap.ts,manifest.ts,global-error.tsx,globals.css}`,
-`src/components/*` (Header, Footer, ZaloFab, ProductCard/Action/Filter/ImageZoom, EnquiryForm, ProviderForm,
-NotFoundView mới, LoadingLabel mới, Skeletons, ViewTransitions), `src/lib/schema.ts`,
-`scripts/accept.mjs`, `scripts/perf.mjs` (mới), `.dev.local.mjs`, `package.json`, `HANDOFF.md`.
-Đã xoá: `src/lib/format.ts`.
+## Ghi chú kỹ thuật
+- Đo hiệu năng: **luôn dùng production làm chuẩn**, localhost thấp hơn ~7 điểm chỉ vì thiếu brotli.
+- Git Bash trên máy này nuốt tham số bắt đầu bằng `/` → chạy perf với `MSYS_NO_PATHCONV=1`.
+- Mọi file `*.local.mjs` là công cụ đo cục bộ, đã gitignore: `.dev.local.mjs` (ma trận thiết bị),
+  `.check.local.mjs` (form/bộ lọc/zoom/số điện thoại), `.proof.local.mjs` (đọc chữ đã render để soát).

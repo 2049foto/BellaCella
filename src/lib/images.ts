@@ -3,7 +3,7 @@
    không cần sửa component. Ảnh lưới sản phẩm dùng `fill` nên không cần ở đây. */
 import type { StaticImageData } from 'next/image';
 
-import hero1400 from '../../public/img/hero-1400.webp';
+import hero from '../../public/img/hero.webp';
 import serumTexture from '../../public/img/serum-texture.webp';
 import credTreatment from '../../public/img/cred-treatment.webp';
 import credFukuokaA from '../../public/img/cred-fukuoka-a.webp';
@@ -21,7 +21,7 @@ import exoBioAmpouleMist from '../../public/img/exo-bio-ampoule-mist.webp';
 import recellaCream from '../../public/img/recella-cream.webp';
 
 export const IMG: Record<string, StaticImageData> = {
-  'hero-1400': hero1400,
+  hero,
   'serum-texture': serumTexture,
   'cred-treatment': credTreatment,
   'cred-fukuoka-a': credFukuokaA,

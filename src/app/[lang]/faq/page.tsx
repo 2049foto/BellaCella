@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { BRAND } from '@/data/products';
 import JsonLd from '@/components/JsonLd';
+import { zaloUrl } from '@/lib/brand';
 import { faqSchema } from '@/lib/schema';
 import { content } from '@/i18n/content';
 import { href } from '@/i18n/routes';
@@ -38,6 +39,7 @@ export default async function FaqPage({ params }: LangParams) {
         <div className="btnrow">
           <Link className="btn solid" href={href(lang, 'contact')}>{t.other}</Link>
           <a className="btn ghost" href={`tel:${BRAND.phoneHref}`}>{ui(lang).call} {BRAND.phone}</a>
+          <a className="btn ghost" href={zaloUrl} target="_blank" rel="noopener">{ui(lang).contactActions.zalo}</a>
         </div>
       </section>
     </div>

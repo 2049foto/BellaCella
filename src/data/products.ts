@@ -31,8 +31,8 @@ export const BRAND = {
   tagline_en: 'Beautiful From Every Cell',
   tagline_vi: 'Đẹp từ từng tế bào.',
   descriptor: 'CELL SOLUTION TECHNOLOGY',
-  phone: '+84 93-445-4426',
-  phoneHref: '+84934454426',
+  phone: '034 966 7962',
+  phoneHref: '+84349667962',
   site: 'ljlbeauty.vn'
 };
 
@@ -244,12 +244,12 @@ export const KNOWLEDGE: Knowledge[] = [
     evidence: [
       'Một tổng quan hệ thống năm 2026 trên 19 nghiên cứu ở người ghi nhận mối liên hệ giữa exosome bôi ngoài với cải thiện ngắn hạn về độ ẩm, độ đàn hồi, nếp nhăn, lỗ chân lông, sắc tố và vẻ ngoài tổng thể.',
       'Phần lớn các nghiên cứu đó không ngẫu nhiên hóa và mang tính quan sát, phương pháp khác nhau nhiều, thời gian theo dõi ngắn, chưa có dữ liệu an toàn dài hạn.',
-      'Riêng việc dùng bôi ngoài sau thủ thuật cho thấy mức an toàn ngắn hạn thuận lợi — đúng bối cảnh sử dụng của dòng sản phẩm này.',
+      'Riêng việc bôi ngoài sau thủ thuật, tức đúng bối cảnh sử dụng của dòng sản phẩm này, cho thấy mức an toàn ngắn hạn thuận lợi.',
       'FDA cho biết hiện chưa có sản phẩm exosome nào được FDA phê duyệt. Các phát ngôn tiếp thị trong ngành nhìn chung đang đi trước dữ liệu.'],
     sources: [{ t: 'Exosomes for skin: what the evidence actually shows (2026)', u: 'https://dermatologynews.net/articles/exosome-skin-rejuvenation-evidence-2026/' },
              { t: 'Plant-Derived Exosomes in Aesthetic Medicine, Biomaterials Research', u: 'https://spj.science.org/doi/10.34133/bmr.0397' },
              { t: 'Clinical Evidence and Commercial Landscape of Topical Exosomes: A Scoping Review', u: 'https://pubmed.ncbi.nlm.nih.gov/42411735/' }] },
-  { key: 'nmn', title: 'NMN — Nicotinamide Mononucleotide', eyebrow: 'Dòng Dr.Becell',
+  { key: 'nmn', title: 'NMN (Nicotinamide Mononucleotide)', eyebrow: 'Dòng Dr.Becell',
     body: [
       'NMN là tiền chất của NAD+, một coenzyme tham gia chuyển hóa năng lượng trong tế bào. Nồng độ NAD+ trong da giảm dần theo tuổi, nên NMN được quan tâm như hướng tiếp cận chống lão hóa.',
       'Trong dòng BELLA CELLA, NMN xuất hiện ở Toner Pad và Dr.Becell NMN Serum Mask.'],
@@ -261,9 +261,9 @@ export const KNOWLEDGE: Knowledge[] = [
              { t: 'NMN reduces melanin production in aged melanocytes (J Dermatol Sci)', u: 'https://www.sciencedirect.com/science/article/abs/pii/S0923181122001220' }] },
   { key: 'botanical', title: 'Nhóm thành phần thực vật', eyebrow: 'Thành phần hỗ trợ',
     body: [
-      'Rau má (Centella asiatica / Asiatic Pennywort) — có trong Toner Pad và Sun Cushion. Đây là thành phần lâu năm trong chăm sóc da phục hồi, thường dùng cho da sau thủ thuật và da nhạy cảm.',
-      'Chiết xuất hạt bưởi (Citrus Grandis Seed) — có trong Bubble Clear Cleanser và Toner Pad. Lá trà (Camellia Sinensis) và Artemisia Princeps cũng xuất hiện trong sản phẩm làm sạch.',
-      'Dầu Babassu ở nồng độ 50.000 ppm trong Recella Cream. Đây là dầu chiết từ hạt cọ Babassu, thuộc nhóm dầu khóa ẩm.'],
+      'Rau má (Centella asiatica) có trong Toner Pad và Sun Cushion. Đây là thành phần lâu năm của chăm sóc da phục hồi, thường được chọn cho da sau thủ thuật và da nhạy cảm.',
+      'Chiết xuất hạt bưởi (Citrus Grandis Seed) có trong Bubble Clear Cleanser và Toner Pad. Lá trà (Camellia Sinensis) và Artemisia Princeps cũng xuất hiện ở sản phẩm làm sạch.',
+      'Recella Cream chứa dầu Babassu ở nồng độ 50.000 ppm, một loại dầu ép từ hạt cọ Babassu, thuộc nhóm dầu khóa ẩm.'],
     evidence: [
       'Các thành phần trên là nguyên liệu mỹ phẩm phổ thông, được sử dụng rộng rãi. Nồng độ và công thức cụ thể quyết định hiệu quả thực tế, và catalogue không công bố toàn bộ bảng thành phần (INCI).',
       'Nếu bạn có tiền sử dị ứng, hãy xem bảng thành phần đầy đủ in trên bao bì trước khi dùng.'],
@@ -285,11 +285,11 @@ export const FAQ: Faq[] = [
   { q: 'Exosome là gì và có thật sự hiệu quả không?',
     a: 'Exosome là túi nhỏ mang phân tử tín hiệu do tế bào tiết ra. Tổng quan hệ thống năm 2026 trên 19 nghiên cứu ở người ghi nhận cải thiện ngắn hạn về độ ẩm, độ đàn hồi và nếp nhăn, nhưng phần lớn nghiên cứu không ngẫu nhiên hóa và chưa có dữ liệu dài hạn. Hiện chưa có sản phẩm exosome nào được FDA phê duyệt. Nói ngắn: tín hiệu ban đầu tích cực, chưa phải kết luận chắc chắn.' },
   { q: 'Dùng được ngay sau khi laser hoặc lăn kim không?',
-    a: 'Phải theo chỉ định của bác sĩ hoặc chuyên gia đang điều trị cho bạn. Catalogue định vị dòng này là chăm sóc tại nhà sau liệu trình, và nghiên cứu cho thấy exosome bôi ngoài sau thủ thuật có mức an toàn ngắn hạn thuận lợi. Nhưng thời điểm bắt đầu dùng sau mỗi thủ thuật là khác nhau — chúng tôi không tự đưa ra chỉ định thay cho người điều trị.' },
+    a: 'Phải theo chỉ định của bác sĩ hoặc chuyên gia đang điều trị cho bạn. Catalogue định vị dòng này là chăm sóc tại nhà sau liệu trình, và nghiên cứu cho thấy exosome bôi ngoài sau thủ thuật có mức an toàn ngắn hạn thuận lợi. Tuy nhiên mỗi thủ thuật có mốc thời gian bắt đầu khác nhau, nên chúng tôi không đưa ra chỉ định thay cho người đang điều trị cho bạn.' },
   { q: 'Thứ tự dùng tám sản phẩm như thế nào?',
     a: 'Làm sạch, cân bằng, tinh chất, cấp ẩm, mặt nạ định kỳ, khóa ẩm, phục hồi, chống nắng. Xem chi tiết ở trang Liệu trình. Đây là thứ tự chăm sóc thông thường, không phải chỉ định y khoa.' },
   { q: 'Da nhạy cảm hoặc da mụn dùng được không?',
-    a: 'Catalogue ghi Sun Cushion đạt chứng nhận an toàn của Hàn Quốc, dịu nhẹ và phù hợp với cả làn da trẻ em. Với các sản phẩm còn lại, catalogue không nêu riêng cho da nhạy cảm — nên thử một vùng nhỏ trước và đọc bảng thành phần trên bao bì nếu bạn có tiền sử dị ứng.' },
+    a: 'Catalogue ghi Sun Cushion đạt chứng nhận an toàn của Hàn Quốc, dịu nhẹ và phù hợp với cả làn da trẻ em. Với các sản phẩm còn lại, catalogue không nói riêng về da nhạy cảm. Nếu bạn có tiền sử dị ứng, hãy thử trên một vùng da nhỏ trước và đọc kỹ bảng thành phần in trên bao bì.' },
   { q: 'NMN trong Toner Pad và Serum Mask có tác dụng gì?',
     a: 'NMN là tiền chất của NAD+. Nghiên cứu tiền lâm sàng trên chuột cho thấy giúp tăng cường hàng rào bảo vệ da và giảm lão hóa do tia UV-B. Dữ liệu trên người với dạng bôi ngoài còn hạn chế.' },
   { q: 'Bao lâu thì thấy kết quả?',

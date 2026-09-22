@@ -4,6 +4,7 @@ import { BRAND } from '@/data/products';
 import { IMG } from '@/lib/images';
 import { zaloUrl } from '@/lib/brand';
 import EnquiryForm from '@/components/EnquiryForm';
+import ContactActions from '@/components/ContactActions';
 import { ui } from '@/i18n/ui';
 import { langOf, pageMeta, type LangParams } from '@/i18n/page';
 
@@ -38,6 +39,8 @@ export default async function ContactPage({ params, searchParams }: LangParams &
               <div><span className="k">Zalo</span><a className="v" href={zaloUrl} target="_blank" rel="noopener">{BRAND.phone}</a></div>
               <div><span className="k">{h.website}</span><span className="v">{BRAND.site}</span></div>
             </div>
+            {/* compact: bỏ dòng gợi ý của ContactActions, vì ngay dưới đã có note riêng của trang. */}
+            <ContactActions lang={lang} compact />
             <div className="note" style={{ marginTop: '24px' }}>{t.note}</div>
             <figure style={{ margin: '28px 0 0', background: 'var(--paper-2)' }}>
               <Image src={IMG['cred-treatment']} alt={t.imgAlt} placeholder="blur" sizes="(max-width:820px) 100vw, 50vw" style={{ width: '100%', height: 'auto' }} />

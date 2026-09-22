@@ -5,8 +5,8 @@ import './globals.css';
 // Chỉ kích hoạt khi chính root layout lỗi — phải tự render <html>/<body>.
 // Không có layout/params → đọc ngôn ngữ từ URL (chỉ render phía trình duyệt).
 const T = {
-  vi: { eyebrow: 'Sự cố tạm thời', h: 'Không tải được trang', p: 'Đã có lỗi khi khởi tạo trang. Vui lòng tải lại; nếu vẫn chưa được, quay lại sau ít phút.', retry: 'Tải lại trang' },
-  en: { eyebrow: 'Temporary problem', h: 'The page could not load', p: 'Something went wrong starting this page. Please reload; if it still fails, come back in a few minutes.', retry: 'Reload page' },
+  vi: { eyebrow: 'Sự cố tạm thời', h: 'Không tải được trang', p: 'Đã có lỗi khi khởi tạo trang. Bạn thử tải lại giúp chúng tôi. Nếu vẫn chưa được, vui lòng quay lại sau ít phút.', retry: 'Tải lại trang' },
+  en: { eyebrow: 'Temporary problem', h: 'This page could not load', p: 'Something went wrong while starting this page. Try reloading. If it still fails, come back in a few minutes.', retry: 'Reload page' },
 };
 
 export default function GlobalError({ reset }: { error: Error & { digest?: string }; reset: () => void }) {
