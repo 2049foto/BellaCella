@@ -11,6 +11,20 @@ const nextConfig = {
   htmlLimitedBots: /.*/,
   // Font OG đọc bằng fs theo process.cwd() — trình trace không tự thấy, phải khai báo.
   outputFileTracingIncludes: { '/*': ['./src/fonts/og/*.ttf'] },
+  // Header bảo mật cho mọi đường dẫn. CSP không siết script (Next dùng inline script
+  // để hydrate) — chỉ chặn nhúng iframe, plugin, đổi base URL và form gửi ra ngoài.
+  async headers() {
+    return [{
+      source: '/:path*',
+      headers: [
+        { key: 'Content-Security-Policy', value: "frame-ancestors 'none'; base-uri 'self'; object-src 'none'; form-action 'self'; upgrade-insecure-requests" },
+        { key: 'X-Content-Type-Options', value: 'nosniff' },
+        { key: 'X-Frame-Options', value: 'DENY' },
+        { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+        { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=(), interest-cohort=()' },
+      ],
+    }];
+  },
 };
 
 export default nextConfig;

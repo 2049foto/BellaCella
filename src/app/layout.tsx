@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { archivo, beVietnamPro } from './fonts';
 import { CartProvider } from '@/components/CartProvider';
@@ -28,6 +28,15 @@ export const metadata: Metadata = {
   },
 };
 
+// Màu thanh trình duyệt/thanh trạng thái iOS–Android theo nền (--paper sáng/tối).
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#FFFFFF' },
+    { media: '(prefers-color-scheme: dark)', color: '#0C0D0E' },
+  ],
+  viewportFit: 'cover',
+};
+
 const themeInit = `try{var t=localStorage.getItem('bc-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -35,11 +44,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="vi" className={`${archivo.variable} ${beVietnamPro.variable}`}>
       <body>
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
+        <a className="skip" href="#view">Bỏ qua, tới nội dung chính</a>
         <JsonLd data={organizationSchema()} />
         <CartProvider>
           <ViewTransitions>
             <Header />
-            <main id="view">{children}</main>
+            <main id="view" tabIndex={-1}>{children}</main>
             <Footer />
             <ZaloFab />
           </ViewTransitions>
