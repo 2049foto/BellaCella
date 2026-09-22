@@ -1,44 +1,48 @@
-# HANDOFF — Website BELLA CELLA
+# HANDOFF — Website BELLA CELLA + kho skill
 
-Cập nhật: 2026-09-18 ~13:40 (PC, còn tới 16:00)
+Cập nhật: 2026-09-22 ~12:05 (PC, Claude-Pro2). Brief: `HANDOFF-PC.md` (A → B → C).
+Branch: `claude/bellacella-design-quality-5q5c5a` (đã push). `main` chưa đổi.
 
 ## Current goal
-Dựng lại prototype 9 trang bằng Next.js 15 (App Router + TS + Tailwind v4), nghiệm thu, rồi deploy Vercel private.
+Chi duyệt bản preview của branch → merge vào `main` để lên bellacella.vercel.app.
 
-## Trạng thái theo phase
-- **Phase 1 — config skill:** phần local XONG. `install.ps1` đã tạo `.claude/settings.json` + skill `bella-acceptance` trong repo (không đụng `~/.claude`). Phần cài plugin `example-skills@anthropic-skills` **CHƯA làm — đang gate** (chờ tắt phiên Claude Code của Gym Coach + Chi xác nhận). Ngoài ra phiên này không chạy được slash command `/plugin`.
-- **Phase 2 — scaffold:** XONG. `npm install` exit 0. Next 15.5.4, React 19.1, Tailwind v4, TS strict. `src/data/`, `src/styles/`, `public/img/` giữ nguyên.
-- **Phase 3 — data:** XONG. Đã thêm `USAGE`, `KNOWLEDGE` (4 khối, có evidence[]+sources[]), `FAQ` (9 câu) vào `src/data/products.ts`, type đầy đủ, nguyên văn.
-- **Phase 4 — 9 route:** XONG. Đủ 9 route + `not-found`. Component tách riêng: `ProductAction` (đọc COMMERCE_ENABLED=false → "Nhận tư vấn"), `CartProvider` (inert), `ZaloFab`, `Header`, `Footer` (ghi rõ đại lý phân phối VN / thương hiệu thuộc nhà sản xuất), `ProductCard`, `ProductFilter`, `EnquiryForm`, `ProviderForm`. Ảnh qua `next/image` từ `public/img/` (đường dẫn đọc từ data, không hardcode JSX).
-- **Phase 5 — nghiệm thu:** ĐANG DỞ.
-  - `npm run build` XANH: 19 trang tĩnh (8 PDP SSG), `/lien-he` dynamic. Không lỗi TS.
-  - Đã sửa 1 bug: `.hero figure` thiếu `position:relative` làm ảnh hero `fill` vỡ layout — đã fix.
-  - Kiểm tràn ngang @390: `/`, `/san-pham`, `/san-pham/[slug]`, `/kien-thuc`, `/lien-he` → không tràn.
-  - Đã xem mắt: home @1440 light (khớp prototype: nền trắng, mực đen, không màu nhấn), home @390, dark mode, danh sách sản phẩm (card + ảnh thật + chip lọc).
-  - **CHƯA chạy Lighthouse + axe-core** (chưa cài tooling). Chưa chụp/nghiệm thu 768 và các trang còn lại (`/lieu-trinh`, `/huong-dan`, `/faq`, `/chuyen-gia`) đầy đủ.
-- **Phase 6 — deploy:** CHƯA. Gate: `npx vercel login` cần Chi (đăng nhập/2FA). LOCAL-ONLY.
-- **Phase 7 — báo cáo:** làm sau khi xong 5–6.
+## Done
+- **A (kho skill):** Chi xác nhận "2 app trên 1 PC" → không cần repo `claude-skills`.
+  Backup + dọn trùng + bật Context7. Chi tiết: `SKILL-INVENTORY.md`.
+- **B (quét skill):** `D:\APP FACTORY\skill-updates\2026-09-22-skill-update.md` + `INSTALLED.md`.
+  Không có skill official nào bắt buộc cài thêm.
+- **C3.1 bảo mật** (`0f40796`): Next 15.5.7 → 15.5.25 (~30 advisory, có RCE), overrides postcss/sharp. `npm audit`: 0.
+- **C3.3 Best Practices** (`0f40796`): thêm favicon (monogram B, Archivo 800) → BP trang chủ 96 → 100.
+- **Script nghiệm thu** `npm run accept` (`scripts/accept.mjs`): CSS thật sự áp dụng, tràn ngang, reveal, axe, Lighthouse `--runs N`.
+- **C1 Tìm theo nhu cầu** (`f07c253`): `/san-pham#theo-nhu-cau` — 7 nhu cầu, 16 gợi ý, mỗi gợi ý trích nguyên văn catalogue; build fail nếu câu trích lệch.
+
+## Số đo (cùng máy PC, Lighthouse mobile, trung vị 3 lần)
+
+| Trang | Perf | A11y | BP | SEO | LCP |
+|---|:-:|:-:|:-:|:-:|:-:|
+| Trang chủ — baseline `ad7e55b` | 90 (87/90/94) | 100 | 100* | 69 | 3.0s |
+| Trang chủ — hiện tại | 89 (89/89/97) | 100 | 100 | 69 | 3.4s |
+| PDP — baseline | 93 | 100 | 100 | 69 | 2.9s |
+| PDP — hiện tại | 94 | 100 | 100 | 69 | 2.7s |
+
+\* lần đo baseline không bắt được lỗi favicon; lần đo đầu phiên (cùng code) bắt được → BP 96.
+SEO 69 = cố ý (noindex). axe: 36 lượt quét, 0 serious/critical. Không tràn ngang 9 route × 3 bề rộng × 2 theme.
+
+## Chưa đạt / chưa làm — và vì sao
+- **Perf trang chủ ~89 trên máy này** (dao động 87–97). LCP đo thật chỉ 0.53s; con số 3.4s là LCP *mô phỏng*. Nguyên nhân chính là main thread parse ~47KB dữ liệu RSC inline (overhead chuẩn của Next). Đã thử `experimental.inlineCss`: không cải thiện → đã xoá. Không phải hồi quy (baseline cùng máy 90). Số 99–100 trong brief đo ở môi trường cloud khác.
+- **C2 pháp lý:** QĐ 610/QĐ-QLD thu hồi 313 số công bố của 14 doanh nghiệp (tự nguyện). Không doanh nghiệp nào mang tên BELLA CELLA / LJL (nguồn: suckhoeviet.org.vn). **Chưa đối chiếu được từng số** vì chưa có số tiếp nhận của 8 SKU.
+- **needsReview** (Toner Pad 200/180ml, Sun Cushion 200ml): vẫn chờ nhà sản xuất — không tự sửa.
+- **app-factory-rules** 1.2.0 → 2.0.x: chỉ làm khi còn 1 cửa sổ Claude.
 
 ## Next 3 actions
-1. Cài lighthouse + @axe-core/cli (hoặc playwright + axe) → chạy nghiệm thu đủ 9 trang @390/768/1440, vá chỗ lệch (tối đa 3 vòng/trang).
-2. Chốt với Chi: (a) có cài plugin skill không (Gym Coach đã tắt chưa); (b) bỏ shadcn/ui — xem "Quyết định đang chờ".
-3. `npm run build` lại rồi Chi chạy `npx vercel login` + `npx vercel --prod`, bật Vercel Authentication, giữ noindex.
+1. Chi mở preview của branch trên Vercel (dashboard: https://vercel.com/derexeths-projects/bellacella), xem `/san-pham#theo-nhu-cau` → duyệt.
+2. Duyệt xong: merge branch vào `main` (Vercel tự deploy production, vẫn noindex).
+3. Xin nhà sản xuất: số tiếp nhận phiếu công bố 8 SKU + chứng nhận SPF Sun Cushion → đối chiếu QĐ 610 + tra cứu dav.gov.vn.
 
-## Blockers / Quyết định đang chờ (chỉ Chi quyết)
-- **Plugin skill (Phase 1):** chờ Gym Coach tắt + Chi xác nhận. Chưa cài.
-- **shadcn/ui:** CLAUDE.md liệt kê trong stack nhưng prototype không dùng component shadcn nào. Tôi **chưa thêm** để tránh code chết. Cần shadcn thật không, hay bỏ khỏi stack?
-- **Vercel deploy:** cần Chi đăng nhập (không hoàn tác tài khoản, cần 2FA).
-- Data chờ giấy tờ: số công bố mỹ phẩm, chứng nhận SPF, dung tích Toner Pad / Sun Cushion (2 mục đã hiện ghi chú `needsReview` ở trang chi tiết — không tự sửa số).
+## Blockers (chỉ Chi)
+- Giấy tờ nhà sản xuất (số công bố, SPF, ảnh gốc, logo vector) — chặn việc mở site công khai.
+- Merge vào `main` = cập nhật site review đang chạy → chờ Chi duyệt.
 
-## Files touched
-- Thêm: `package.json`, `tsconfig.json`, `next.config.mjs`, `postcss.config.mjs`, `.gitignore`, `.claude/launch.json`
-- `src/app/`: `layout.tsx`, `globals.css`, `page.tsx`, `not-found.tsx`, `san-pham/page.tsx`, `san-pham/[slug]/page.tsx`, `lieu-trinh/`, `huong-dan/`, `kien-thuc/`, `faq/`, `chuyen-gia/`, `lien-he/`
-- `src/components/`: `Header`, `Footer`, `ZaloFab`, `CartProvider`, `ProductAction`, `ProductCard`, `ProductFilter`, `EnquiryForm`, `ProviderForm`
-- `src/lib/`: `format.ts`, `brand.ts`, `images.ts`; `src/types/assets.d.ts`
-- Sửa: `src/data/products.ts` (thêm USAGE/KNOWLEDGE/FAQ — không đụng nội dung cũ)
-- `.claude/settings.json` + `.claude/skills/bella-acceptance/SKILL.md` (do install.ps1 tạo)
-
-## Ghi chú kỹ thuật
-- Dev server đang chạy nền ở `localhost:3000` (npm run dev).
-- Chưa `git init` (repo này chưa phải git repo).
-- Font Archivo + Be Vietnam Pro qua next/font/google, cầu nối biến trong `globals.css` để khớp token `design-tokens.css`.
+## Files touched (phiên này)
+- Repo: `package.json`, `package-lock.json`, `.gitignore`, `scripts/accept.mjs`, `src/app/{favicon.ico,icon.png,apple-icon.png}`, `src/app/globals.css`, `src/app/san-pham/page.tsx`, `src/data/products.ts`, `SKILL-INVENTORY.md`, `HANDOFF.md`
+- Ngoài repo: `~/.claude/skills` (junction), `~/.claude/settings.json` (plugin), `~/.claude/backups/`, `D:\APP FACTORY\skill-updates\*`, `D:\APP FACTORY\NOTEFORALL.md`
