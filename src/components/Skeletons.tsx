@@ -27,8 +27,3 @@ export function PageHeadSkeleton() {
     </div>
   );
 }
-
-export function LoadingLabel() {
-  // Thông báo cho trình đọc màn hình; ẩn khỏi mắt.
-  return <p className="sr-only" role="status">Đang tải nội dung…</p>;
-}

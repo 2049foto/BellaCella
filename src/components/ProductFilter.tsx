@@ -3,10 +3,11 @@
 import { useState } from 'react';
 import { type Product } from '@/data/products';
 import ProductCard from '@/components/ProductCard';
+import type { Lang } from '@/i18n/routes';
+import { ui } from '@/i18n/ui';
 
-const ALL = 'Tất cả';
-
-export default function ProductFilter({ products }: { products: Product[] }) {
+export default function ProductFilter({ products, lang }: { products: Product[]; lang: Lang }) {
+  const ALL = ui(lang).filterAll;
   const [active, setActive] = useState(ALL);
   const groups = [ALL, ...Array.from(new Set(products.map((p) => p.group)))];
   const shown = active === ALL ? products : products.filter((p) => p.group === active);
@@ -20,7 +21,7 @@ export default function ProductFilter({ products }: { products: Product[] }) {
           </button>
         ))}
       </div>
-      <div className="pgrid">{shown.map((p) => <ProductCard key={p.id} product={p} />)}</div>
+      <div className="pgrid">{shown.map((p) => <ProductCard key={p.id} product={p} lang={lang} />)}</div>
     </>
   );
 }

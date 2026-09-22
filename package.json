@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "accept": "node scripts/accept.mjs"
+    "accept": "node scripts/accept.mjs",
+    "perf": "node scripts/perf.mjs"
   },
   "dependencies": {
     "next": "15.5.25",

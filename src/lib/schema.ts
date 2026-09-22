@@ -1,16 +1,19 @@
 import { BRAND, type Product, type Faq } from '@/data/products';
 import { SITE_URL, SITE_NAME } from '@/lib/site';
+import { href, type Lang } from '@/i18n/routes';
+
+const abs = (path: string) => SITE_URL + (path === '/' ? '' : path);
 
 /* JSON-LD dựng từ dữ liệu nội bộ.
    Product KHÔNG khai offers/availability vì chưa bán online — khai sai là rủi ro. */
 
-export function organizationSchema() {
+export function organizationSchema(lang: Lang) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: BRAND.name,
     alternateName: SITE_NAME,
-    url: SITE_URL,
+    url: abs(href(lang, 'home')),
     slogan: BRAND.tagline_en,
     telephone: BRAND.phone,
     contactPoint: {
@@ -18,12 +21,12 @@ export function organizationSchema() {
       telephone: BRAND.phone,
       contactType: 'customer service',
       areaServed: 'VN',
-      availableLanguage: ['vi'],
+      availableLanguage: ['vi', 'en'],
     },
   };
 }
 
-export function productSchema(p: Product) {
+export function productSchema(p: Product, lang: Lang) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -33,7 +36,8 @@ export function productSchema(p: Product) {
     description: p.vi,
     brand: { '@type': 'Brand', name: BRAND.name },
     image: `${SITE_URL}/img/${p.slug}.webp`,
-    url: `${SITE_URL}/san-pham/${p.slug}`,
+    url: abs(href(lang, 'products', p.slug)),
+    inLanguage: lang,
     // Cố ý bỏ "offers": chưa bán online, không khai giá/tồn kho dạng thương mại.
   };
 }
@@ -51,10 +55,11 @@ export function breadcrumbSchema(items: { name: string; path: string }[]) {
   };
 }
 
-export function faqSchema(faqs: Faq[]) {
+export function faqSchema(faqs: Faq[], lang: Lang) {
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
+    inLanguage: lang,
     mainEntity: faqs.map((f) => ({
       '@type': 'Question',
       name: f.q,

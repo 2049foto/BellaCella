@@ -10,10 +10,12 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 
 const BASE = process.env.BASE || 'http://localhost:3000';
 const OUT = '.accept';
-const ROUTES = ['/', '/san-pham', '/san-pham/exo-bio-ampoule', '/kien-thuc', '/lieu-trinh', '/huong-dan', '/faq', '/chuyen-gia', '/lien-he'];
+const ROUTES_VI = ['/', '/san-pham', '/san-pham/exo-bio-ampoule', '/kien-thuc', '/lieu-trinh', '/huong-dan', '/faq', '/chuyen-gia', '/lien-he'];
+const ROUTES_EN = ['/en', '/en/products', '/en/products/exo-bio-ampoule', '/en/ingredients', '/en/routine', '/en/how-to-use', '/en/faq', '/en/professionals', '/en/contact'];
+const ROUTES = [...ROUTES_VI, ...ROUTES_EN];
 const WIDTHS = [390, 768, 1440];
 const THEMES = ['light', 'dark'];
-const LH_ROUTES = ['/', '/san-pham/exo-bio-ampoule'];
+const LH_ROUTES = ['/', '/san-pham/exo-bio-ampoule', '/en'];
 const noLh = process.argv.includes('--no-lh');
 const lhOnly = process.argv.includes('--lh-only');
 const RUNS = Number(process.argv[process.argv.indexOf('--runs') + 1]) || 1;
@@ -42,14 +44,49 @@ const fail = (m) => { failed++; console.log('  FAIL ' + m); };
 }
 if (failed) { await browser.close(); process.exit(1); }
 
+// Song ngữ: mã HTTP, <html lang>, hreflang, nút đổi ngôn ngữ trỏ đúng trang tương ứng, 404 có khung trang.
+if (!lhOnly) {
+  const page = await browser.newPage();
+  for (let i = 0; i < ROUTES_VI.length; i++) {
+    for (const [route, lang, other] of [[ROUTES_VI[i], 'vi', ROUTES_EN[i]], [ROUTES_EN[i], 'en', ROUTES_VI[i]]]) {
+      const res = await page.goto(BASE + route);
+      const info = await page.evaluate(() => ({
+        lang: document.documentElement.lang,
+        alt: [...document.querySelectorAll('link[rel="alternate"][hreflang]')].map((l) => l.hreflang).sort().join(','),
+        sw: new URL(document.querySelector('a.langbtn')?.href || 'x:', location.href).pathname,
+      }));
+      if (res.status() !== 200) fail(`${route} trả ${res.status()}`);
+      if (info.lang !== lang) fail(`${route} <html lang="${info.lang}"> — cần ${lang}`);
+      if (info.alt !== 'en,vi,x-default') fail(`${route} hreflang thiếu: ${info.alt}`);
+      if (info.sw !== other) fail(`${route} nút đổi ngôn ngữ trỏ ${info.sw} — cần ${other}`);
+    }
+  }
+  for (const [route, lang] of [['/khong-co-trang-nay', 'vi'], ['/en/no-such-page', 'en'], ['/san-pham/khong-co', 'vi']]) {
+    const res = await page.goto(BASE + route);
+    const ok = await page.evaluate(() => ({ lang: document.documentElement.lang, header: !!document.querySelector('header.site'), h1: document.querySelector('h1')?.textContent }));
+    console.log(`404 ${route}: HTTP ${res.status()} lang=${ok.lang} header=${ok.header} h1="${ok.h1}"`);
+    if (res.status() !== 404) fail(`${route} trả ${res.status()} — cần 404`);
+    if (ok.lang !== lang || !ok.header) fail(`${route} 404 thiếu khung trang/ngôn ngữ`);
+  }
+  const vi = await page.goto(BASE + '/vi/san-pham');
+  if (page.url() !== BASE + '/san-pham') fail(`/vi/san-pham không chuyển về /san-pham (${vi.status()} ${page.url()})`);
+  console.log(`song ngữ: ${ROUTES_VI.length * 2} trang kiểm lang/hreflang/nút đổi ngôn ngữ`);
+  await page.close();
+}
+
 const axeRows = [];
 for (const theme of lhOnly ? [] : THEMES) {
   for (const w of WIDTHS) {
     const ctx = await browser.newContext({ viewport: { width: w, height: 900 }, colorScheme: theme });
     await ctx.addInitScript((t) => { try { localStorage.setItem('bc-theme', t); } catch {} }, theme);
     const page = await ctx.newPage();
+    // Lỗi console (vd. hydration lệch giữa server và trình duyệt) = FAIL.
+    let consoleErrs = [];
+    page.on('console', (m) => { if (m.type() === 'error') consoleErrs.push(m.text().slice(0, 140)); });
     for (const route of ROUTES) {
+      consoleErrs = [];
       await page.goto(BASE + route, { waitUntil: 'networkidle' });
+      if (consoleErrs.length) fail(`console ${route} @${w} ${theme}: ${consoleErrs[0]}`);
       const ov = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
       if (ov > 0) fail(`tràn ngang ${ov}px ${route} @${w} ${theme}`);
       // Cuộn hết trang: mọi khối reveal phải hiện đủ (không kẹt ẩn, không mờ).

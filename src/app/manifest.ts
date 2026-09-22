@@ -8,6 +8,7 @@ export default function manifest(): MetadataRoute.Manifest {
     short_name: BRAND.name,
     description: BRAND.tagline_vi,
     lang: 'vi',
+    // Có bản tiếng Anh tại /en; manifest giữ tiếng Việt làm mặc định.
     start_url: '/',
     display: 'standalone',
     background_color: '#FFFFFF',

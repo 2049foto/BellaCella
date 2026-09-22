@@ -2,13 +2,16 @@
 
 import Image, { type StaticImageData } from 'next/image';
 import { useRef } from 'react';
+import type { Lang } from '@/i18n/routes';
+import { ui } from '@/i18n/ui';
 
 /* Xem ảnh cận cảnh bằng <dialog> gốc — không thư viện lightbox.
    Đóng bằng Esc (native) và bấm nền. Ảnh đã upscale nên phóng to vẫn nét. */
 
-type Props = { src: StaticImageData; alt: string; slug: string; badge?: string | null };
+type Props = { src: StaticImageData; alt: string; slug: string; badge?: string | null; lang: Lang };
 
-export default function ProductImageZoom({ src, alt, slug, badge }: Props) {
+export default function ProductImageZoom({ src, alt, slug, badge, lang }: Props) {
+  const t = ui(lang).product;
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   function open() {
@@ -22,7 +25,7 @@ export default function ProductImageZoom({ src, alt, slug, badge }: Props) {
   return (
     <>
       <figure style={{ margin: 0 }}>
-        <button type="button" className="zoom-trigger" onClick={open} aria-label={`Phóng to ảnh ${alt}`}>
+        <button type="button" className="zoom-trigger" onClick={open} aria-label={`${t.zoom}: ${alt}`}>
           <Image
             src={src}
             alt={alt}
@@ -33,13 +36,13 @@ export default function ProductImageZoom({ src, alt, slug, badge }: Props) {
             placeholder="blur"
           />
           {badge && <span className="pbadge">{badge}</span>}
-          <span className="zoom-hint" aria-hidden="true">Bấm để xem lớn</span>
+          <span className="zoom-hint" aria-hidden="true">{t.zoomHint}</span>
         </button>
       </figure>
 
-      <dialog ref={dialogRef} className="zoom" onClick={onDialogClick} aria-label={`Ảnh lớn: ${alt}`}>
+      <dialog ref={dialogRef} className="zoom" onClick={onDialogClick} aria-label={`${t.zoomLarge}: ${alt}`}>
         <div className="zoom-inner">
-          <button type="button" className="zoom-close" onClick={() => dialogRef.current?.close()} aria-label="Đóng ảnh lớn">
+          <button type="button" className="zoom-close" onClick={() => dialogRef.current?.close()} aria-label={t.zoomClose}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
           </button>
           <Image src={src} alt={alt} sizes="(max-width:900px) 94vw, 860px" placeholder="blur" style={{ width: 'auto', height: 'auto', maxWidth: '94vw', maxHeight: '86vh' }} />

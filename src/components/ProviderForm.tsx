@@ -3,24 +3,16 @@
 import { useState } from 'react';
 import { BRAND } from '@/data/products';
 import { zaloUrl } from '@/lib/brand';
+import type { Lang } from '@/i18n/routes';
+import { ui } from '@/i18n/ui';
 
 /* Không có backend — không giả vờ đã gửi. Dựng nội dung đăng ký, chép clipboard,
    mở Zalo để cơ sở gửi thật. */
 
-function composeMessage(name: string, phone: string, city: string, type: string) {
-  const lines = [
-    'Đăng ký hợp tác BELLA CELLA',
-    `Cơ sở / người phụ trách: ${name}`,
-    `Điện thoại: ${phone}`,
-  ];
-  if (city) lines.push(`Tỉnh / thành: ${city}`);
-  if (type) lines.push(`Loại hình: ${type}`);
-  return lines.join('\n');
-}
-
-export default function ProviderForm() {
+export default function ProviderForm({ lang }: { lang: Lang }) {
+  const f = ui(lang).form;
+  const t = f.pv;
   const [status, setStatus] = useState<'idle' | 'error' | 'ready'>('idle');
-  const [errorText, setErrorText] = useState('');
   const [copied, setCopied] = useState(false);
 
   function onSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -33,15 +25,16 @@ export default function ProviderForm() {
 
     if (!name || !phone) {
       setStatus('error');
-      setErrorText('Vui lòng nhập họ tên và số điện thoại để chúng tôi liên hệ lại.');
       const target = (name ? form.elements.namedItem('phone') : form.elements.namedItem('name')) as HTMLElement | null;
       target?.focus();
       return;
     }
 
-    const text = composeMessage(name, phone, city, type);
+    const lines = [t.msg.title, `${t.msg.name}: ${name}`, `${f.msg.phone}: ${phone}`];
+    if (city) lines.push(`${t.msg.city}: ${city}`);
+    if (type) lines.push(`${t.msg.type}: ${type}`);
     if (navigator.clipboard?.writeText) {
-      navigator.clipboard.writeText(text).then(() => setCopied(true)).catch(() => setCopied(false));
+      navigator.clipboard.writeText(lines.join('\n')).then(() => setCopied(true)).catch(() => setCopied(false));
     }
     setStatus('ready');
     window.open(zaloUrl, '_blank', 'noopener');
@@ -49,20 +42,20 @@ export default function ProviderForm() {
 
   return (
     <form className="enq" onSubmit={onSubmit} noValidate>
-      <div className="field"><label htmlFor="pv-name">Tên cơ sở / người phụ trách</label><input id="pv-name" name="name" autoComplete="organization" required /></div>
-      <div className="field"><label htmlFor="pv-phone">Số điện thoại</label><input id="pv-phone" name="phone" type="tel" inputMode="tel" autoComplete="tel" required /></div>
-      <div className="field"><label htmlFor="pv-city">Tỉnh / thành</label><input id="pv-city" name="city" autoComplete="address-level1" /></div>
+      <div className="field"><label htmlFor="pv-name">{t.name}</label><input id="pv-name" name="name" autoComplete="organization" required /></div>
+      <div className="field"><label htmlFor="pv-phone">{f.phone}</label><input id="pv-phone" name="phone" type="tel" inputMode="tel" autoComplete="tel" required /></div>
+      <div className="field"><label htmlFor="pv-city">{t.city}</label><input id="pv-city" name="city" autoComplete="address-level1" /></div>
       <div className="field">
-        <label htmlFor="pv-type">Loại hình</label>
-        <select id="pv-type" name="type" defaultValue="Spa">
-          <option>Spa</option><option>Phòng khám da liễu</option><option>Thẩm mỹ viện</option><option>Nhà phân phối</option><option>Khác</option>
+        <label htmlFor="pv-type">{t.type}</label>
+        <select id="pv-type" name="type" defaultValue={t.types[0]}>
+          {t.types.map((x) => <option key={x}>{x}</option>)}
         </select>
       </div>
-      <button className="btn solid" type="submit" style={{ justifyContent: 'center' }}>Đăng ký qua Zalo</button>
-      {status === 'error' && <div className="formmsg" role="alert">{errorText}</div>}
+      <button className="btn solid" type="submit" style={{ justifyContent: 'center' }}>{t.submit}</button>
+      {status === 'error' && <div className="formmsg" role="alert">{f.required}</div>}
       {status === 'ready' && (
         <div className="formmsg" role="status">
-          Website chưa nhận đăng ký tự động. {copied ? 'Nội dung bạn điền đã được chép sẵn — dán vào Zalo và gửi giúp chúng tôi.' : 'Vui lòng nhắn nội dung đăng ký qua Zalo.'} Nếu cửa sổ Zalo chưa mở, bấm <a href={zaloUrl} target="_blank" rel="noopener" style={{ textDecoration: 'underline' }}>mở Zalo</a> hoặc gọi <a href={`tel:${BRAND.phoneHref}`} style={{ textDecoration: 'underline' }}>{BRAND.phone}</a>.
+          {t.readyA} {copied ? f.copied : t.notCopied} {f.ifNot} <a href={zaloUrl} target="_blank" rel="noopener" style={{ textDecoration: 'underline' }}>{t.openZalo}</a> {f.orCall} <a href={`tel:${BRAND.phoneHref}`} style={{ textDecoration: 'underline' }}>{BRAND.phone}</a>.
         </div>
       )}
     </form>

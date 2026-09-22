@@ -154,7 +154,7 @@ export const bySlug = (s: string) => PRODUCTS.find((p) => p.slug === s);
    TÌM THEO NHU CẦU
    Mỗi gợi ý kèm `quote` — câu NGUYÊN VĂN trong `body` của sản phẩm đó
    (catalogue). Không thêm nhu cầu nào catalogue không nói tới.
-   `assertNeedQuotes()` làm build fail nếu quote lệch với `body`.
+   `assertNeedQuotes()` (src/i18n/content.ts) làm build fail nếu quote lệch `body`, cả bản EN.
    Đây là tra cứu theo mô tả công dụng, không phải chẩn đoán hay chỉ định.
    --------------------------------------------------------------- */
 export type Need = { key: string; label: string; picks: { slug: string; quote: string }[] };
@@ -183,14 +183,6 @@ export const NEEDS: Need[] = [
     { slug: 'sun-cushion', quote: 'bảo vệ da trước tia UV, mang lại lớp nền mỏng nhẹ, tự nhiên' },
     { slug: 'recovery-bb-cushion', quote: 'giúp che phủ tự nhiên' }] },
 ];
-
-export function assertNeedQuotes() {
-  for (const n of NEEDS) for (const { slug, quote } of n.picks) {
-    const p = bySlug(slug);
-    if (!p) throw new Error(`NEEDS/${n.key}: không có sản phẩm "${slug}"`);
-    if (!p.body.join(' ').includes(quote)) throw new Error(`NEEDS/${n.key}: câu trích không khớp catalogue của ${slug}: "${quote}"`);
-  }
-}
 
 /* ---------------------------------------------------------------
    HƯỚNG DẪN SỬ DỤNG
