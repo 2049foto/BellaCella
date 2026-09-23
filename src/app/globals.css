@@ -194,7 +194,7 @@ figure.texture { position: relative; margin: 0; background: var(--paper-2); aspe
 .pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: clamp(18px, 2.4vw, 34px); }
 
 .pcard { container-type: inline-size; display: flex; flex-direction: column; border-top: 1px solid var(--rule); padding-top: 16px; }
-.pcard figure { margin: 0 0 16px; background: var(--paper-2); position: relative; aspect-ratio: 454/560; overflow: hidden; max-width: 100%; }
+.pcard figure { margin: 0 0 16px; background: var(--paper-2); position: relative; aspect-ratio: 4 / 5; overflow: hidden; max-width: 100%; }
 .pcard figure img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
 .pcard:hover figure img { transform: scale(1.03); }
 /* Ảnh sản phẩm nhích nhẹ khi rê chuột — phản hồi đủ thấy, không chuyển động thừa. */
@@ -481,7 +481,7 @@ dialog.zoom::backdrop { background: rgba(12, 13, 14, .82); }
 .sk-line { height: .72em; margin-block: .34em; }
 .sk-eyebrow { height: 10px; width: 120px; margin-bottom: 14px; }
 .sk-h1 { height: clamp(30px, 5vw, 52px); width: min(70%, 460px); margin-bottom: 18px; }
-.sk-fig { width: 100%; aspect-ratio: 454/560; }
+.sk-fig { width: 100%; aspect-ratio: 4 / 5; }
 .sk-fig-wide { width: 100%; aspect-ratio: 2480/2557; max-height: min(66vh, 600px); }
 
 /* ---- error state ---- */
