@@ -99,7 +99,6 @@ Không có việc dở.
 
 ## Blockers
 - Chi chưa muốn mở công khai: giữ noindex, Vercel Hobby, bellacella.vercel.app.
-- MCP RevenueCat, expo, supabase cần anh uỷ quyền (claude.ai → Settings → Connectors, hoặc `/mcp` trong terminal `claude`).
 - Tài khoản Zalo cho 034 966 7962 phải tồn tại thì nút Zalo mới dùng được.
 
 ## Files touched (23/09 chiều)
