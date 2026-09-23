@@ -101,7 +101,7 @@ Không có việc dở.
 - Chi chưa muốn mở công khai: giữ noindex, Vercel Hobby, bellacella.vercel.app.
 - Tài khoản Zalo cho 034 966 7962 phải tồn tại thì nút Zalo mới dùng được.
 - Không phải blocker của website — ghi để khỏi nhầm: đăng nhập MCP (Expo/RevenueCat/Supabase) lưu chung ở
-  `C:Users9f.claude.credentials.json`, không phụ thuộc tài khoản Claude (2048foto hay 2049foto). 23/09 14:36: Expo
+  `C:\Users\2049f\.claude\.credentials.json`, không phụ thuộc tài khoản Claude (2048foto hay 2049foto). 23/09 14:36: Expo
   và RevenueCat đã có token (phiên mở trước lúc uỷ quyền thì vẫn báo chưa — mở phiên mới là nhận); Supabase chưa có token.
 
 ## Files touched (23/09 chiều)
