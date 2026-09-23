@@ -39,7 +39,7 @@ export default async function UsagePage({ params }: LangParams) {
               <div className="ucard" key={st.n}>
                 <figure>
                   <Link href={link}>
-                    <Image src={IMG[p.slug]} alt={`${p.name} — ${p.vi}`} placeholder="blur" sizes="(max-width:760px) 100vw, 120px" style={{ width: '100%', height: 'auto' }} />
+                    <Image src={IMG[p.slug]} alt={`${p.name} — ${p.vi}`} placeholder="blur" sizes="(max-width:760px) 88px, 120px" style={{ width: '100%', height: 'auto' }} />
                   </Link>
                 </figure>
                 <div>

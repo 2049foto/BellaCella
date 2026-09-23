@@ -102,7 +102,7 @@ export default async function ProductPage({ params }: Params) {
             </div>
           )}
           <p style={{ marginTop: '22px', fontSize: '12.5px' }}>
-            <Link className="inline" href={href(lang, 'knowledge')} style={{ textDecoration: 'underline' }}>{t.learnActives}</Link>
+            <Link className="inline" href={href(lang, 'knowledge')}>{t.learnActives}</Link>
           </p>
           {p.needsReview && (
             <div className="note" style={{ marginTop: '20px' }}>
@@ -121,7 +121,7 @@ export default async function ProductPage({ params }: Params) {
             <span className="btn ghost">{t.view}</span>
           </div>
           <figure>
-            <Image src={IMG[next.slug]} alt={`${next.name} — ${next.vi}`} fill placeholder="blur" sizes="(max-width:760px) 100vw, 40vw" style={{ objectFit: 'cover' }} />
+            <Image src={IMG[next.slug]} alt={`${next.name} — ${next.vi}`} fill placeholder="blur" sizes="(max-width:520px) 100vw, (max-width:760px) 460px, 380px" style={{ objectFit: 'cover' }} />
           </figure>
         </Link>
       </section>

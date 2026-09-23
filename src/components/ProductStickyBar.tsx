@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
-import { BRAND, COMMERCE_ENABLED, type Product } from '@/data/products';
+import { BRAND, type Product } from '@/data/products';
+import ProductAction from '@/components/ProductAction';
 import { zaloUrl } from '@/lib/brand';
-import { href, type Lang } from '@/i18n/routes';
+import type { Lang } from '@/i18n/routes';
 import { ui, money } from '@/i18n/ui';
 
 /* Thanh tóm tắt sản phẩm, hiện khi khối giá cuộn khuất khỏi màn hình.
@@ -18,14 +18,14 @@ export default function ProductStickyBar({ product, lang }: { product: Product; 
   useEffect(() => {
     const el = sentinel.current;
     if (!el || typeof IntersectionObserver === 'undefined') return;
-    // Chỉ hiện khi khối giá đã cuộn LÊN khỏi màn hình (top < 0). Nếu chỉ xét isIntersecting
+    // Chỉ hiện khi khối giá đã cuộn LÊN khuất sau header. Nếu chỉ xét isIntersecting
     // thì lúc mới vào trang trên điện thoại — khi khối giá còn nằm dưới màn hình — thanh đã bật.
-    // -70px: trừ chiều cao header dính, để thanh xuất hiện đúng lúc giá khuất sau header.
+    // Biên trên = chiều cao header dính đo thật (86px máy tính, thấp hơn trên điện thoại),
+    // không đoán số cố định. So với rootBounds.top chứ không so với 0 vì biên đã bị đẩy xuống.
+    const headerH = Math.round(document.querySelector('header.site')?.getBoundingClientRect().height ?? 0);
     const io = new IntersectionObserver(
-      // So với BIÊN của vùng quan sát, không so với 0: rootMargin âm đẩy biên xuống 70px,
-      // nên lúc mốc vừa khuất sau header thì top vẫn đang là số dương.
       ([e]) => setShown(!e.isIntersecting && e.boundingClientRect.top < (e.rootBounds?.top ?? 0)),
-      { rootMargin: '-70px 0px 0px 0px' },
+      { rootMargin: `-${headerH}px 0px 0px 0px` },
     );
     io.observe(el);
     return () => io.disconnect();
@@ -41,9 +41,7 @@ export default function ProductStickyBar({ product, lang }: { product: Product; 
             <span className="pbar-price">{money(lang, product.price)} VND {product.priceUnit}</span>
           </div>
           <div className="pbar-act">
-            <Link className="btn solid" href={`${href(lang, 'contact')}?sp=${product.slug}`}>
-              {COMMERCE_ENABLED ? t.product.addToCart : t.product.consult}
-            </Link>
+            <ProductAction product={product} lang={lang} solid />
             <a className="btn ghost" href={zaloUrl} target="_blank" rel="noopener">{t.contactActions.zalo}</a>
             <a className="btn ghost pbar-call" href={`tel:${BRAND.phoneHref}`}>{t.call} {BRAND.phone}</a>
           </div>
