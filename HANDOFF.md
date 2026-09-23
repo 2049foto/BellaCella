@@ -64,19 +64,21 @@ Còn lại: chờ giấy tờ nhà sản xuất mới mở công khai.
 - Repo website tắt 4 plugin không dùng (posthog, expo, revenuecat, supabase) ở phạm vi local → nhẹ ~29k token/phiên.
 - Gói `.skill` sẵn để tải lên tài khoản kia: `D:\APP FACTORY\_skillpkg\` (skill-updater, llm-council, find-skills, frontend-design).
 
-## Số đo thật (bản vừa đẩy — ảnh từ bellacella.store, commit 9ed0be6)
+## Số đo thật (production, bản cuối 979c3cc)
 ```
 BASE=https://bellacella.vercel.app npm run accept
-  404 ×3 đúng · song ngữ 18 trang · axe 72 lượt, 0 lỗi serious/critical
-  overflow/reveal: 18 route × 3 bề rộng × 2 theme
-  Lighthouse production: / 91 · /san-pham/exo-bio-ampoule 98 · /en 99 — a11y 100, bp 100, CLS 0
+  404 ×3 đúng · song ngữ 18 trang · axe 72 lượt, 0 lỗi serious/critical · overflow 18 route × 3 bề rộng × 2 theme
   KẾT QUẢ: ĐẠT
-Bộ ảnh trên production (máy tính 1280 + điện thoại 390): 8 ảnh, chuyển ảnh đúng, xem lớn 672px / 374px,
-  phím → và nút trước hoạt động, đóng giữ đúng ảnh vừa xem, 0 lỗi console
-node .dev.local.mjs (local) → 10/10 thiết bị OK (320 → 2560px)
+BASE=https://bellacella.vercel.app npm run perf -- --runs 3        → KẾT QUẢ: ĐẠT mọi ngưỡng
+  / 95 · /san-pham 99 · /san-pham/exo-bio-ampoule 99 · /lieu-trinh 100 · /huong-dan 100 · /kien-thuc 100
+  /faq 99 · /en 99 · /en/products 99 · /en/products/exo-bio-ampoule 99 — a11y 100, bp 100, CLS ≤ 0,004
+node .cls.local.mjs (Chrome như Lighthouse, 10 lượt, production)  → 0/10 lượt nhảy bố cục
+node .gallery.local.mjs → bộ ảnh 8 ảnh, chuyển ảnh / xem lớn / phím / đóng giữ ảnh đúng, 0 lỗi console
+node .dev.local.mjs     → 10/10 thiết bị OK (320 → 2560px)
 ```
-SEO 69 là do noindex có chủ đích (chưa mở công khai). Lighthouse local thấp hơn vì máy local nén gzip,
-Vercel nén brotli — mốc chuẩn là production.
+Lỗi đã bắt được và sửa trong lượt này: bộ ảnh mới làm trang sản phẩm nhảy bố cục trên điện thoại (CLS 0,3,
+perf 82) — khung ảnh căn giữa bằng margin auto mà thiếu `width: 100%` nên co còn 28px lúc ảnh chưa giải mã.
+SEO 69 là do noindex có chủ đích (chưa mở công khai).
 
 ## In progress
 Không có việc dở.
