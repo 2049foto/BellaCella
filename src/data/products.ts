@@ -185,42 +185,41 @@ export const NEEDS: Need[] = [
 ];
 
 /* ---------------------------------------------------------------
-   HƯỚNG DẪN SỬ DỤNG
-   usageSource: 'general' = hướng dẫn chung theo LOẠI sản phẩm, không
-   phải văn bản chính thức của BELLA CELLA. Cần thay bằng hướng dẫn
-   chính thức khi nhà sản xuất cung cấp.
+   HƯỚNG DẪN SỬ DỤNG — dịch từ mục 사용방법 (cách dùng) trên trang
+   sản phẩm của cửa hàng chính hãng bellacella.store.
+   `when` là vị trí trong quy trình của site, trừ khi hãng ghi rõ.
    --------------------------------------------------------------- */
 export type Usage = {
-  usageSource: 'general';
   when: string;
   steps: string[];
 };
 
 export const USAGE: Record<string, Usage> = {
-  'bubble-clear-cleanser': { usageSource: 'general', when: 'Sáng và tối', steps: [
-    'Làm ướt mặt bằng nước ấm.', 'Nhấn 1–2 lần lấy bọt ra lòng bàn tay.',
-    'Massage nhẹ theo vòng tròn 30–60 giây, tránh vùng mắt.', 'Rửa lại bằng nước sạch, thấm khô bằng khăn mềm.'] },
-  'toner-pad': { usageSource: 'general', when: 'Sau bước làm sạch', steps: [
-    'Dùng kẹp gắp lấy một miếng, tránh đưa tay vào hũ.', 'Lau nhẹ khắp mặt theo hướng từ trong ra ngoài.',
-    'Có thể đắp tại vùng cần cấp ẩm 3–5 phút.', 'Không cần rửa lại.'] },
-  'exo-bio-ampoule': { usageSource: 'general', when: 'Tối, theo liệu trình', steps: [
-    'Lắc nhẹ lọ trước khi mở.', 'Dùng hết một lọ cho mỗi lần sử dụng.',
-    'Vỗ nhẹ cho thấm, không chà xát.', 'Chờ thấm rồi mới dùng bước dưỡng tiếp theo.'] },
-  'nmn-serum-mask': { usageSource: 'general', when: '2–3 lần mỗi tuần', steps: [
-    'Dùng sau bước làm sạch và cân bằng.', 'Đắp mặt nạ 15–20 phút.',
-    'Tháo mặt nạ, vỗ nhẹ phần tinh chất còn lại cho thấm.', 'Không rửa lại, tiếp tục bước dưỡng.'] },
-  'sun-cushion': { usageSource: 'general', when: 'Buổi sáng, bước cuối', steps: [
-    'Dùng sau khi đã hoàn tất các bước dưỡng.', 'Ấn nhẹ bông phấn vào lõi, dặm đều từ giữa mặt ra ngoài.',
-    'Dặm lại sau mỗi 2–3 giờ nếu ở ngoài trời.', 'Tẩy trang kỹ vào cuối ngày.'] },
-  'recovery-bb-cushion': { usageSource: 'general', when: 'Ban ngày hoặc qua đêm', steps: [
-    'Ban ngày: dặm như lớp nền sau bước dưỡng.', 'Sau liệu trình thẩm mỹ: dặm một lớp mỏng như kem dưỡng phục hồi.',
-    'Theo catalogue, sản phẩm có thể lưu trên da qua đêm mà không cần rửa mặt.', 'Vệ sinh bông phấn thường xuyên.'] },
-  'exo-bio-ampoule-mist': { usageSource: 'general', when: 'Bất cứ khi nào da cần ẩm', steps: [
-    'Lắc nhẹ, giữ cách mặt 15–20cm.', 'Xịt đều 2–3 nhịp.',
-    'Vỗ nhẹ cho thấm thay vì để tự khô.', 'Dùng được trên lớp trang điểm.'] },
-  'recella-cream': { usageSource: 'general', when: 'Sáng và tối, bước dưỡng', steps: [
-    'Xé một gói, dùng hết trong một lần.', 'Thoa đều khắp mặt và cổ.',
-    'Vỗ nhẹ theo hướng đi lên.', 'Dùng trước bước chống nắng vào buổi sáng.'] }
+  'bubble-clear-cleanser': { when: 'Khi rửa mặt', steps: [
+    'Làm ướt mặt bằng nước ấm.', 'Bơm 2–3 lần lấy bọt ra lòng bàn tay.',
+    'Massage nhẹ nhàng khắp mặt.', 'Rửa sạch lại bằng nước ấm.'] },
+  'toner-pad': { when: 'Sau bước làm sạch', steps: [
+    'Dùng mặt nhám của miếng pad lau nhẹ toàn bộ khuôn mặt.', 'Lật sang mặt mịn, lau lại một lần nữa.',
+    'Đậy kín nắp sau khi dùng và để hũ ở tư thế đứng.', 'Da nhạy cảm: dùng 2 lần mỗi tuần, không dùng hằng ngày.'] },
+  'exo-bio-ampoule': { when: 'Sau bước toner', steps: [
+    'Kéo nắp theo hướng chữ UP để mở hẳn, rồi lắp đầu nhỏ giọt. Cẩn thận mép nắp nhôm khi mở.',
+    'Thoa đều khắp mặt.', 'Massage nhẹ nhàng cho tinh chất thấm vào da.'] },
+  'nmn-serum-mask': { when: 'Sau bước làm sạch và toner', steps: [
+    'Sau khi rửa mặt, dùng toner để cân bằng da.', 'Trải mặt nạ ra, đặt khớp vị trí mắt và miệng rồi áp sát khắp mặt.',
+    'Sau 15–20 phút, tháo mặt nạ.', 'Vỗ nhẹ phần tinh chất còn lại cho thấm.'] },
+  'sun-cushion': { when: 'Buổi sáng, bước cuối', steps: [
+    'Lấy một lượng vừa đủ ra bông phấn.', 'Vỗ nhẹ để dàn đều lên da.',
+    'Dặm lại nhiều lần trong ngày khi cần.'] },
+  'recovery-bb-cushion': { when: 'Ban ngày hoặc qua đêm', steps: [
+    'Nhấn nút bên phải tấm đệm trong hộp để kem được đẩy lên.',
+    'Lấy lượng vừa đủ bằng bông phấn, vỗ nhẹ dàn đều ở vùng cần tạo tông.',
+    'Theo hãng, kết cấu để da thở được nên có thể thoa sau các thủ thuật chăm sóc da và để qua đêm.'] },
+  'exo-bio-ampoule-mist': { when: 'Bất cứ khi nào da cần ẩm', steps: [
+    'Lắc chai lên xuống 3–5 lần.', 'Hơi ngửa mặt, nhắm mắt, xịt 4–5 lần ở khoảng cách 10–20cm.',
+    'Vỗ nhẹ cho thấm.', 'Nín thở khi xịt để sương không vào mũi, miệng.'] },
+  'recella-cream': { when: 'Bước dưỡng, hoặc làm mặt nạ ngủ', steps: [
+    'Xé gói theo đường răng cưa.', 'Thoa lượng vừa đủ lên mặt và cổ, vỗ nhẹ cho thấm.',
+    'Làm mặt nạ ngủ: thoa đều khoảng 1 gói (2g), không lau đi; sáng hôm sau rửa mặt nhẹ nhàng.'] }
 };
 
 /* ---------------------------------------------------------------

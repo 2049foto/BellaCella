@@ -64,19 +64,21 @@ Giỏ hàng **chưa bật**. Ba điểm chuẩn bị, giữ nguyên khi phát tr
 Khi bật bán online: Việt Nam dùng MoMo, ZaloPay, VNPay và COD.
 Cổng thanh toán cần giấy phép kinh doanh và tài khoản doanh nghiệp — không phải việc code.
 
-## Việc chưa xong, cần giấy tờ từ nhà sản xuất
+## Giấy tờ và trạng thái mở site
 
-- Số tiếp nhận phiếu công bố sản phẩm mỹ phẩm cho cả 8 SKU.
-- Bản chứng nhận SPF cho Sun Cushion (catalogue ghi "chứng nhận an toàn của Hàn Quốc").
-- Ảnh sản phẩm gốc độ phân giải cao và logo vector.
-- **Không mở site công khai trước khi có đủ giấy tờ trên.**
-
-Hai chỗ mâu thuẫn trong catalogue, đã đánh dấu `needsReview` trong dữ liệu:
-Toner Pad ghi 200ml nhưng nhãn ghi 180ml/70EA; Sun Cushion ghi 200ml cho dạng phấn nước.
+- 23/09/2026: Chi báo hãng đã cho phép dùng ảnh, nội dung và mọi thủ tục giấy phép.
+- Chi chọn **chưa mở công khai**: giữ bellacella.vercel.app, giữ `noindex`, giữ nút "Nhận tư vấn",
+  `COMMERCE_ENABLED=false`. Mua domain / lên Vercel Pro là quyết định của Chi, làm sau.
+- Ảnh sản phẩm lấy từ cửa hàng chính hãng bellacella.store (`scripts/build-store-images.mjs`).
+- Dung tích và cách dùng lấy từ trang sản phẩm bellacella.store (bảng 상품정보제공고시, mục 사용방법).
+  Catalogue cũ ghi sai 3 dung tích (Toner Pad 200ml → 180ml/70 miếng, Sun Cushion 200ml → 25g,
+  Recella 24ml → 2g × 30 gói); số trên site theo bảng chính hãng.
+- Chưa có trên site: số tiếp nhận phiếu công bố, bản chứng nhận SPF, bảng thành phần đầy đủ (INCI).
+  Chỉ đưa lên khi Chi gửi bản giấy tờ — không tự điền.
 
 ## Nguyên tắc nội dung — bắt buộc
 
-**Mọi câu trên trang phải truy được về catalogue chính thức.**
+**Mọi câu trên trang phải truy được về catalogue chính thức hoặc cửa hàng chính hãng bellacella.store.**
 Không bịa chứng nhận. Không bịa số liệu clinical. Không bịa review hay testimonial.
 Không suy diễn chỉ định y khoa sau thủ thuật — thứ tự sản phẩm chỉ là quy trình
 chăm sóc thông thường, phải ghi rõ là theo hướng dẫn của chuyên gia điều trị.

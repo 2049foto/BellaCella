@@ -33,7 +33,7 @@ Chạy toàn bộ checklist sau mỗi trang. **Không sang trang tiếp theo khi
 
 - [ ] Mọi câu truy được về catalogue — không bịa chứng nhận, số liệu, review
 - [ ] Trang liệu trình có ghi rõ đây là quy trình thông thường, không phải chỉ định y khoa
-- [ ] Hai mục `needsReview` (Toner Pad, Sun Cushion) hiển thị ghi chú chờ xác nhận
+- [ ] Dung tích và cách dùng khớp trang sản phẩm chính hãng bellacella.store (bảng 상품정보제공고시, mục 사용방법)
 
 ## Giới hạn phạm vi
 

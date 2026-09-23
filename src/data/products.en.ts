@@ -83,30 +83,31 @@ export const NEEDS_EN: Record<string, { label: string; quotes: Record<string, st
 };
 
 export const USAGE_EN: Record<string, { when: string; steps: string[] }> = {
-  'bubble-clear-cleanser': { when: 'Morning and evening', steps: [
-    'Wet your face with lukewarm water.', 'Pump 1–2 times into your palm.',
-    'Massage gently in circles for 30–60 seconds, avoiding the eye area.', 'Rinse with clean water and pat dry with a soft towel.'] },
+  'bubble-clear-cleanser': { when: 'When cleansing', steps: [
+    'Wet your face with lukewarm water.', 'Pump 2–3 times to dispense foam into your palm.',
+    'Massage gently over the whole face.', 'Rinse off with lukewarm water.'] },
   'toner-pad': { when: 'After cleansing', steps: [
-    'Use the tweezers to take one pad; avoid putting fingers in the jar.', 'Wipe gently over the face from the centre outwards.',
-    'You can leave it on areas that need hydration for 3–5 minutes.', 'No need to rinse.'] },
-  'exo-bio-ampoule': { when: 'Evening, as part of a treatment course', steps: [
-    'Shake the vial gently before opening.', 'Use one full vial per application.',
-    'Pat gently to absorb; do not rub.', 'Wait until absorbed before the next step.'] },
-  'nmn-serum-mask': { when: '2–3 times a week', steps: [
-    'Use after cleansing and balancing.', 'Leave the mask on for 15–20 minutes.',
-    'Remove the mask and pat the remaining essence in.', 'Do not rinse; continue with your moisturising steps.'] },
+    'Wipe the whole face gently with the textured side of the pad.', 'Turn it over and wipe once more with the smooth side.',
+    'Close the lid tightly after use and keep the jar upright.', 'Sensitive skin: use twice a week, not daily.'] },
+  'exo-bio-ampoule': { when: 'After toner', steps: [
+    'Pull the cap in the direction marked UP to remove it fully, then fit the dropper. Mind the aluminium edge when opening.',
+    'Apply evenly over the face.', 'Massage gently until absorbed.'] },
+  'nmn-serum-mask': { when: 'After cleansing and toner', steps: [
+    'After washing your face, use a toner to balance the skin.', 'Unfold the mask, line it up with the eyes and mouth, and press it onto the whole face.',
+    'Remove after 15–20 minutes.', 'Pat the remaining essence in gently.'] },
   'sun-cushion': { when: 'Morning, last step', steps: [
-    'Apply after completing your skincare steps.', 'Press the puff lightly into the cushion and dab evenly from the centre of the face outwards.',
-    'Reapply every 2–3 hours when outdoors.', 'Remove thoroughly at the end of the day.'] },
+    'Take an appropriate amount onto the puff.', 'Pat gently to spread evenly.',
+    'Reapply several times during the day as needed.'] },
   'recovery-bb-cushion': { when: 'Daytime or overnight', steps: [
-    'Daytime: dab on as a base after skincare.', 'After an aesthetic treatment: apply a thin layer as a restorative moisturiser.',
-    'According to the catalogue, it can stay on the skin overnight without cleansing.', 'Clean the puff regularly.'] },
+    'Press the button on the right of the cushion pad inside the case to push the cream up.',
+    'Take an appropriate amount with the puff and pat it evenly over the areas you want to even out.',
+    'According to the brand, the formula lets skin breathe, so it can be applied after skin procedures and left on overnight.'] },
   'exo-bio-ampoule-mist': { when: 'Whenever skin needs moisture', steps: [
-    'Shake gently and hold 15–20cm from the face.', 'Mist evenly 2–3 times.',
-    'Pat in gently rather than letting it air-dry.', 'Can be used over make-up.'] },
-  'recella-cream': { when: 'Morning and evening, moisturising step', steps: [
-    'Tear open one sachet and use it all at once.', 'Apply evenly over face and neck.',
-    'Pat gently in upward strokes.', 'Use before sunscreen in the morning.'] },
+    'Shake the bottle up and down 3–5 times.', 'Tilt your face up slightly, close your eyes and spray 4–5 times from 10–20cm away.',
+    'Pat in gently.', 'Hold your breath while spraying so the mist does not get into your nose or mouth.'] },
+  'recella-cream': { when: 'Moisturising step, or as a sleeping mask', steps: [
+    'Tear the sachet open along the notch.', 'Apply an appropriate amount to face and neck and pat in.',
+    'As a sleeping mask: spread about one sachet (2g) evenly, leave it on, and wash your face gently the next morning.'] },
 };
 
 export const KNOWLEDGE_EN: Record<string, { title: string; eyebrow: string; body: string[]; evidence: string[] }> = {
