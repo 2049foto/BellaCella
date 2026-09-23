@@ -1,116 +1,88 @@
 # HANDOFF — Website BELLA CELLA
 
-Cập nhật: 2026-09-22 chiều (PC, Claude-Pro2).
-Branch `claude/bellacella-design-quality-5q5c5a`. Production: bellacella.vercel.app.
+Cập nhật: 2026-09-23 (PC, Claude-Pro2).
+Branch `main` (đã đẩy, Vercel đã build) · nhánh làm việc `claude/bellacella-design-quality-5q5c5a` = `main`.
+Production: bellacella.vercel.app (vẫn noindex, COMMERCE_ENABLED=false).
+Lịch sử các phiên trước: `git log`.
 
 ## Current goal
-Xong 4 việc Chi giao (số điện thoại + Zalo, tinh chỉnh trải nghiệm, rà soát câu chữ 2 ngôn ngữ,
-nâng chất ảnh). Còn lại là chờ giấy tờ nhà sản xuất mới mở công khai.
+Xong 3 việc Chi giao ngày 23/09: (1) cập nhật skill, (2) tối ưu ảnh + phóng to + UI/UX theo các
+hãng mỹ phẩm hàng đầu, (3) liệt kê kho skill chung, final review, đẩy build. **Cả ba đã xong.**
+Còn lại: chờ giấy tờ nhà sản xuất mới mở công khai.
 
-## Done (phiên này)
+## Done (phiên 23/09)
 
-### 1. Liên hệ — số mới 034 966 7962
-- Số cũ bị xoá khỏi toàn bộ repo. `BRAND.phone = '034 966 7962'`, `phoneHref = '+84349667962'`,
-  Zalo `zalo.me/84349667962`. Sửa ở `src/data/products.ts`, `CLAUDE.md`, `reference/prototype-data.js`.
-- **`src/components/ContactActions.tsx` (mới)** — ba cách liên hệ cùng một chỗ: Gọi · Nhắn Zalo · Chép số.
-  Nút chép dùng Clipboard API, báo "Đã chép" qua `role="status"`; máy chặn clipboard thì hiện số
-  ra màn hình để khách tự bôi đen. Gắn ở trang chủ và trang liên hệ; trang sản phẩm + FAQ có nút Zalo.
-- **Xoá hẳn** thư mục `deploy/` (bản tĩnh cũ, vẫn còn số điện thoại cũ và dữ liệu lệch).
+### Ảnh — hết vỡ chữ trên nhãn
+- Nguyên nhân gốc: ảnh cũ bị làm nét (sharpen) SAU khi phóng to → nhiễu JPEG thành răng cưa ở chữ nhãn.
+- Dựng lại từ lớp ảnh gốc 2480×3507 trong catalogue PDF: `scripts/extract-pdf-layers.py` + `scripts/build-images.mjs`
+  (lặp lại được, cho ra cùng từng byte). 8 ảnh sản phẩm 1000×1250 (4:5), nới nền bằng nhân bản mép —
+  không cắt sản phẩm, không vẽ thêm chi tiết. Hero 2000px, 5 ảnh chứng thực + ảnh kết cấu giữ pixel gốc.
+- Ảnh sản phẩm gốc chỉ 454px → mọi chỗ hiển thị ảnh sản phẩm khoá ≤460px để không bị kéo giãn nhoè.
+  Đã đo toàn site ở 5 bề rộng: không còn chỗ nào vượt 460px.
 
-### 2. Tinh chỉnh trải nghiệm
-- Form: lỗi báo **ngay tại ô thiếu** (`aria-invalid` + mô tả dưới ô), con trỏ nhảy về ô đầu tiên bị thiếu,
-  lỗi tự biến mất khi khách gõ lại. Bảng màu không có màu nhấn nên báo lỗi bằng viền dày + chữ đậm, không dùng đỏ.
-- Bộ lọc sản phẩm: `role="group"` + nhãn, và một dòng ẩn báo cho trình đọc màn hình còn lại bao nhiêu sản phẩm
-  sau mỗi lần lọc (đổi bộ lọc không tải lại trang nên nếu không báo thì người dùng trình đọc không biết gì đã đổi).
-- Xem ảnh cận cảnh: khoá cuộn nền khi mở, trả lại đúng trạng thái cũ khi đóng; ảnh trong khung phóng to
-  nén nhẹ tay hơn (`quality={90}`).
-- CSS: bôi đen theo màu thương hiệu, `text-wrap: balance/pretty` chống dòng cụt, cuộn mượt tới mục
-  (tôn trọng reduced-motion), ảnh nhích nhẹ khi rê chuột, FAQ trượt mở, **bản in sạch** (bỏ nav/nút, in kèm link).
+### Phóng to ảnh — hết lỗi "bấm vào lại bé đi"
+- Nguyên nhân: next/image khai `sizes` lớn hơn ảnh gốc → trình duyệt tự chia mật độ điểm ảnh, co ảnh xuống 458px.
+- Sửa: bề rộng khung phóng do CSS quyết định. Đo thật: máy tính 460 → 584px, điện thoại 336 → 374px,
+  điện thoại xoay ngang 460 → 460px (cuộn trong khung).
 
-### 3. Rà soát toàn bộ câu chữ (vi + en)
-- `src/i18n/ui.ts` viết lại toàn bộ: bỏ lối lạm dụng gạch ngang, câu dài ngắn xen kẽ, bỏ giọng máy dịch.
-- `src/data/products.ts` + `products.en.ts`: sửa lối viết định nghĩa bằng gạch ngang trong phần kiến thức
-  thành phần và FAQ; ba mô tả tiếng Anh bị mất chữ phân loại so với bản Việt đã bổ sung lại
-  (Restorative BB cushion · Exo-Bio Ampoule facial mist · ReCella day and night cream).
-- Sửa lỗi số ít/số nhiều tiếng Anh ở dòng đếm sản phẩm ("1 product" thay vì "1 products").
-- Trang liên hệ trước đây nhắc "Zalo" ba lần liền nhau; nay khối nút để chế độ gọn, phần ghi chú đổi sang
-  thông tin có ích (gửi kèm ảnh da + tên liệu trình để tư vấn sát hơn).
-- **Phần mô tả công dụng sản phẩm vẫn là nguyên văn catalogue, không đụng tới.** `assertNeedQuotes()`
-  chạy lúc build bảo đảm câu trích "tìm theo nhu cầu" khớp nguyên văn ở cả 2 ngôn ngữ.
+### UI/UX mượn từ các hãng lớn (Aesop, La Mer, Sephora…)
+- Thanh tóm tắt sản phẩm dính đáy khi cuộn qua khối giá (tên · giá · Nhận tư vấn · Zalo · Gọi);
+  màn hẹp gọn lại, nút Zalo nổi tự ẩn/đẩy lên để không trùng, không chồng.
+- Link "Tìm hiểu Exosome, NMN và các nhóm thành phần" trên trang sản phẩm → trang Kiến thức.
+- Khối "Bước tiếp theo": khung 4:5, hiện nguyên chai (trước bị cắt nắp và đáy).
+- Hướng dẫn dùng trên điện thoại: ảnh thu nhỏ cạnh chữ (trước bung 525px nhoè).
+- Thanh cuộn chừa chỗ sẵn (`scrollbar-gutter`) → mở ảnh lớn không giật ngang.
 
-### 4. Ảnh — dựng lại từ catalogue gốc
-- Nguồn: `Catalogue BELLA CELLA VN.pdf` Chi gửi, trích ở 2480px/trang.
-- 8 ảnh sản phẩm 908 → **1200px**, ảnh kết cấu 900 → 1200px, ảnh hero 1400 → **2000px**, 5 ảnh chứng thực dựng lại.
-- Đã so 1:1 với ảnh cũ trước khi thay: cùng nguồn, bản mới nhiều điểm ảnh hơn và ít viền halo hơn.
-  Tổng thư mục ảnh 1,01 MB. Xoá `hero-1400.webp`, `hero-760.webp`.
-- Giới hạn còn lại: ảnh trong catalogue vốn chỉ ~448px cho khung sản phẩm. Muốn nét hơn nữa thì
-  **phải xin ảnh gốc của nhà sản xuất** — không có cách nào bịa thêm chi tiết.
+### Final review (code-review high) — 6 lỗi, đã sửa cả 6
+1. Thanh tóm tắt trên máy tính bị header che hoàn toàn → chuyển dính đáy ở mọi cỡ màn hình.
+2. Thanh tự dựng lại nút tư vấn → dùng `ProductAction` (bật giỏ hàng là đúng hành vi).
+3. Mốc hiện thanh đoán header 70px → đo chiều cao header thật.
+4. Phóng to trên điện thoại xoay ngang nhỏ hơn ảnh trên trang → tối thiểu 460px.
+5. Khối bước tiếp theo cắt chai → khung 4:5.
+6. Style inline thừa trên link → bỏ.
 
-## Số đo thật (chạy trên máy, bản build này)
+### Skill (kho chung cho cả hai app Claude)
+- Danh sách đầy đủ: **`D:\APP FACTORY\skill-updates\SKILLS.md`** (3 tầng: skill cá nhân dùng chung qua junction ·
+  plugin Claude Code · skill tài khoản claude.ai).
+- Báo cáo cập nhật: `D:\APP FACTORY\skill-updates\2026-09-23-skill-update.md`. Ledger: `INSTALLED.md`.
+- Đã cập nhật: Claude Code 2.1.252 → 2.1.280, superpowers 6.4.1, context7, posthog, expo, marketing-skills,
+  revenuecat 2.3.0, 8 skill `asc-*`… Cài mới `modern-web-guidance` (Google Chrome, chính thức).
+- Repo website tắt 4 plugin không dùng (posthog, expo, revenuecat, supabase) ở phạm vi local → nhẹ ~29k token/phiên.
+- Gói `.skill` sẵn để tải lên tài khoản kia: `D:\APP FACTORY\_skillpkg\` (skill-updater, llm-council, find-skills, frontend-design).
+
+## Số đo thật (bản vừa đẩy)
 ```
-npm run accept
-  404 /khong-co-trang-nay: HTTP 404 lang=vi h1="Không tìm thấy trang"
-  404 /en/no-such-page:    HTTP 404 lang=en h1="Page not found"
-  404 /san-pham/khong-co:  HTTP 404 lang=vi h1="Không tìm thấy trang"
-  song ngữ: 18 trang kiểm lang/hreflang/nút đổi ngôn ngữ
-  axe: 72 lượt quét, 0 lượt có lỗi serious/critical
+BASE=https://bellacella.vercel.app npm run accept
+  404 ×3 đúng · song ngữ 18 trang · axe 72 lượt, 0 lỗi serious/critical
   overflow/reveal: 18 route × 3 bề rộng × 2 theme
-  Lighthouse localhost: / 82 · /san-pham/exo-bio-ampoule 96 · /en 87 — a11y 100, bp 100, CLS 0.000
+  Lighthouse production: / 90 · /san-pham/exo-bio-ampoule 96 · /en 99 — a11y 100, bp 100, CLS 0
+  KẾT QUẢ: ĐẠT
+BASE=https://bellacella.vercel.app npm run perf -- --runs 3   → KẾT QUẢ: ĐẠT mọi ngưỡng
+node .dev.local.mjs (local)                                    → 10/10 thiết bị OK (320 → 2560px)
+Thanh tóm tắt production: hiện đúng, nằm trên cùng, không chồng Zalo ở 1280/768/390px
+```
+SEO 69 là do noindex có chủ đích (chưa mở công khai). Lighthouse local thấp hơn (~85) vì máy local nén gzip,
+Vercel nén brotli — mốc chuẩn là production.
 
-node .dev.local.mjs   → 10/10 thiết bị OK (320px → 2560px)
-npx tsc --noEmit      → sạch
-npm run build         → 43/43 trang tĩnh
-```
-
-**Về 2 mục Lighthouse dưới 90 ở trên:** không phải do bản này. Đã dựng worktree bản cũ `b7a6d65`,
-build và chạy song song cùng máy cùng lúc, 3 lượt mỗi bên:
-```
-CŨ  (b7a6d65, :3001)  perf 85  FCP 2.3s  LCP 3.9s   | các lượt: 82 86 85
-MỚI (bản này,  :3000)  perf 85  FCP 2.4s  LCP 3.9s   | các lượt: 85 84 85
-```
-Hai bản bằng nhau. Ngưỡng ≥ 90 trong `accept` được chỉnh theo production: Vercel nén brotli
-(trang chủ 25,4 KB trên đường truyền) còn `next start` ở máy chỉ có gzip (43,8 KB).
-Cùng lúc đó bản cũ đo trên bellacella.vercel.app được perf 92 / FCP 1,4s.
-→ **Đo hiệu năng phải đo trên production**, không đo localhost.
-
-## Đã deploy — số đo trên production (bellacella.vercel.app, bản 1cd7040)
-```
-BASE=https://bellacella.vercel.app npm run accept   -> KẾT QUẢ: ĐẠT
-  404 vi/en/slug sai: đúng mã 404, đúng ngôn ngữ, có khung site
-  song ngữ 18 trang · axe 72 lượt quét 0 lỗi serious/critical
-  /  91 · /san-pham/exo-bio-ampoule 97 · /en 99   (a11y 100, bp 100, CLS 0)
-
-BASE=... npm run perf -- --runs 3                   -> ĐẠT mọi ngưỡng
-route                        perf  LCP    CLS
-/                             92   3.0s   0.000
-/san-pham                     99   2.0s   0.000
-/san-pham/exo-bio-ampoule     99   1.8s   0.000
-/lieu-trinh                  100   1.8s   0.000
-/huong-dan                    96   2.7s   0.000
-/kien-thuc                    98   2.2s   0.000
-/faq                          99   2.0s   0.000
-/en                           99   2.0s   0.000
-/en/products                  99   2.1s   0.004
-/en/products/exo-bio-ampoule  99   1.8s   0.000
-```
-Trang chủ 92 là điểm thấp nhất, đúng bằng bản cũ đo cùng máy cùng ngày (92) → không phải do bản này,
-mà do mạng hôm nay chậm hơn lúc đo lần trước. Mọi trang còn lại 96–100.
+## In progress
+Không có việc dở.
 
 ## Next 3 actions
-1. Chi mở web kiểm mắt thường: số 034 966 7962, nút Gọi/Nhắn Zalo/Chép số, chuyển VI–EN.
-2. Chi kiểm tra tài khoản Zalo của số 034 966 7962 đã mở chưa — nút "Nhắn Zalo" trỏ
-   `zalo.me/84349667962`, số chưa đăng ký Zalo thì link sẽ hỏng.
-3. Chờ giấy tờ nhà sản xuất (số công bố 8 SKU, chứng nhận SPF, ảnh gốc, logo vector) rồi mới mở công khai.
+1. `LOCAL-ONLY: cần thực hiện trước 16:00` — nâng app-factory-rules 1.2.0 → 2.0.x: đóng hết cửa sổ Claude trừ một, rồi
+   `powershell -ExecutionPolicy Bypass -File "D:\APP FACTORY\Claude 2\PUBLISH-PLUGIN.ps1"` →
+   `claude plugin update app-factory-rules@app-factory-toolkit`.
+2. Chi xin nhà sản xuất: ảnh sản phẩm gốc độ phân giải cao (ảnh hiện tại đã ở giới hạn của catalogue 454px),
+   logo vector, số tiếp nhận phiếu công bố 8 SKU, chứng nhận SPF Sun Cushion.
+3. Có ảnh gốc → chạy lại `node scripts/build-images.mjs` với nguồn mới (bỏ giới hạn 460px trong `.pdp`, `.nextband`).
 
-## Blockers (cần Chi hoặc nhà sản xuất)
-- Tài khoản Zalo cho số mới.
-- Giấy tờ nhà sản xuất — chưa đủ thì giữ `robots noindex`, không mở công khai.
-- Ảnh sản phẩm gốc độ phân giải cao: trần chất lượng hiện tại nằm ở nguồn catalogue.
-- Hạ tầng khi chạy thật: Vercel Hobby cấm dùng thương mại → Cloudflare Pages hoặc Vercel Pro.
-- `LOCAL-ONLY: cần thực hiện trước 16:00` — nâng app-factory-rules 1.2.0 → 2.0.x.
+## Blockers
+- Không mở công khai khi chưa đủ giấy tờ nhà sản xuất (xem CLAUDE.md).
+- MCP RevenueCat, expo, supabase cần anh uỷ quyền (claude.ai → Settings → Connectors, hoặc `/mcp` trong terminal `claude`).
+- Tài khoản Zalo cho 034 966 7962 phải tồn tại thì nút Zalo mới dùng được.
 
-## Ghi chú kỹ thuật
-- Đo hiệu năng: **luôn dùng production làm chuẩn**, localhost thấp hơn ~7 điểm chỉ vì thiếu brotli.
-- Git Bash trên máy này nuốt tham số bắt đầu bằng `/` → chạy perf với `MSYS_NO_PATHCONV=1`.
-- Mọi file `*.local.mjs` là công cụ đo cục bộ, đã gitignore: `.dev.local.mjs` (ma trận thiết bị),
-  `.check.local.mjs` (form/bộ lọc/zoom/số điện thoại), `.proof.local.mjs` (đọc chữ đã render để soát).
+## Files touched (phiên 23/09)
+`public/img/*.webp` · `scripts/extract-pdf-layers.py` (mới) · `scripts/build-images.mjs` (mới) · `.gitignore` ·
+`src/app/globals.css` · `src/components/ProductImageZoom.tsx` · `src/components/ProductStickyBar.tsx` (mới) ·
+`src/components/ProductAction.tsx` · `src/app/[lang]/san-pham/[slug]/page.tsx` · `src/app/[lang]/huong-dan/page.tsx` ·
+`src/i18n/ui.ts` · `HANDOFF.md` · ngoài repo: `D:\APP FACTORY\skill-updates\{SKILLS.md, 2026-09-23-skill-update.md, INSTALLED.md}`,
+`D:\APP FACTORY\_skillpkg\*.skill`
