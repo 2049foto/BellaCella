@@ -105,11 +105,6 @@ export default async function ProductPage({ params }: Params) {
           <p style={{ marginTop: '22px', fontSize: '12.5px' }}>
             <Link className="inline" href={href(lang, 'knowledge')}>{t.learnActives}</Link>
           </p>
-          {p.needsReview && (
-            <div className="note" style={{ marginTop: '20px' }}>
-              <strong>{t.pending}</strong> {p.needsReview}
-            </div>
-          )}
         </div>
       </section>
       <section className="block flush">

@@ -16,7 +16,6 @@ export type Product = {
   priceUnit: string;
   group: string;
   badge: string | null;
-  needsReview: string | null;
   actives: string | null;
   activeList: string[] | null;
   body: string[];
@@ -53,18 +52,18 @@ export const PRODUCTS: Product[] = [
     name: 'BUBBLE CLEAR CLEANSER',
     vi: 'Sữa rửa mặt tạo bọt làm sạch dịu nhẹ',
     size: '200ml', price: 800000, priceUnit: '',
-    group: 'Làm sạch', badge: null, needsReview: null,
+    group: 'Làm sạch', badge: null,
     actives: 'Chiết xuất hạt bưởi (Citrus Grandis Seed), Artemisia Princeps, chiết xuất lá trà (Camellia Sinensis).',
     activeList: null,
     body: ['Sữa rửa mặt tạo bọt dịu nhẹ có nguồn gốc từ các thành phần thiên nhiên, giúp làm sạch hiệu quả bụi bẩn và tạp chất, đồng thời duy trì độ ẩm tự nhiên cho da mà không gây cảm giác khô căng sau khi rửa.']
   },
   {
-    id: 'BC-02', sku: 'BC-TONERPAD-200', slug: 'toner-pad', inStock: true,
+    id: 'BC-02', sku: 'BC-TONERPAD-180', slug: 'toner-pad', inStock: true,
     name: 'TONER PAD',
     vi: 'Miếng bông dưỡng da đa năng',
-    size: '200ml', price: 1100000, priceUnit: '',
+    // Dung tích theo bảng thông tin sản phẩm của hãng (bellacella.store) và nhãn hũ; catalogue in nhầm 200ml.
+    size: '180ml / 70 miếng', price: 1100000, priceUnit: '',
     group: 'Cân bằng', badge: null,
-    needsReview: 'Catalogue ghi 200ml, nhãn trên hũ ghi 180ml / 70EA — chờ xác nhận.',
     actives: 'Chiết xuất hạt bưởi (Citrus Grandis Seed), chiết xuất rau má (Asiatic Pennywort), 3 loại Amino Acid.',
     activeList: null,
     body: ['Với dưỡng chất từ chiết xuất thực vật, sản phẩm giúp cấp ẩm, cân bằng độ pH và mang lại làn da tươi mới, khỏe mạnh, căng mịn đầy sức sống.']
@@ -74,7 +73,7 @@ export const PRODUCTS: Product[] = [
     name: 'EXO-BIO AMPOULE',
     vi: 'Tinh chất Exo-Bio Ampoule',
     size: '5ml × 10 lọ', price: 7000000, priceUnit: '/ Hộp',
-    group: 'Tinh chất', badge: null, needsReview: null,
+    group: 'Tinh chất', badge: null,
     actives: null,
     activeList: ['6 loại Exosome có nguồn gốc từ tế bào gốc thực vật', '7 loại Collagen', '15 loại Peptide', '8 loại Hyaluronic Acid'],
     body: ['Tinh chất chuyên sâu dành cho cả liệu trình chuyên nghiệp và chăm sóc tại nhà, chứa 20% Exosome thực vật, giúp tăng cường năng lượng cho làn da, cải thiện độ săn chắc và hỗ trợ làm chậm các dấu hiệu lão hóa.']
@@ -84,7 +83,7 @@ export const PRODUCTS: Product[] = [
     name: 'DR.BECELL NMN SERUM MASK',
     vi: 'Mặt nạ tinh chất NMN Dr.Becell',
     size: '25ml × 10 miếng/hộp', price: 1100000, priceUnit: '',
-    group: 'Mặt nạ', badge: null, needsReview: null,
+    group: 'Mặt nạ', badge: null,
     actives: 'NMN (Nicotinamide Mononucleotide) cùng các hoạt chất dưỡng ẩm và phục hồi.',
     activeList: null,
     body: ['Mặt nạ serum cao cấp giúp cấp ẩm chuyên sâu, hỗ trợ phục hồi hàng rào bảo vệ da và cải thiện độ đàn hồi. Công thức giàu dưỡng chất giúp làn da trở nên mềm mại, căng bóng và rạng rỡ, đặc biệt phù hợp với làn da khô, xỉn màu hoặc sau các liệu trình chăm sóc chuyên sâu.']
@@ -93,9 +92,9 @@ export const PRODUCTS: Product[] = [
     id: 'BC-05', sku: 'BC-SUNCUSHION', slug: 'sun-cushion', inStock: true,
     name: 'SUN CUSHION SPF50+ PA++++',
     vi: 'Phấn nước chống nắng SPF50+ PA++++',
-    size: '200ml', price: 900000, priceUnit: '',
+    // Theo bảng thông tin sản phẩm của hãng (bellacella.store); catalogue in nhầm 200ml.
+    size: '25g', price: 900000, priceUnit: '',
     group: 'Chống nắng', badge: null,
-    needsReview: 'Catalogue ghi 200ml cho dạng phấn nước — bất thường, chờ xác nhận.',
     actives: 'Lô hội, rau má và hỗn hợp thảo mộc thiên nhiên.',
     activeList: null,
     body: ['Phấn nước chống nắng khoáng giúp bảo vệ da trước tia UV, mang lại lớp nền mỏng nhẹ, tự nhiên, đồng thời làm dịu và cấp ẩm cho da nhờ các thành phần làm mát.',
@@ -106,7 +105,7 @@ export const PRODUCTS: Product[] = [
     name: 'RECOVERY BB CUSHION',
     vi: 'Phấn nước phục hồi Recovery BB Cushion',
     size: '15g', price: 1200000, priceUnit: '',
-    group: 'Phục hồi', badge: 'BEST SELLER', needsReview: null,
+    group: 'Phục hồi', badge: 'BEST SELLER',
     actives: null, activeList: null,
     body: ['Chứa phức hợp độc quyền BELLA CELLA gồm Exosome từ tế bào gốc thực vật, 8 loại dưỡng chất quý chiết xuất từ thực vật và 7 loại Peptide.',
            'Sản phẩm dùng cho make-up giúp che phủ tự nhiên, hỗ trợ tăng cường hàng rào bảo vệ da, nuôi dưỡng làn da khỏe mạnh và mang đến hiệu ứng rạng rỡ tươi trẻ.',
@@ -117,7 +116,7 @@ export const PRODUCTS: Product[] = [
     name: 'EXO-BIO AMPOULE MIST',
     vi: 'Xịt dưỡng Exo-Bio Ampoule Mist',
     size: '50ml', price: 650000, priceUnit: '',
-    group: 'Cấp ẩm', badge: null, needsReview: null,
+    group: 'Cấp ẩm', badge: null,
     actives: null,
     activeList: ['2 loại Exosome có nguồn gốc từ thực vật', '8 loại Hyaluronic Acid'],
     body: ['Xịt dưỡng cung cấp độ ẩm và dưỡng chất tức thì, giúp làn da luôn tươi mát, căng mọng. Công thức chứa Exosome thực vật kết hợp 8 loại Hyaluronic Acid cùng nguyên liệu độc quyền của BELLA CELLA giúp nuôi dưỡng làn da khỏe mạnh mỗi ngày.']
@@ -126,8 +125,9 @@ export const PRODUCTS: Product[] = [
     id: 'BC-08', sku: 'BC-RECELLA-30', slug: 'recella-cream', inStock: true,
     name: 'RECELLA CREAM',
     vi: 'Kem dưỡng ReCella Cream',
-    size: '24ml × 30 gói', price: 600000, priceUnit: '/ Hộp',
-    group: 'Dưỡng', badge: null, needsReview: null,
+    // Theo bảng thông tin sản phẩm của hãng và nhãn hộp (2g × 30ea); catalogue in nhầm 24ml.
+    size: '2g × 30 gói', price: 600000, priceUnit: '/ Hộp',
+    group: 'Dưỡng', badge: null,
     actives: null,
     activeList: ['Dầu Babassu: 50.000 ppm'],
     body: ['Kem dưỡng ngày và đêm chứa 14 loại chiết xuất thực vật, giúp nuôi dưỡng chuyên sâu, củng cố hàng rào bảo vệ độ ẩm tự nhiên và duy trì làn da mềm mại, khỏe mạnh.',

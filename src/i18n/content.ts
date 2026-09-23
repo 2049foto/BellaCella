@@ -25,7 +25,7 @@ function build(lang: Lang): Content {
     const e = PRODUCTS_EN[p.slug];
     if (!e) throw new Error(`Thiếu bản dịch EN cho sản phẩm ${p.slug}`);
     return { ...p, vi: e.desc, group: e.group, size: e.size, priceUnit: e.priceUnit,
-      actives: e.actives, activeList: e.activeList, body: e.body, needsReview: e.needsReview };
+      actives: e.actives, activeList: e.activeList, body: e.body };
   });
   const bySlug = (s: string) => products.find((p) => p.slug === s);
   const needs: Need[] = NEEDS.map((n) => {

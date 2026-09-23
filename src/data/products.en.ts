@@ -5,55 +5,53 @@
 
 type ProductEn = {
   desc: string; group: string; size: string; priceUnit: string;
-  actives: string | null; activeList: string[] | null; body: string[]; needsReview: string | null;
+  actives: string | null; activeList: string[] | null; body: string[];
 };
 
 export const PRODUCTS_EN: Record<string, ProductEn> = {
   'bubble-clear-cleanser': {
     desc: 'Gentle foaming facial cleanser', group: 'Cleanse', size: '200ml', priceUnit: '',
-    actives: 'Citrus Grandis (grapefruit) seed extract, Artemisia Princeps, Camellia Sinensis (tea) leaf extract.', activeList: null, needsReview: null,
+    actives: 'Citrus Grandis (grapefruit) seed extract, Artemisia Princeps, Camellia Sinensis (tea) leaf extract.', activeList: null,
     body: ['A gentle foaming cleanser derived from natural ingredients that effectively removes dirt and impurities while maintaining the skin’s natural moisture, without leaving it feeling tight after washing.'],
   },
   'toner-pad': {
-    desc: 'Multi-purpose skincare toner pads', group: 'Balance', size: '200ml', priceUnit: '',
+    desc: 'Multi-purpose skincare toner pads', group: 'Balance', size: '180ml / 70 pads', priceUnit: '',
     actives: 'Citrus Grandis (grapefruit) seed extract, Asiatic Pennywort (centella) extract, 3 types of Amino Acid.', activeList: null,
-    needsReview: 'The catalogue states 200ml; the jar label states 180ml / 70 pads — awaiting confirmation.',
     body: ['With nourishment from plant extracts, it helps hydrate, balance the skin’s pH and leave skin fresh, healthy, smooth and full of vitality.'],
   },
   'exo-bio-ampoule': {
     desc: 'Exo-Bio Ampoule essence', group: 'Essence', size: '5ml × 10 vials', priceUnit: '/ box',
-    actives: null, needsReview: null,
+    actives: null,
     activeList: ['6 types of Exosome derived from plant stem cells', '7 types of Collagen', '15 types of Peptide', '8 types of Hyaluronic Acid'],
     body: ['An intensive essence for both professional treatments and home care, containing 20% plant Exosome, helping energise the skin, improve firmness and help slow the visible signs of ageing.'],
   },
   'nmn-serum-mask': {
     desc: 'Dr.Becell NMN essence sheet mask', group: 'Mask', size: '25ml × 10 sheets / box', priceUnit: '',
-    actives: 'NMN (Nicotinamide Mononucleotide) with moisturising and restoring actives.', activeList: null, needsReview: null,
+    actives: 'NMN (Nicotinamide Mononucleotide) with moisturising and restoring actives.', activeList: null,
     body: ['A premium serum mask that provides intensive hydration, helps restore the skin barrier and improves elasticity. Its nutrient-rich formula leaves skin soft, plump and radiant, especially suited to dry or dull skin, or after intensive treatments.'],
   },
   'sun-cushion': {
-    desc: 'Sunscreen cushion SPF50+ PA++++', group: 'Sun care', size: '200ml', priceUnit: '',
+    desc: 'Sunscreen cushion SPF50+ PA++++', group: 'Sun care', size: '25g', priceUnit: '',
     actives: 'Aloe, centella and a blend of natural botanicals.', activeList: null,
-    needsReview: 'The catalogue states 200ml for a cushion compact — unusual, awaiting confirmation.',
     body: ['A mineral sunscreen cushion that protects skin from UV rays and gives a thin, light, natural base, while soothing and hydrating thanks to its cooling ingredients.',
            'The product holds a Korean safety certification, is gentle, and is suitable even for children’s skin.'],
   },
   'recovery-bb-cushion': {
     desc: 'Restorative BB cushion', group: 'Recovery', size: '15g', priceUnit: '',
-    actives: null, activeList: null, needsReview: null,
+    actives: null, activeList: null,
     body: ['Contains BELLA CELLA’s exclusive complex of Exosome from plant stem cells, 8 precious plant-derived nutrients and 7 types of Peptide.',
            'A make-up product that gives natural coverage, helps strengthen the skin barrier, nourishes healthy skin and brings a youthful, radiant finish.',
            'Its special formula can be used as a restorative moisturising layer after aesthetic treatments. It can stay on the skin overnight without cleansing, helping nourish and support the skin’s renewal.'],
   },
   'exo-bio-ampoule-mist': {
     desc: 'Exo-Bio Ampoule facial mist', group: 'Hydrate', size: '50ml', priceUnit: '',
-    actives: null, needsReview: null,
+    actives: null,
     activeList: ['2 types of plant-derived Exosome', '8 types of Hyaluronic Acid'],
     body: ['A facial mist that delivers instant moisture and nutrients, keeping skin fresh and plump. Its formula combines plant Exosome with 8 types of Hyaluronic Acid and BELLA CELLA’s exclusive ingredients to nourish healthy skin every day.'],
   },
   'recella-cream': {
-    desc: 'ReCella day and night cream', group: 'Moisturise', size: '24ml × 30 sachets', priceUnit: '/ box',
-    actives: null, needsReview: null,
+    desc: 'ReCella day and night cream', group: 'Moisturise', size: '2g × 30 sachets', priceUnit: '/ box',
+    actives: null,
     activeList: ['Babassu oil: 50,000 ppm'],
     body: ['A day and night cream with 14 plant extracts that deeply nourishes, reinforces the skin’s natural moisture barrier and keeps skin soft and healthy.',
            'Packed in single-use sachets for hygiene and convenience, easy to carry anywhere.'],

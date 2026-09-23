@@ -6,9 +6,28 @@ Production: bellacella.vercel.app (vẫn noindex, COMMERCE_ENABLED=false).
 Lịch sử các phiên trước: `git log`.
 
 ## Current goal
-Việc mới nhất (23/09 trưa): lấy ảnh từ cửa hàng chính thức của hãng https://bellacella.store
-(베라셀라 공식 스토어) tích hợp vào website. **Đã xong và đã deploy** (commit 9ed0be6).
-Còn lại: chờ giấy tờ nhà sản xuất mới mở công khai.
+Chi (23/09 chiều): hãng đã cho phép mọi giấy tờ/ảnh. "Hoàn thiện website xong luôn" nhưng **KHÔNG mở công khai**:
+giữ bellacella.vercel.app, giữ noindex, giữ nút "Nhận tư vấn" (Chi mua domain / lên Vercel Pro sau, hiện dùng cá nhân).
+
+## Done (23/09 chiều, commit local, CHƯA push)
+- Dung tích theo bảng thông tin chính hãng (상품정보제공고시 trên bellacella.store): Toner Pad **180ml / 70 miếng**
+  (SKU BC-TONERPAD-180), Sun Cushion **25g**, Recella **2g × 30 gói**. 5 SKU còn lại khớp (BB Cushion store không có bảng, giữ 15g).
+- Xoá hẳn cơ chế needsReview (type, dữ liệu vi/en, khối UI trên trang sản phẩm, chuỗi `pending`). `npx tsc --noEmit` đạt.
+
+## In progress — thay hướng dẫn dùng chung bằng cách dùng CHÍNH HÃNG
+File: `src/data/products.ts` (USAGE, bỏ field `usageSource` + sửa comment), `src/data/products.en.ts` (USAGE_EN),
+`src/i18n/ui.ts` (`usageNote` vi/en; `note`/`noteStrong` trang hướng dẫn: bỏ câu "không phải hướng dẫn chính thức").
+Bản dịch từ mục 사용방법 của hãng (đã đọc từ ảnh, dùng nguyên):
+- Cleanser: làm ướt mặt bằng nước ấm · bơm 2–3 lần lấy bọt ra lòng bàn tay · massage nhẹ khắp mặt · rửa sạch bằng nước ấm.
+- Toner Pad: lau nhẹ toàn mặt bằng mặt nhám · lật sang mặt mịn lau lại một lần · đậy kín nắp, để hũ đứng · da nhạy cảm: 2 lần/tuần, không dùng hằng ngày.
+- Exo-Bio Ampoule: kéo nắp theo chữ UP để mở hẳn, lắp đầu nhỏ giọt (cẩn thận nắp nhôm) · thoa đều khắp mặt · massage nhẹ cho thấm.
+- NMN Mask: sau rửa mặt dùng toner · trải mặt nạ, đặt khớp mắt và miệng, áp sát khắp mặt · 15–20 phút tháo ra · vỗ nhẹ phần tinh chất còn lại cho thấm.
+- Sun Cushion: lấy lượng vừa đủ ra bông phấn · vỗ nhẹ dàn đều · dặm lại nhiều lần khi cần.
+- BB Cushion: nhấn nút bên phải tấm đệm trong hộp để kem đẩy lên · lấy vừa đủ bằng bông phấn, vỗ dàn đều vùng cần tạo tông ·
+  TIP của hãng: da thở được, có thể thoa sau thủ thuật cho da và để qua đêm.
+- Mist: lắc lên xuống 3–5 lần · hơi ngửa mặt, nhắm mắt, xịt 4–5 lần cách 10–20cm · vỗ nhẹ cho thấm · nín thở khi xịt để sương không vào mũi/miệng.
+- Recella: xé gói theo đường răng cưa · thoa lượng vừa đủ lên mặt và cổ cho thấm · làm mặt nạ ngủ: thoa đều ~1 gói (2g), không lau, sáng hôm sau rửa mặt nhẹ.
+(`when` giữ theo quy trình; mặt nạ đổi "2–3 lần mỗi tuần" → "Sau bước làm sạch và toner" vì hãng không ghi tần suất.)
 
 ## Done — ảnh từ bellacella.store (23/09 trưa)
 - 45 ảnh sản phẩm (8 ảnh chính + 37 ảnh phụ): ảnh chụp sản phẩm, người mẫu, cận cảnh, kết cấu.
@@ -84,16 +103,14 @@ SEO 69 là do noindex có chủ đích (chưa mở công khai).
 Không có việc dở.
 
 ## Next 3 actions
-1. `LOCAL-ONLY: cần thực hiện trước 16:00` — nâng app-factory-rules 1.2.0 → 2.0.x: đóng hết cửa sổ Claude trừ một, rồi
-   `powershell -ExecutionPolicy Bypass -File "D:\APP FACTORY\Claude 2\PUBLISH-PLUGIN.ps1"` →
-   `claude plugin update app-factory-rules@app-factory-toolkit`.
-2. Chi xác nhận với hãng được dùng ảnh của bellacella.store trên website phân phối VN (ảnh thuộc hãng),
-   và xin: ảnh gốc độ phân giải cao (store chỉ có 570–1000px), logo vector, số công bố 8 SKU, chứng nhận SPF.
-3. Có ảnh gốc lớn hơn → thêm vào `SETS` trong `scripts/build-store-images.mjs`, chạy `node scripts/build-store-images.mjs`,
-   rồi nới cột ảnh `.pdp` (460px) và khung xem lớn (680px) theo độ phân giải mới.
+1. Viết USAGE / USAGE_EN / usageNote / note theo bản dịch ở trên → `npx tsc --noEmit` → `npm run build` → `npm run accept`.
+2. Commit, `git push origin main` + `git push origin main:claude/bellacella-design-quality-5q5c5a`, chờ Vercel,
+   `BASE=https://bellacella.vercel.app npm run accept`.
+3. Sửa CLAUDE.md mục "Việc chưa xong": hãng đã cho phép (Chi 23/09); site vẫn riêng tư theo lựa chọn của Chi.
+   Gợi ý thêm: xin Chi danh sách thành phần đầy đủ (INCI) trong phiếu công bố để thêm mục "Thành phần đầy đủ".
 
 ## Blockers
-- Không mở công khai khi chưa đủ giấy tờ nhà sản xuất (xem CLAUDE.md).
+- Chi chưa muốn mở công khai: giữ noindex, Vercel Hobby, bellacella.vercel.app.
 - MCP RevenueCat, expo, supabase cần anh uỷ quyền (claude.ai → Settings → Connectors, hoặc `/mcp` trong terminal `claude`).
 - Tài khoản Zalo cho 034 966 7962 phải tồn tại thì nút Zalo mới dùng được.
 
