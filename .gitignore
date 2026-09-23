@@ -34,3 +34,6 @@ yarn-error.log*
 
 # acceptance output
 /.accept/
+
+# Lớp ảnh trích từ catalogue PDF (scripts/extract-pdf-layers.py) — nặng, không đưa vào repo.
+.src-img/

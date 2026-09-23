@@ -7,6 +7,7 @@ import { IMG } from '@/lib/images';
 import { zaloUrl } from '@/lib/brand';
 import ProductAction from '@/components/ProductAction';
 import ProductImageZoom from '@/components/ProductImageZoom';
+import ProductStickyBar from '@/components/ProductStickyBar';
 import JsonLd from '@/components/JsonLd';
 import { productSchema, breadcrumbSchema } from '@/lib/schema';
 import { content } from '@/i18n/content';
@@ -80,6 +81,8 @@ export default async function ProductPage({ params }: Params) {
             <a className="btn ghost" href={`tel:${BRAND.phoneHref}`}>{ui(lang).call} {BRAND.phone}</a>
             <a className="btn ghost" href={zaloUrl} target="_blank" rel="noopener">{ui(lang).contactActions.zalo}</a>
           </div>
+          {/* Mốc quan sát nằm ngay dưới khối giá: giá khuất thì thanh tóm tắt hiện ra. */}
+          <ProductStickyBar product={p} lang={lang} />
           <div className="spec">
             <div className="row"><span className="k">{t.size}</span><span>{p.size}</span></div>
             <div className="row"><span className="k">{t.sku}</span><span style={{ fontVariantNumeric: 'tabular-nums' }}>{p.sku}</span></div>
@@ -98,6 +101,9 @@ export default async function ProductPage({ params }: Params) {
               </p>
             </div>
           )}
+          <p style={{ marginTop: '22px', fontSize: '12.5px' }}>
+            <Link className="inline" href={href(lang, 'knowledge')} style={{ textDecoration: 'underline' }}>{t.learnActives}</Link>
+          </p>
           {p.needsReview && (
             <div className="note" style={{ marginTop: '20px' }}>
               <strong>{t.pending}</strong> {p.needsReview}

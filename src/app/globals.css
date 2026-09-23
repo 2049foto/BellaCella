@@ -26,7 +26,9 @@
 /* ---- ngữ pháp bố cục port nguyên từ reference/prototype.html ---- */
 * { box-sizing: border-box; }
 /* Header dính ~64px: chừa chỗ khi cuộn/tab tới mục tử tế để focus không bị che (WCAG 2.4.11). */
-html { scroll-padding-top: 84px; }
+/* Chừa sẵn chỗ thanh cuộn: trang dài/ngắn không làm nội dung nhích ngang,
+   và khoá cuộn lúc mở ảnh lớn cũng không gây giật. */
+html { scroll-padding-top: 84px; scrollbar-gutter: stable; }
 body {
   margin: 0;
   background: var(--paper);
@@ -253,10 +255,30 @@ figure.texture { position: relative; margin: 0; background: var(--paper-2); aspe
 @media (max-width: 560px) { .cgrid figure.lead { grid-column: span 1; } }
 
 /* ---- PDP ---- */
-.pdp { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); gap: clamp(28px, 5.5vw, 88px); align-items: start; padding-block: clamp(30px, 4vw, 60px) clamp(48px, 6vw, 96px); }
+/* Ảnh sản phẩm gốc chỉ 454px. Khoá bề rộng hiển thị ở 460px để trên màn retina
+   ảnh vẫn nét 1:1 thay vì bị kéo giãn, phần còn lại của cột để trống cho thoáng. */
+.pdp { display: grid; grid-template-columns: minmax(0, 460px) minmax(0, 1fr); gap: clamp(28px, 5.5vw, 80px); align-items: start; padding-block: clamp(30px, 4vw, 60px) clamp(48px, 6vw, 96px); }
 @media (min-width: 901px) { .pdp > :first-child { position: sticky; top: 96px; } }
 @media (max-width: 900px) { .pdp { grid-template-columns: 1fr; } }
 .pdp-step { font-size: 13px; color: var(--ink-3); }
+
+/* Thanh tóm tắt sản phẩm: dính đáy trên di động (tầm ngón tay), dính dưới header trên máy tính.
+   Chỉ 1px kẻ, không đổ bóng, không bo góc — theo đúng ngữ pháp bố cục của trang. */
+.pbar { position: fixed; left: 0; right: 0; z-index: 55; background: var(--paper); visibility: hidden; opacity: 0; transition: opacity .18s ease, transform .18s ease; }
+.pbar[data-shown] { visibility: visible; opacity: 1; transform: none; }
+.pbar-in { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 10px; }
+.pbar-id { min-width: 0; }
+.pbar-name { display: block; font-family: var(--font-display); font-size: 12px; font-weight: 700; letter-spacing: var(--tracking-label); text-transform: uppercase; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pbar-price { display: block; font-size: 12px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.pbar-act { display: flex; gap: 8px; flex: 0 0 auto; }
+.pbar .btn { padding: 9px 14px; font-size: 11px; }
+@media (min-width: 901px) { .pbar { top: 0; border-bottom: 1px solid var(--rule); transform: translateY(-100%); } }
+@media (max-width: 900px) { .pbar { bottom: 0; border-top: 1px solid var(--rule); transform: translateY(100%); padding-bottom: env(safe-area-inset-bottom, 0px); } .pbar-call { display: none; } }
+@media (max-width: 560px) { .pbar-act .btn.ghost:not(.pbar-call) { display: none; } .pbar-name { font-size: 11px; } }
+@media (prefers-reduced-motion: reduce) { .pbar { transition: none; } }
+/* Nút Zalo nổi không được chồng lên thanh này trên di động. */
+@media (max-width: 900px) { body:has(.pbar[data-shown]) .zalo { bottom: calc(76px + env(safe-area-inset-bottom, 0px)); } }
+@media print { .pbar { display: none; } }
 .pdp-title { font-size: clamp(32px, 4.2vw, 58px); line-height: 1.02; letter-spacing: -.03em; font-weight: 800; margin-top: 14px; }
 .pdp-vi { font-size: clamp(16px, 1.4vw, 19px); color: var(--ink-2); margin-top: 12px; }
 .pdp-h { font-size: 15px; letter-spacing: 0; }
@@ -273,7 +295,8 @@ figure.texture { position: relative; margin: 0; background: var(--paper-2); aspe
 .nextband:hover .btn { border-color: var(--ink); color: var(--ink); }
 .nextband figure { position: relative; margin: 0; aspect-ratio: 4 / 3; background: var(--paper-2); overflow: hidden; }
 @media (max-width: 760px) { .nextband { grid-template-columns: 1fr; } .nextband figure { order: -1; } }
-.pdp figure { margin: 0; background: var(--paper-2); position: relative; }
+.pdp figure { margin: 0; background: var(--paper-2); position: relative; max-width: 460px; }
+@media (max-width: 900px) { .pdp figure { margin-inline: auto; } }
 .crumb { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); font-family: var(--font-display); font-weight: 600; padding-block: 18px; border-bottom: 1px solid var(--rule); }
 .crumb a:hover { color: var(--ink); }
 .spec { margin-top: 26px; }
@@ -435,10 +458,16 @@ html[data-nav="busy"] header.site::after { opacity: 1; transition: opacity .1s .
 /* Cảm ứng không có hover → hiện sẵn nhãn, nếu không người dùng không biết ảnh bấm được. */
 @media (hover: none) { .zoom-hint { opacity: 1; } }
 
-dialog.zoom { border: 0; padding: 0; margin: auto; background: transparent; max-width: 96vw; max-height: 94vh; overflow: visible; }
+/* Khung xem lớn phải LUÔN lớn hơn ảnh trên trang, nếu không thì bấm vào ảnh lại bé đi.
+   Chặn trên 880px để không kéo quá xa khỏi độ phân giải ảnh gốc. */
+dialog.zoom { border: 0; padding: 0; margin: auto; background: transparent; max-width: 96vw; max-height: 96vh; overflow: visible; }
 dialog.zoom::backdrop { background: rgba(12, 13, 14, .82); }
-.zoom-inner { position: relative; background: var(--paper); display: flex; }
-.zoom-inner img { display: block; }
+/* Bề rộng phải do CSS quyết định, KHÔNG để trình duyệt suy từ srcset.
+   next/image khai sizes lớn hơn ảnh gốc -> trình duyệt chia lại mật độ điểm ảnh
+   và tự co ảnh xuống, đó là lý do bấm phóng to lại thấy ảnh bé đi.
+   73vh = 92vh chia cho tỉ lệ ảnh 4:5, để chiều cao không tràn màn hình. */
+.zoom-inner { position: relative; background: var(--paper); display: block; width: min(96vw, 73vh, 880px); }
+.zoom-inner img { display: block; width: 100%; height: auto; }
 .zoom-close { position: absolute; top: 0; right: 0; width: 44px; height: 44px; display: grid; place-items: center; background: var(--ink); color: var(--paper); }
 .zoom-close:hover { opacity: .85; }
 
@@ -472,7 +501,7 @@ dialog.zoom::backdrop { background: rgba(12, 13, 14, .82); }
    Khách in trang sản phẩm hoặc liệu trình để mang tới spa: bỏ thanh điều hướng,
    nút nổi, nút bấm; hiện địa chỉ đầy đủ của liên kết để tra lại. */
 @media print {
-  header.site, footer.site, .zalo, .skip, .btnrow, .filters, .nextband, .cta-block { display: none !important; }
+  header.site, footer.site, .zalo, .skip, .btnrow, .filters, .nextband, .cta-block, .pbar { display: none !important; }
   html, body { background: #fff; color: #000; }
   .wrap { max-width: none; padding: 0; }
   section.block { break-inside: avoid; border-top: 1px solid #ccc; }

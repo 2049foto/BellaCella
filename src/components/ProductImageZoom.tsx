@@ -7,7 +7,8 @@ import { ui } from '@/i18n/ui';
 
 /* Xem ảnh cận cảnh bằng <dialog> gốc, không dùng thư viện lightbox.
    Đóng bằng Esc (native) và bấm nền. Khoá cuộn nền khi mở để trang sau
-   không trôi dưới ảnh. Ảnh nguồn 1200px nên phóng to vẫn nét. */
+   không trôi dưới ảnh. Ảnh sản phẩm gốc chỉ 454px (catalogue), nên khung lớn
+   chỉ phóng tới mức ảnh còn nét — xem .zoom-inner trong globals.css. */
 
 type Props = { src: StaticImageData; alt: string; slug: string; badge?: string | null; lang: Lang };
 
@@ -40,7 +41,7 @@ export default function ProductImageZoom({ src, alt, slug, badge, lang }: Props)
           <Image
             src={src}
             alt={alt}
-            sizes="(max-width:900px) 100vw, 50vw"
+            sizes="(max-width:520px) 100vw, 460px"
             style={{ width: '100%', height: 'auto', viewTransitionName: `product-${slug}` }}
             priority
             fetchPriority="high"
@@ -56,8 +57,8 @@ export default function ProductImageZoom({ src, alt, slug, badge, lang }: Props)
           <button type="button" className="zoom-close" onClick={() => dialogRef.current?.close()} aria-label={t.zoomClose}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
           </button>
-          {/* Ảnh xem cận cảnh nên nén nhẹ tay hơn phần còn lại của trang. */}
-          <Image src={src} alt={alt} sizes="(max-width:900px) 94vw, 860px" quality={90} placeholder="blur" style={{ width: 'auto', height: 'auto', maxWidth: '94vw', maxHeight: '86vh' }} />
+          {/* Kích thước do CSS quyết định (.zoom-inner img) để luôn lớn hơn ảnh trên trang. */}
+          <Image src={src} alt={alt} sizes="(max-width:920px) 96vw, 880px" quality={90} placeholder="blur" />
         </div>
       </dialog>
     </>
