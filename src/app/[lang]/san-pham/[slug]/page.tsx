@@ -6,7 +6,8 @@ import { PRODUCTS, BRAND } from '@/data/products';
 import { IMG } from '@/lib/images';
 import { zaloUrl } from '@/lib/brand';
 import ProductAction from '@/components/ProductAction';
-import ProductImageZoom from '@/components/ProductImageZoom';
+import ProductGallery from '@/components/ProductGallery';
+import { GALLERY } from '@/lib/gallery';
 import ProductStickyBar from '@/components/ProductStickyBar';
 import JsonLd from '@/components/JsonLd';
 import { productSchema, breadcrumbSchema } from '@/lib/schema';
@@ -70,7 +71,7 @@ export default async function ProductPage({ params }: Params) {
       ]} />
       <div className="crumb"><Link href={href(lang, 'products')}>{t.crumb}</Link> &nbsp;/&nbsp; {p.name}</div>
       <section className="pdp">
-        <ProductImageZoom src={IMG[p.slug]} alt={`${p.name} — ${p.vi}`} slug={p.slug} badge={p.badge} lang={lang} />
+        <ProductGallery items={GALLERY[p.slug]} name={p.name} alt0={`${p.name} — ${p.vi}`} slug={p.slug} badge={p.badge} lang={lang} />
         <div>
           <p className="pdp-step">{t.stepOf(nn(step.n), step.label)}</p>
           <h1 className="pdp-title">{p.name}</h1>

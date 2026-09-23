@@ -32,6 +32,8 @@ const vi = {
   product: {
     consult: 'Nhận tư vấn', addToCart: 'Thêm vào giỏ', currency: 'VND',
     zoom: 'Phóng to ảnh', zoomHint: 'Bấm để xem lớn', zoomLarge: 'Ảnh lớn', zoomClose: 'Đóng ảnh lớn',
+    gallery: 'Bộ ảnh sản phẩm', galleryShow: 'Xem ảnh', galleryPrev: 'Ảnh trước', galleryNext: 'Ảnh sau',
+    kinds: { pack: 'ảnh sản phẩm', box: 'hộp sản phẩm', detail: 'cận cảnh', texture: 'kết cấu', model: 'người mẫu', use: 'khi sử dụng', scene: 'ảnh bối cảnh' },
     stepOf: (n: string, label: string) => `Bước ${n} trong quy trình, ${label}`,
     size: 'Dung tích', sku: 'Mã sản phẩm', actives: 'Thành phần chính', benefits: 'Công dụng',
     howTo: 'Cách dùng', usageNote: 'Hướng dẫn chung theo loại sản phẩm. Ưu tiên hướng dẫn in trên bao bì và chỉ dẫn của chuyên gia điều trị.',
@@ -181,6 +183,8 @@ const en: Ui = {
   product: {
     consult: 'Get advice', addToCart: 'Add to cart', currency: 'VND',
     zoom: 'Enlarge image', zoomHint: 'Tap to enlarge', zoomLarge: 'Large image', zoomClose: 'Close large image',
+    gallery: 'Product images', galleryShow: 'Show image', galleryPrev: 'Previous image', galleryNext: 'Next image',
+    kinds: { pack: 'product', box: 'packaging', detail: 'close-up', texture: 'texture', model: 'model', use: 'in use', scene: 'still life' },
     stepOf: (n: string, label: string) => `Step ${n} of the routine, ${label}`,
     size: 'Size', sku: 'Product code', actives: 'Key ingredients', benefits: 'Benefits',
     howTo: 'How to use', usageNote: 'General guidance by product type. The packaging instructions and your treating specialist come first.',

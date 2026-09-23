@@ -13,7 +13,6 @@ import pymupdf
 
 LAYERS = {
     177: 'layer-177',  # trang 1: người mẫu (hero)
-    17: 'layer-17',    # trang 2: lưới 8 sản phẩm
     95: 'layer-95',    # trang 3: ảnh chứng thực
     126: 'layer-126',  # trang 4: kết cấu tinh chất
 }

@@ -194,7 +194,7 @@ figure.texture { position: relative; margin: 0; background: var(--paper-2); aspe
 .pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: clamp(18px, 2.4vw, 34px); }
 
 .pcard { container-type: inline-size; display: flex; flex-direction: column; border-top: 1px solid var(--rule); padding-top: 16px; }
-.pcard figure { margin: 0 0 16px; background: var(--paper-2); position: relative; aspect-ratio: 4 / 5; overflow: hidden; max-width: 100%; }
+.pcard figure { margin: 0 0 16px; background: var(--paper-2); position: relative; aspect-ratio: 1; overflow: hidden; max-width: 100%; }
 .pcard figure img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
 .pcard:hover figure img { transform: scale(1.03); }
 /* Ảnh sản phẩm nhích nhẹ khi rê chuột — phản hồi đủ thấy, không chuyển động thừa. */
@@ -255,8 +255,8 @@ figure.texture { position: relative; margin: 0; background: var(--paper-2); aspe
 @media (max-width: 560px) { .cgrid figure.lead { grid-column: span 1; } }
 
 /* ---- PDP ---- */
-/* Ảnh sản phẩm gốc chỉ 454px. Khoá bề rộng hiển thị ở 460px để trên màn retina
-   ảnh vẫn nét 1:1 thay vì bị kéo giãn, phần còn lại của cột để trống cho thoáng. */
+/* Ảnh sản phẩm của hãng rộng 570–1000px. Cột ảnh khoá 460px để ảnh nhỏ nhất vẫn dày điểm ảnh
+   hơn khung (không bị kéo giãn), phần còn lại của cột để trống cho thoáng. */
 .pdp { display: grid; grid-template-columns: minmax(0, 460px) minmax(0, 1fr); gap: clamp(28px, 5.5vw, 80px); align-items: start; padding-block: clamp(30px, 4vw, 60px) clamp(48px, 6vw, 96px); }
 @media (min-width: 901px) { .pdp > :first-child { position: sticky; top: 96px; } }
 @media (max-width: 900px) { .pdp { grid-template-columns: 1fr; } }
@@ -287,8 +287,7 @@ figure.texture { position: relative; margin: 0; background: var(--paper-2); aspe
 .pdp-h span { font-weight: 400; color: var(--ink-3); margin-left: 8px; font-family: var(--font-body); font-size: 13px; }
 
 /* Dải "bước tiếp theo": chữ trái, ảnh phải — ngữ pháp catalogue. */
-/* Ảnh cột phải đúng tỉ lệ 4:5 của ảnh gốc (khung 4:3 cũ cắt mất nắp và đáy chai) và
-   không rộng quá 380px, để ảnh gốc 454px không bị kéo giãn nhoè chữ trên nhãn. */
+/* Ảnh cột phải vuông đúng như ảnh gốc (khung 4:3 cũ cắt mất nắp và đáy chai), không rộng quá 380px. */
 .nextband { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 380px); gap: clamp(24px, 5vw, 80px); align-items: center; border-top: 1px solid var(--ink); padding-top: clamp(24px, 3vw, 40px); }
 .nextband h2 { font-size: clamp(28px, 3.6vw, 52px); letter-spacing: -.03em; font-weight: 800; line-height: 1.04; margin-top: 10px; }
 .nb-kicker { font-size: 13px; color: var(--ink-3); }
@@ -297,10 +296,27 @@ figure.texture { position: relative; margin: 0; background: var(--paper-2); aspe
 .nb-vi { color: var(--ink-2); margin-top: 10px; }
 .nextband .btn { margin-top: clamp(22px, 2.6vw, 34px); }
 .nextband:hover .btn { border-color: var(--ink); color: var(--ink); }
-.nextband figure { position: relative; margin: 0; aspect-ratio: 4 / 5; background: var(--paper-2); overflow: hidden; }
+.nextband figure { position: relative; margin: 0; aspect-ratio: 1; background: var(--paper-2); overflow: hidden; }
 @media (max-width: 760px) { .nextband { grid-template-columns: 1fr; } .nextband figure { order: -1; width: 100%; max-width: 460px; } }
-.pdp figure { margin: 0; background: var(--paper-2); position: relative; max-width: 460px; }
+.pdp figure { margin: 0; position: relative; max-width: 460px; }
 @media (max-width: 900px) { .pdp figure { margin-inline: auto; } }
+
+/* Bộ ảnh sản phẩm: dải cuộn ngang có điểm dừng; ảnh nhỏ bên dưới (máy tính), vạch tiến độ (điện thoại). */
+.gstage { position: relative; background: var(--paper-2); }
+.gtrack { display: flex; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.gtrack::-webkit-scrollbar { display: none; }
+.gslide { flex: 0 0 100%; position: relative; aspect-ratio: 1; scroll-snap-align: start; scroll-snap-stop: always; background: var(--paper-2); }
+.gslide img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.gthumbs { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
+.gthumb { position: relative; aspect-ratio: 1; padding: 0; border: 1px solid transparent; background: var(--paper-2); opacity: .55; transition: opacity .15s ease, border-color .15s ease; }
+.gthumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.gthumb:hover { opacity: 1; }
+.gthumb[aria-current] { opacity: 1; border-color: var(--ink); }
+.gdots { display: none; gap: 4px; margin-top: 12px; }
+.gdots span { flex: 1; height: 2px; background: var(--rule); transition: background .15s ease; }
+.gdots span[data-on] { background: var(--ink); }
+@media (max-width: 560px) { .gthumbs { display: none; } .gdots { display: flex; } }
+@media (prefers-reduced-motion: reduce) { .gthumb, .gdots span { transition: none; } }
 .crumb { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); font-family: var(--font-display); font-weight: 600; padding-block: 18px; border-bottom: 1px solid var(--rule); }
 .crumb a:hover { color: var(--ink); }
 .spec { margin-top: 26px; }
@@ -464,17 +480,20 @@ html[data-nav="busy"] header.site::after { opacity: 1; transition: opacity .1s .
 @media (hover: none) { .zoom-hint { opacity: 1; } }
 
 /* Khung xem lớn phải LUÔN lớn hơn ảnh trên trang, nếu không thì bấm vào ảnh lại bé đi.
-   Chặn trên 880px để không kéo quá xa khỏi độ phân giải ảnh gốc. */
+   Chặn trên 680px để không kéo quá xa khỏi độ phân giải ảnh gốc (570–1000px). */
 dialog.zoom { border: 0; padding: 0; margin: auto; background: transparent; max-width: 96vw; max-height: 96vh; overflow: auto; overscroll-behavior: contain; }
 dialog.zoom::backdrop { background: rgba(12, 13, 14, .82); }
 /* Bề rộng phải do CSS quyết định, KHÔNG để trình duyệt suy từ srcset.
    next/image khai sizes lớn hơn ảnh gốc -> trình duyệt chia lại mật độ điểm ảnh
    và tự co ảnh xuống, đó là lý do bấm phóng to lại thấy ảnh bé đi.
-   73vh = 92vh chia cho tỉ lệ ảnh 4:5, để chiều cao không tràn màn hình. Riêng điện thoại
-   xoay ngang (màn thấp) thì giữ tối thiểu 460px như ảnh trên trang và cho cuộn trong khung. */
-.zoom-inner { position: relative; background: var(--paper); display: block; width: min(96vw, 880px, max(73vh, 460px)); }
-.zoom-inner img { display: block; width: 100%; height: auto; }
-.zoom-close { position: absolute; top: 0; right: 0; width: 44px; height: 44px; display: grid; place-items: center; background: var(--ink); color: var(--paper); }
+   84vh: ảnh vuông + thanh điều hướng 45px vẫn lọt màn hình. Riêng điện thoại xoay ngang
+   (màn thấp) thì giữ tối thiểu 460px như ảnh trên trang và cho cuộn trong khung. */
+.zoom-inner { position: relative; background: var(--paper); display: block; width: min(96vw, 680px, max(84vh, 460px)); }
+.zoom-nav { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--rule); }
+.zoom-nav button { width: 44px; height: 44px; display: grid; place-items: center; color: var(--ink); }
+.zoom-nav button:disabled { color: var(--rule-strong); }
+.zoom-count { font-family: var(--font-display); font-size: 12px; font-weight: 600; letter-spacing: var(--tracking-label); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.zoom-close { position: absolute; z-index: 1; top: 0; right: 0; width: 44px; height: 44px; display: grid; place-items: center; background: var(--ink); color: var(--paper); }
 .zoom-close:hover { opacity: .85; }
 
 /* ---- loading skeleton ---- */
@@ -487,7 +506,7 @@ dialog.zoom::backdrop { background: rgba(12, 13, 14, .82); }
 .sk-line { height: .72em; margin-block: .34em; }
 .sk-eyebrow { height: 10px; width: 120px; margin-bottom: 14px; }
 .sk-h1 { height: clamp(30px, 5vw, 52px); width: min(70%, 460px); margin-bottom: 18px; }
-.sk-fig { width: 100%; aspect-ratio: 4 / 5; }
+.sk-fig { width: 100%; aspect-ratio: 1; }
 .sk-fig-wide { width: 100%; aspect-ratio: 2480/2557; max-height: min(66vh, 600px); }
 
 /* ---- error state ---- */
@@ -513,6 +532,7 @@ dialog.zoom::backdrop { background: rgba(12, 13, 14, .82); }
   section.block { break-inside: avoid; border-top: 1px solid #ccc; }
   .pdp { display: block; }
   .pdp figure { max-width: 60mm; }
+  .gthumbs, .gdots, .zoom-hint { display: none !important; }
   a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 10px; color: #555; }
   .faq details { break-inside: avoid; }
   .faq details::details-content { block-size: auto; }

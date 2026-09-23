@@ -1,6 +1,7 @@
 import { BRAND, type Product, type Faq } from '@/data/products';
 import { SITE_URL, SITE_NAME } from '@/lib/site';
 import { href, type Lang } from '@/i18n/routes';
+import { GALLERY } from '@/lib/gallery';
 
 const abs = (path: string) => SITE_URL + (path === '/' ? '' : path);
 
@@ -35,7 +36,7 @@ export function productSchema(p: Product, lang: Lang) {
     category: p.group,
     description: p.vi,
     brand: { '@type': 'Brand', name: BRAND.name },
-    image: `${SITE_URL}/img/${p.slug}.webp`,
+    image: GALLERY[p.slug].map((g) => `${SITE_URL}${g.file}`),
     url: abs(href(lang, 'products', p.slug)),
     inLanguage: lang,
     // Cố ý bỏ "offers": chưa bán online, không khai giá/tồn kho dạng thương mại.
