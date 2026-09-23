@@ -298,7 +298,9 @@ figure.texture { position: relative; margin: 0; background: var(--paper-2); aspe
 .nextband:hover .btn { border-color: var(--ink); color: var(--ink); }
 .nextband figure { position: relative; margin: 0; aspect-ratio: 1; background: var(--paper-2); overflow: hidden; }
 @media (max-width: 760px) { .nextband { grid-template-columns: 1fr; } .nextband figure { order: -1; width: 100%; max-width: 460px; } }
-.pdp figure { margin: 0; position: relative; max-width: 460px; }
+/* width: 100% bắt buộc: màn hẹp căn giữa bằng margin auto, thiếu bề rộng thì khung co theo nội dung
+   (28px lúc ảnh chưa giải mã) rồi bung ra khi ảnh xong -> đẩy cả khối thông tin xuống (CLS 0,3). */
+.pdp figure { margin: 0; position: relative; width: 100%; max-width: 460px; }
 @media (max-width: 900px) { .pdp figure { margin-inline: auto; } }
 
 /* Bộ ảnh sản phẩm: dải cuộn ngang có điểm dừng; ảnh nhỏ bên dưới (máy tính), vạch tiến độ (điện thoại). */

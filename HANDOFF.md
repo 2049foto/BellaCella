@@ -6,9 +6,23 @@ Production: bellacella.vercel.app (vẫn noindex, COMMERCE_ENABLED=false).
 Lịch sử các phiên trước: `git log`.
 
 ## Current goal
-Xong 3 việc Chi giao ngày 23/09: (1) cập nhật skill, (2) tối ưu ảnh + phóng to + UI/UX theo các
-hãng mỹ phẩm hàng đầu, (3) liệt kê kho skill chung, final review, đẩy build. **Cả ba đã xong.**
+Việc mới nhất (23/09 trưa): lấy ảnh từ cửa hàng chính thức của hãng https://bellacella.store
+(베라셀라 공식 스토어) tích hợp vào website. **Đã xong và đã deploy** (commit 9ed0be6).
 Còn lại: chờ giấy tờ nhà sản xuất mới mở công khai.
+
+## Done — ảnh từ bellacella.store (23/09 trưa)
+- 45 ảnh sản phẩm (8 ảnh chính + 37 ảnh phụ): ảnh chụp sản phẩm, người mẫu, cận cảnh, kết cấu.
+  Rộng 570–1000px (ảnh catalogue cũ chỉ 454px). Không phóng, không làm nét, không vẽ thêm.
+- Chi cho phép lấy hết ảnh dùng được, không cần theo luật nội dung. Tôi vẫn loại 3 nhóm vì làm web kém
+  chuyên nghiệp: ảnh dính chữ Hàn, ảnh selfie review của khách Hàn, ảnh ghép trước/sau.
+- Chữ "DR.BECELL" in chìm trên ảnh toner/mặt nạ: nền trắng tinh thì tô trắng (script kiểm nền),
+  nền có hoa văn thì cắt dải trên.
+- `scripts/build-store-images.mjs` dựng lại toàn bộ (ảnh gốc cache ở `.src-img/store/`), tự sinh `src/lib/gallery.ts`.
+- Trang sản phẩm: `ProductGallery` thay `ProductImageZoom` — vuốt ảnh (scroll-snap), ảnh nhỏ bên dưới trên
+  máy tính, vạch tiến độ trên điện thoại, xem lớn có vuốt / nút trước-sau / phím mũi tên, đóng thì giữ đúng ảnh.
+- Khung ảnh sản phẩm toàn site chuyển vuông theo ảnh gốc của hãng. JSON-LD khai đủ ảnh.
+- `build-images.mjs` bỏ phần ảnh sản phẩm từ catalogue (hero/chứng thực dựng lại vẫn trùng từng byte).
+- Store ghi Toner Pad **180ml / 70 miếng** — khớp nhãn, lệch catalogue (200ml). Dữ liệu chưa đổi, vẫn `needsReview`.
 
 ## Done (phiên 23/09)
 
@@ -50,18 +64,18 @@ Còn lại: chờ giấy tờ nhà sản xuất mới mở công khai.
 - Repo website tắt 4 plugin không dùng (posthog, expo, revenuecat, supabase) ở phạm vi local → nhẹ ~29k token/phiên.
 - Gói `.skill` sẵn để tải lên tài khoản kia: `D:\APP FACTORY\_skillpkg\` (skill-updater, llm-council, find-skills, frontend-design).
 
-## Số đo thật (bản vừa đẩy)
+## Số đo thật (bản vừa đẩy — ảnh từ bellacella.store, commit 9ed0be6)
 ```
 BASE=https://bellacella.vercel.app npm run accept
   404 ×3 đúng · song ngữ 18 trang · axe 72 lượt, 0 lỗi serious/critical
   overflow/reveal: 18 route × 3 bề rộng × 2 theme
-  Lighthouse production: / 90 · /san-pham/exo-bio-ampoule 96 · /en 99 — a11y 100, bp 100, CLS 0
+  Lighthouse production: / 91 · /san-pham/exo-bio-ampoule 98 · /en 99 — a11y 100, bp 100, CLS 0
   KẾT QUẢ: ĐẠT
-BASE=https://bellacella.vercel.app npm run perf -- --runs 3   → KẾT QUẢ: ĐẠT mọi ngưỡng
-node .dev.local.mjs (local)                                    → 10/10 thiết bị OK (320 → 2560px)
-Thanh tóm tắt production: hiện đúng, nằm trên cùng, không chồng Zalo ở 1280/768/390px
+Bộ ảnh trên production (máy tính 1280 + điện thoại 390): 8 ảnh, chuyển ảnh đúng, xem lớn 672px / 374px,
+  phím → và nút trước hoạt động, đóng giữ đúng ảnh vừa xem, 0 lỗi console
+node .dev.local.mjs (local) → 10/10 thiết bị OK (320 → 2560px)
 ```
-SEO 69 là do noindex có chủ đích (chưa mở công khai). Lighthouse local thấp hơn (~85) vì máy local nén gzip,
+SEO 69 là do noindex có chủ đích (chưa mở công khai). Lighthouse local thấp hơn vì máy local nén gzip,
 Vercel nén brotli — mốc chuẩn là production.
 
 ## In progress
@@ -71,16 +85,23 @@ Không có việc dở.
 1. `LOCAL-ONLY: cần thực hiện trước 16:00` — nâng app-factory-rules 1.2.0 → 2.0.x: đóng hết cửa sổ Claude trừ một, rồi
    `powershell -ExecutionPolicy Bypass -File "D:\APP FACTORY\Claude 2\PUBLISH-PLUGIN.ps1"` →
    `claude plugin update app-factory-rules@app-factory-toolkit`.
-2. Chi xin nhà sản xuất: ảnh sản phẩm gốc độ phân giải cao (ảnh hiện tại đã ở giới hạn của catalogue 454px),
-   logo vector, số tiếp nhận phiếu công bố 8 SKU, chứng nhận SPF Sun Cushion.
-3. Có ảnh gốc → chạy lại `node scripts/build-images.mjs` với nguồn mới (bỏ giới hạn 460px trong `.pdp`, `.nextband`).
+2. Chi xác nhận với hãng được dùng ảnh của bellacella.store trên website phân phối VN (ảnh thuộc hãng),
+   và xin: ảnh gốc độ phân giải cao (store chỉ có 570–1000px), logo vector, số công bố 8 SKU, chứng nhận SPF.
+3. Có ảnh gốc lớn hơn → thêm vào `SETS` trong `scripts/build-store-images.mjs`, chạy `node scripts/build-store-images.mjs`,
+   rồi nới cột ảnh `.pdp` (460px) và khung xem lớn (680px) theo độ phân giải mới.
 
 ## Blockers
 - Không mở công khai khi chưa đủ giấy tờ nhà sản xuất (xem CLAUDE.md).
 - MCP RevenueCat, expo, supabase cần anh uỷ quyền (claude.ai → Settings → Connectors, hoặc `/mcp` trong terminal `claude`).
 - Tài khoản Zalo cho 034 966 7962 phải tồn tại thì nút Zalo mới dùng được.
 
-## Files touched (phiên 23/09)
+## Files touched (23/09 trưa — ảnh bellacella.store)
+`public/img/<slug>.webp` + `<slug>-<n>.webp` (45 ảnh) · `scripts/build-store-images.mjs` (mới) · `src/lib/gallery.ts` (tự sinh) ·
+`src/components/ProductGallery.tsx` (mới, thay `ProductImageZoom.tsx` đã xoá) · `src/lib/images.ts` · `src/lib/schema.ts` ·
+`src/app/globals.css` · `src/i18n/ui.ts` · `src/app/[lang]/san-pham/[slug]/page.tsx` · `scripts/build-images.mjs` ·
+`scripts/extract-pdf-layers.py` · `HANDOFF.md`
+
+## Files touched (23/09 sáng)
 `public/img/*.webp` · `scripts/extract-pdf-layers.py` (mới) · `scripts/build-images.mjs` (mới) · `.gitignore` ·
 `src/app/globals.css` · `src/components/ProductImageZoom.tsx` · `src/components/ProductStickyBar.tsx` (mới) ·
 `src/components/ProductAction.tsx` · `src/app/[lang]/san-pham/[slug]/page.tsx` · `src/app/[lang]/huong-dan/page.tsx` ·
