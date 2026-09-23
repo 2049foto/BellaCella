@@ -1,33 +1,23 @@
 # HANDOFF — Website BELLA CELLA
 
-Cập nhật: 2026-09-23 (PC, Claude-Pro2).
-Branch `main` (đã đẩy, Vercel đã build) · nhánh làm việc `claude/bellacella-design-quality-5q5c5a` = `main`.
-Production: bellacella.vercel.app (vẫn noindex, COMMERCE_ENABLED=false).
+Cập nhật: 2026-09-23 ~14:30 (PC, Claude-Pro2).
+Branch `main` = `765024a` (đã đẩy, Vercel đã build) · nhánh `claude/bellacella-design-quality-5q5c5a` = `main`.
+Production: bellacella.vercel.app (noindex, COMMERCE_ENABLED=false — cố ý).
 Lịch sử các phiên trước: `git log`.
 
 ## Current goal
 Chi (23/09 chiều): hãng đã cho phép mọi giấy tờ/ảnh. "Hoàn thiện website xong luôn" nhưng **KHÔNG mở công khai**:
 giữ bellacella.vercel.app, giữ noindex, giữ nút "Nhận tư vấn" (Chi mua domain / lên Vercel Pro sau, hiện dùng cá nhân).
+→ **Đã xong.** Site hoàn chỉnh ở trạng thái riêng tư.
 
-## Done (23/09 chiều, commit local, CHƯA push)
-- Dung tích theo bảng thông tin chính hãng (상품정보제공고시 trên bellacella.store): Toner Pad **180ml / 70 miếng**
-  (SKU BC-TONERPAD-180), Sun Cushion **25g**, Recella **2g × 30 gói**. 5 SKU còn lại khớp (BB Cushion store không có bảng, giữ 15g).
-- Xoá hẳn cơ chế needsReview (type, dữ liệu vi/en, khối UI trên trang sản phẩm, chuỗi `pending`). `npx tsc --noEmit` đạt.
-
-## In progress — thay hướng dẫn dùng chung bằng cách dùng CHÍNH HÃNG
-File: `src/data/products.ts` (USAGE, bỏ field `usageSource` + sửa comment), `src/data/products.en.ts` (USAGE_EN),
-`src/i18n/ui.ts` (`usageNote` vi/en; `note`/`noteStrong` trang hướng dẫn: bỏ câu "không phải hướng dẫn chính thức").
-Bản dịch từ mục 사용방법 của hãng (đã đọc từ ảnh, dùng nguyên):
-- Cleanser: làm ướt mặt bằng nước ấm · bơm 2–3 lần lấy bọt ra lòng bàn tay · massage nhẹ khắp mặt · rửa sạch bằng nước ấm.
-- Toner Pad: lau nhẹ toàn mặt bằng mặt nhám · lật sang mặt mịn lau lại một lần · đậy kín nắp, để hũ đứng · da nhạy cảm: 2 lần/tuần, không dùng hằng ngày.
-- Exo-Bio Ampoule: kéo nắp theo chữ UP để mở hẳn, lắp đầu nhỏ giọt (cẩn thận nắp nhôm) · thoa đều khắp mặt · massage nhẹ cho thấm.
-- NMN Mask: sau rửa mặt dùng toner · trải mặt nạ, đặt khớp mắt và miệng, áp sát khắp mặt · 15–20 phút tháo ra · vỗ nhẹ phần tinh chất còn lại cho thấm.
-- Sun Cushion: lấy lượng vừa đủ ra bông phấn · vỗ nhẹ dàn đều · dặm lại nhiều lần khi cần.
-- BB Cushion: nhấn nút bên phải tấm đệm trong hộp để kem đẩy lên · lấy vừa đủ bằng bông phấn, vỗ dàn đều vùng cần tạo tông ·
-  TIP của hãng: da thở được, có thể thoa sau thủ thuật cho da và để qua đêm.
-- Mist: lắc lên xuống 3–5 lần · hơi ngửa mặt, nhắm mắt, xịt 4–5 lần cách 10–20cm · vỗ nhẹ cho thấm · nín thở khi xịt để sương không vào mũi/miệng.
-- Recella: xé gói theo đường răng cưa · thoa lượng vừa đủ lên mặt và cổ cho thấm · làm mặt nạ ngủ: thoa đều ~1 gói (2g), không lau, sáng hôm sau rửa mặt nhẹ.
-(`when` giữ theo quy trình; mặt nạ đổi "2–3 lần mỗi tuần" → "Sau bước làm sạch và toner" vì hãng không ghi tần suất.)
+## Done (23/09 chiều — đã đẩy, production đạt)
+- `5dd010d` Dung tích theo bảng thông tin chính hãng (상품정보제공고시 trên bellacella.store): Toner Pad **180ml / 70 miếng**
+  (SKU BC-TONERPAD-180), Sun Cushion **25g**, Recella **2g × 30 gói**. 5 SKU còn lại khớp. Xoá hẳn cơ chế needsReview.
+- `765024a` Cách dùng của cả 8 sản phẩm dịch từ mục 사용방법 chính hãng (vi + en). Bỏ nhãn "hướng dẫn chung,
+  không phải văn bản chính thức"; ghi chú mới: theo hướng dẫn chính hãng, sau thủ thuật thì theo chuyên gia điều trị.
+- CLAUDE.md: thay mục "Việc chưa xong" bằng "Giấy tờ và trạng thái mở site"; nguyên tắc nội dung cho phép nguồn
+  bellacella.store. Checklist `bella-acceptance` bỏ mục needsReview (cả bản trong `claude-setup/`).
+- `.claude/launch.json` thêm `bella-prod` (`npm run start`) để chạy nghiệm thu trên bản production ở máy.
 
 ## Done — ảnh từ bellacella.store (23/09 trưa)
 - 45 ảnh sản phẩm (8 ảnh chính + 37 ảnh phụ): ảnh chụp sản phẩm, người mẫu, cận cảnh, kết cấu.
@@ -41,7 +31,6 @@ Bản dịch từ mục 사용방법 của hãng (đã đọc từ ảnh, dùng 
   máy tính, vạch tiến độ trên điện thoại, xem lớn có vuốt / nút trước-sau / phím mũi tên, đóng thì giữ đúng ảnh.
 - Khung ảnh sản phẩm toàn site chuyển vuông theo ảnh gốc của hãng. JSON-LD khai đủ ảnh.
 - `build-images.mjs` bỏ phần ảnh sản phẩm từ catalogue (hero/chứng thực dựng lại vẫn trùng từng byte).
-- Store ghi Toner Pad **180ml / 70 miếng** — khớp nhãn, lệch catalogue (200ml). Dữ liệu chưa đổi, vẫn `needsReview`.
 
 ## Done (phiên 23/09)
 
@@ -83,36 +72,40 @@ Bản dịch từ mục 사용방법 của hãng (đã đọc từ ảnh, dùng 
 - Repo website tắt 4 plugin không dùng (posthog, expo, revenuecat, supabase) ở phạm vi local → nhẹ ~29k token/phiên.
 - Gói `.skill` sẵn để tải lên tài khoản kia: `D:\APP FACTORY\_skillpkg\` (skill-updater, llm-council, find-skills, frontend-design).
 
-## Số đo thật (production, bản cuối 979c3cc)
+## Số đo thật (production, bản cuối 765024a)
 ```
 BASE=https://bellacella.vercel.app npm run accept
   404 ×3 đúng · song ngữ 18 trang · axe 72 lượt, 0 lỗi serious/critical · overflow 18 route × 3 bề rộng × 2 theme
+  / 92 · /san-pham/exo-bio-ampoule 99 · /en 99 — a11y 100, bp 100, CLS 0
   KẾT QUẢ: ĐẠT
-BASE=https://bellacella.vercel.app npm run perf -- --runs 3        → KẾT QUẢ: ĐẠT mọi ngưỡng
-  / 95 · /san-pham 99 · /san-pham/exo-bio-ampoule 99 · /lieu-trinh 100 · /huong-dan 100 · /kien-thuc 100
-  /faq 99 · /en 99 · /en/products 99 · /en/products/exo-bio-ampoule 99 — a11y 100, bp 100, CLS ≤ 0,004
-node .cls.local.mjs (Chrome như Lighthouse, 10 lượt, production)  → 0/10 lượt nhảy bố cục
-node .gallery.local.mjs → bộ ảnh 8 ảnh, chuyển ảnh / xem lớn / phím / đóng giữ ảnh đúng, 0 lỗi console
-node .dev.local.mjs     → 10/10 thiết bị OK (320 → 2560px)
 ```
-Lỗi đã bắt được và sửa trong lượt này: bộ ảnh mới làm trang sản phẩm nhảy bố cục trên điện thoại (CLS 0,3,
-perf 82) — khung ảnh căn giữa bằng margin auto mà thiếu `width: 100%` nên co còn 28px lúc ảnh chưa giải mã.
 SEO 69 là do noindex có chủ đích (chưa mở công khai).
+Lưu ý đo: khi máy bận (CapCut chạy, CPU 84%) Lighthouse tụt mạnh — cùng bản production cũ, trang chủ ra 68 (TBT 1.310ms).
+Điểm thấp kèm TBT cao bất thường → đo lại lúc máy rảnh trước khi kết luận có lỗi.
+
+Bản trước (979c3cc): `npm run perf -- --runs 3` đạt mọi ngưỡng (10 route 95–100, CLS ≤ 0,004); CLS 0/10 lượt;
+bộ ảnh 8 ảnh 0 lỗi console; 10/10 thiết bị OK (320 → 2560px).
 
 ## In progress
 Không có việc dở.
 
 ## Next 3 actions
-1. Viết USAGE / USAGE_EN / usageNote / note theo bản dịch ở trên → `npx tsc --noEmit` → `npm run build` → `npm run accept`.
-2. Commit, `git push origin main` + `git push origin main:claude/bellacella-design-quality-5q5c5a`, chờ Vercel,
-   `BASE=https://bellacella.vercel.app npm run accept`.
-3. Sửa CLAUDE.md mục "Việc chưa xong": hãng đã cho phép (Chi 23/09); site vẫn riêng tư theo lựa chọn của Chi.
-   Gợi ý thêm: xin Chi danh sách thành phần đầy đủ (INCI) trong phiếu công bố để thêm mục "Thành phần đầy đủ".
+1. **LOCAL-ONLY: cần thực hiện trước 16:00** — nâng plugin `app-factory-rules` (Chi làm, đóng hết cửa sổ Claude trừ một):
+   `pwsh -File "D:\APP FACTORY\Claude 2\PUBLISH-PLUGIN.ps1"` rồi trong Claude Code: `/plugin update app-factory-rules@app-factory-toolkit`.
+2. Chờ Chi gửi bảng thành phần đầy đủ (INCI) trong phiếu công bố → thêm mục "Thành phần đầy đủ" trên trang sản phẩm.
+   Làm được từ mobile (chỉ sửa `src/data/products.ts` + `products.en.ts`).
+3. Khi Chi quyết mở công khai: mua domain → Vercel Pro hoặc Cloudflare Pages (Hobby cấm thương mại) → bỏ noindex
+   (`src/app/robots.ts` + `robots` trong `src/app/[lang]/layout.tsx`) → thêm số tiếp nhận phiếu công bố nếu Chi có.
 
 ## Blockers
 - Chi chưa muốn mở công khai: giữ noindex, Vercel Hobby, bellacella.vercel.app.
 - MCP RevenueCat, expo, supabase cần anh uỷ quyền (claude.ai → Settings → Connectors, hoặc `/mcp` trong terminal `claude`).
 - Tài khoản Zalo cho 034 966 7962 phải tồn tại thì nút Zalo mới dùng được.
+
+## Files touched (23/09 chiều)
+`src/data/products.ts` · `src/data/products.en.ts` · `src/i18n/content.ts` · `src/i18n/ui.ts` ·
+`src/app/[lang]/san-pham/[slug]/page.tsx` · `CLAUDE.md` · `.claude/skills/bella-acceptance/SKILL.md` ·
+`claude-setup/bella-acceptance.SKILL.md` · `.claude/launch.json` · `HANDOFF.md`
 
 ## Files touched (23/09 trưa — ảnh bellacella.store)
 `public/img/<slug>.webp` + `<slug>-<n>.webp` (45 ảnh) · `scripts/build-store-images.mjs` (mới) · `src/lib/gallery.ts` (tự sinh) ·
