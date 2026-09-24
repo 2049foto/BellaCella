@@ -18,6 +18,12 @@ const THEMES = ['light', 'dark'];
 const LH_ROUTES = ['/', '/san-pham/exo-bio-ampoule', '/en'];
 const noLh = process.argv.includes('--no-lh');
 const lhOnly = process.argv.includes('--lh-only');
+// Lighthouse mặc định MÔ PHỎNG throttling (Lantern). Trên máy đang bận, số mô phỏng
+// tụt rất sâu so với thực tế: đo 24/09 trên container, PDP ra LCP 3,5s (mô phỏng)
+// nhưng chỉ 0,8s khi throttling thật. Nghi số xấu do máy bận thì chạy lại với
+//   npm run accept -- --lh-only --lh-applied
+// để dùng throttling thật (devtools) rồi hãy kết luận.
+const lhApplied = process.argv.includes('--lh-applied');
 const RUNS = Number(process.argv[process.argv.indexOf('--runs') + 1]) || 1;
 mkdirSync(OUT, { recursive: true });
 
@@ -85,7 +91,10 @@ for (const theme of lhOnly ? [] : THEMES) {
     page.on('console', (m) => { if (m.type() === 'error') consoleErrs.push(m.text().slice(0, 140)); });
     for (const route of ROUTES) {
       consoleErrs = [];
-      await page.goto(BASE + route, { waitUntil: 'networkidle' });
+      // networkidle từng timeout 30s và giết cả run ở trang có bộ ảnh lớn (PDP).
+      // Chờ load trước, rồi cố chờ mạng lặng nhưng KHÔNG cho phép nó làm hỏng run.
+      await page.goto(BASE + route, { waitUntil: 'load', timeout: 120000 });
+      await page.waitForLoadState('networkidle', { timeout: 5000 }).catch(() => {});
       if (consoleErrs.length) fail(`console ${route} @${w} ${theme}: ${consoleErrs[0]}`);
       const ov = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
       if (ov > 0) fail(`tràn ngang ${ov}px ${route} @${w} ${theme}`);
@@ -95,6 +104,9 @@ for (const theme of lhOnly ? [] : THEMES) {
       const hidden = await page.$$eval('section.block', (els) => els.filter((e) => getComputedStyle(e).opacity !== '1' || getComputedStyle(e).visibility === 'hidden').length);
       if (hidden) fail(`${hidden} section.block không hiện đủ ${route} @${w} ${theme}`);
       await page.evaluate(() => window.scrollTo(0, 0));
+      // Thanh tóm tắt mờ dần .18s khi cuộn về đầu; quét ngay thì axe bắt được lúc
+      // nó còn hiện nhưng opacity < 1 -> báo oan color-contrast. Chờ transition xong.
+      await page.waitForTimeout(400);
       const name = `${route === '/' ? 'home' : route.slice(1).replaceAll('/', '_')}-${w}-${theme}`;
       await page.screenshot({ path: `${OUT}/${name}.png`, fullPage: true });
       if (w !== 768) {
@@ -115,12 +127,12 @@ console.log(`overflow/reveal: ${ROUTES.length} route × ${WIDTHS.length} bề r�
 if (!noLh) {
   const { default: lighthouse } = await import('lighthouse');
   const { launch } = await import('chrome-launcher');
-  const chrome = await launch({ chromePath: chromium.executablePath(), chromeFlags: ['--headless=new'] });
-  console.log('\nLighthouse mobile (mặc định: 4× CPU, mạng chậm giả lập)');
+  const chrome = await launch({ chromePath: chromium.executablePath(), chromeFlags: ['--headless=new', '--no-sandbox', '--disable-dev-shm-usage'] });
+  console.log(`\nLighthouse mobile (4× CPU, mạng chậm — throttling ${lhApplied ? 'THẬT (devtools)' : 'mô phỏng (mặc định)'})`);
   console.log('route | perf | a11y | bp | seo | LCP | CLS | TBT | audit lệch');
   for (const route of LH_ROUTES) {
     const runs = [];
-    for (let i = 0; i < RUNS; i++) runs.push((await lighthouse(BASE + route, { port: chrome.port, output: 'json', logLevel: 'error' })).lhr);
+    for (let i = 0; i < RUNS; i++) runs.push((await lighthouse(BASE + route, { port: chrome.port, output: 'json', logLevel: 'error', ...(lhApplied ? { throttlingMethod: 'devtools' } : {}) })).lhr);
     runs.sort((x, y) => x.categories.performance.score - y.categories.performance.score);
     const r = { lhr: runs[Math.floor(runs.length / 2)] };
     if (RUNS > 1) console.log(`${route} perf ${RUNS} lần: ${runs.map((x) => Math.round(x.categories.performance.score * 100)).join(' ')} → lấy trung vị`);

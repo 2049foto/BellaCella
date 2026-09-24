@@ -1,6 +1,7 @@
 # HANDOFF — Website BELLA CELLA
 
-Cập nhật: 2026-09-23 ~14:30 (PC, Claude-Pro2).
+Cập nhật: 2026-09-24 (phiên cloud — nghiệm thu độc lập + vá bộ nghiệm thu).
+Trước đó: 2026-09-23 ~14:30 (PC, Claude-Pro2).
 Branch `main` = `765024a` (đã đẩy, Vercel đã build) · nhánh `claude/bellacella-design-quality-5q5c5a` = `main`.
 Production: bellacella.vercel.app (noindex, COMMERCE_ENABLED=false — cố ý).
 Lịch sử các phiên trước: `git log`.
@@ -86,6 +87,56 @@ Lưu ý đo: khi máy bận (CapCut chạy, CPU 84%) Lighthouse tụt mạnh —
 Bản trước (979c3cc): `npm run perf -- --runs 3` đạt mọi ngưỡng (10 route 95–100, CLS ≤ 0,004); CLS 0/10 lượt;
 bộ ảnh 8 ảnh 0 lỗi console; 10/10 thiết bị OK (320 → 2560px).
 
+## Done (24/09 — phiên cloud: kiểm chứng độc lập)
+
+Không đổi một dòng nào của website — chỉ kiểm chứng lại và vá bộ nghiệm thu.
+
+### Đã xác minh lại bằng cách tự đo
+- 4 quyết định khoá còn nguyên: `--ink-3:#6B6F73` · reveal chỉ `translateY` (không opacity) ·
+  font `preload:false` · `COMMERCE_ENABLED=false` + noindex.
+- `npm run build` xanh, **0 vulnerabilities** (Next 15.5.25).
+- axe **72 lượt quét, 0 lỗi** serious/critical · overflow/reveal 18 route × 3 bề rộng × 2 theme sạch.
+
+### ⚠️ Phát hiện quan trọng: Lighthouse MÔ PHỎNG cho số sai lệch nặng khi máy bận
+Lighthouse mặc định dùng throttling **mô phỏng** (Lantern), không phải throttling thật.
+Trên container đang tải nặng, cùng một bản build cho ra kết quả **đảo lộn giữa các lần chạy**:
+
+| | trang chủ | PDP | /en |
+|---|---|---|---|
+| mô phỏng (lần A) | 98 | **87** | 98 |
+| mô phỏng (lần B) | **85** | 95 | **88** |
+| **throttling THẬT (devtools)** | **99** | **97** | **99** |
+
+Đo bằng PerformanceObserver: LCP thật của PDP = **0,8s** (ảnh LCP về từ 61ms, chỉ 8KB) —
+trong khi mô phỏng báo 3,5s. **Không có vấn đề hiệu năng nào cả.**
+
+→ Quy tắc: thấy điểm perf thấp mà TBT/CLS vẫn đẹp thì **đừng vội sửa code**. Chạy đối chứng:
+```
+npm run accept -- --lh-only --lh-applied
+```
+Nếu bản đối chứng đạt thì máy bận, không phải lỗi web.
+
+### Vá `scripts/accept.mjs` (3 lỗi của chính bộ nghiệm thu)
+1. `waitUntil: 'networkidle'` timeout 30s ở PDP (bộ ảnh lớn) → **giết cả run**, tái hiện đều.
+   Đổi sang `load` + timeout 120s, rồi chờ mạng lặng tối đa 5s nhưng nuốt lỗi.
+2. axe chạy ngay sau `scrollTo(0,0)` → bắt trúng thanh `.pbar` đang mờ dần (.18s) →
+   **báo oan `color-contrast`** (gặp 1 lần, chạy lại 6 lần riêng lẻ không tái hiện). Thêm chờ 400ms.
+3. Lighthouse thiếu `--no-sandbox` → không chạy được dưới root/container/CI. Đã thêm.
+4. Thêm cờ `--lh-applied` để đo bằng throttling thật.
+
+### Kết quả sau khi vá (chạy trọn vẹn, không crash)
+```
+npm run accept                          → axe 0 lỗi, overflow sạch; perf mô phỏng dao động 85–95 (máy bận)
+npm run accept -- --lh-only --lh-applied
+  / 99 · /san-pham/exo-bio-ampoule 97 · /en 99
+  a11y 100 · bp 100 · LCP 1,3–1,5s · CLS ≤0,009 · SEO 69 (noindex cố ý)
+  KẾT QUẢ: ĐẠT
+```
+
+### Chưa xác minh được từ phiên cloud
+- `bellacella.vercel.app` bị proxy chặn (403) → không đo được production từ đây.
+- Máy này thiếu bản chromium khớp Playwright; đã trỏ symlink thủ công. Trên PC không gặp.
+
 ## In progress
 Không có việc dở.
 
@@ -98,6 +149,13 @@ Không có việc dở.
    (`src/app/robots.ts` + `robots` trong `src/app/[lang]/layout.tsx`) → thêm số tiếp nhận phiếu công bố nếu Chi có.
 
 ## Blockers
+
+- **Pháp lý — phải làm trước khi mở công khai (chưa ai xử lý, đã nêu 2 lần):**
+  - **QĐ 610/QĐ-QLD (27/07/2026)** — Cục Quản lý Dược thu hồi một số số tiếp nhận phiếu công bố mỹ phẩm.
+    Phải đối chiếu **cả 8 SKU** với danh sách thu hồi. Chưa có số công bố nên chưa đối chiếu được.
+  - **Luật TMĐT 2025 + Nghị định 248/2026/NĐ-CP** (hiệu lực 01/07/2026): website có chức năng
+    **đặt hàng/thanh toán** phải **thông báo với Bộ Công Thương** (online.gov.vn) trước khi chạy.
+    Hiện site không có đặt hàng nên chưa thuộc diện; **bật giỏ hàng là phải làm thủ tục trước.**
 - Chi chưa muốn mở công khai: giữ noindex, Vercel Hobby, bellacella.vercel.app.
 - Tài khoản Zalo cho 034 966 7962 phải tồn tại thì nút Zalo mới dùng được.
 - Không phải blocker của website — ghi để khỏi nhầm: đăng nhập MCP (Expo/RevenueCat/Supabase) lưu chung ở
