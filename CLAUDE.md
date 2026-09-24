@@ -40,7 +40,7 @@ Không thêm màu mới ngoài danh sách này.
 | `--paper-3` | `#EEF0F2` | Nền nhấn nhẹ |
 | `--ink` | `#101112` | Wordmark, tiêu đề |
 | `--ink-2` | `#3A3D40` | Thân bài |
-| `--ink-3` | `#8C9094` | Dung tích, chú thích ảnh |
+| `--ink-3` | `#6B6F73` | Dung tích, chú thích ảnh. Đậm hơn `#8C9094` ban đầu để chữ nhỏ đạt WCAG AA (≥4.5:1). **Đừng đổi lại** — nền tối vẫn dùng `#83888C`, đã đạt. |
 | `--rule` | `#E3E6E8` | Đường kẻ 1px |
 | `--rule-strong` | `#C9CED2` | Viền nhấn |
 
